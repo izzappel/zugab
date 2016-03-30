@@ -3,7 +3,6 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Windows.Input;
 
 using ZuegerAdressbook.Annotations;
 using ZuegerAdressbook.Commands;
@@ -71,7 +70,7 @@ namespace ZuegerAdressbook.ViewModels
 
         private void NewPerson()
         {
-            SelectedPerson = new Person();
+            SelectedPerson = null;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

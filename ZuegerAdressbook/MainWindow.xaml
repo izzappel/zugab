@@ -1,0 +1,96 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" x:Class="ZuegerAdressbook.MainWindow"
+        Title="Züger Reisen - Addressbuch" d:DesignWidth="1133.582"
+    xmlns:converter="clr-namespace:ZuegerAdressbook.Converters">
+    <Window.Resources>
+        <converter:EnumBooleanConverter x:Key="enumBooleanConverter" />
+    </Window.Resources>
+    
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1.5*"/>
+            <ColumnDefinition Width="5" />
+            <ColumnDefinition Width="1.5*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <ToolBarTray Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3">
+            <ToolBar>
+                <Button Command="{Binding NewCommand}">
+                    <StackPanel Orientation="Horizontal">
+                        <!--<Image Source=""></Image>-->
+                        <TextBlock Margin="3,0,0,0">Neu</TextBlock>
+                    </StackPanel>
+                </Button>
+                <Button Command="Save" Content="Speichern"></Button>
+            </ToolBar>
+        </ToolBarTray>
+        
+        <Grid Grid.Column="0" Grid.Row="1" Margin="4" DataContext="{Binding SelectedPerson}">
+            <Grid.Resources>
+                <Style TargetType="{x:Type TextBox}">
+                    <Setter Property="Margin" Value="0,2,0,2" />
+                </Style>
+            </Grid.Resources>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+            </Grid.RowDefinitions>
+
+            <Label Grid.Column="0" Grid.Row="0" Content="Anrede"/>
+            <StackPanel Grid.Column="1" Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Center">
+                <RadioButton Margin="0,0,20,0" IsChecked="{Binding Path=Gender, Converter={StaticResource enumBooleanConverter}, ConverterParameter=Male}">Herr</RadioButton>
+                <RadioButton IsChecked="{Binding Path=Gender, Converter={StaticResource enumBooleanConverter}, ConverterParameter=Female}">Frau</RadioButton>
+            </StackPanel>
+
+            <Label Grid.Column="0" Grid.Row="1" Content="Nachname"/>
+            <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding Lastname}"/>
+            <Label Grid.Column="2" Grid.Row="1" Content="Vorname"/>
+            <TextBox Grid.Column="3" Grid.Row="1" Text="{Binding Firstname}"/>
+            
+            <Label Grid.Column="0" Grid.Row="2">Strasse / Nr.</Label>
+            <TextBox Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="3" Text="{Binding Street1}"></TextBox>
+            
+            <Label Grid.Column="0" Grid.Row="3">Strasse 2</Label>
+            <TextBox Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="3" Text="{Binding Street2}"></TextBox>
+            
+            <Label Grid.Column="0" Grid.Row="4">PLZ</Label>
+            <TextBox Grid.Column="1" Grid.Row="4" Text="{Binding Plz}"></TextBox>
+            <Label Grid.Column="2" Grid.Row="4">Ort</Label>
+            <TextBox Grid.Column="3" Grid.Row="4" Text="{Binding City}"></TextBox>
+            
+            <Separator Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="4"></Separator>
+            
+            <Label Grid.Column="0" Grid.Row="6">Tel P</Label>
+            <TextBox Grid.Column="1" Grid.Row="6" Text="{Binding PhoneNumber}"></TextBox>
+            
+            <Label Grid.Column="2" Grid.Row="6">Tel Mobile</Label>
+            <TextBox Grid.Column="3" Grid.Row="6" Text="{Binding MobileNumber}"></TextBox>
+            
+            <Label Grid.Column="0" Grid.Row="7">E-Mail</Label>
+            <TextBox Grid.Column="1" Grid.Row="7" Text="{Binding EmailAddress}"></TextBox>
+        </Grid>
+        <GridSplitter Grid.Column="1" Grid.Row="1" Width="5" HorizontalAlignment="Stretch" />
+        <Grid Grid.Column="2" Grid.Row="1">
+            <ListBox ItemsSource="{Binding Persons}"></ListBox>
+        </Grid>
+
+    </Grid>
+</Window>

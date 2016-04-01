@@ -116,11 +116,17 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Icons\user.png" />
+  </ItemGroup>
   <ItemGroup>
     <Resource Include="Icons\floppy.png" />
     <Resource Include="Icons\sign-add.png" />
     <Resource Include="Icons\sign-error.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\user-group.png" />
+    <Resource Include="Icons\user-id.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

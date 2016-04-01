@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" x:Class="ZuegerAdressbook.MainWindow"
         Title="Züger Reisen - Addressbuch" d:DesignWidth="1133.582"
-    xmlns:converter="clr-namespace:ZuegerAdressbook.Converters">
+    xmlns:converter="clr-namespace:ZuegerAdressbook.Converters" Icon="Icons/user-id.png">
     <Window.Resources>
         <converter:EnumBooleanConverter x:Key="enumBooleanConverter" />
         <Style TargetType="{x:Type TextBox}">
@@ -39,19 +39,19 @@
             </ToolBarTray.Resources>
             <ToolBar>
                 <Button Command="{Binding NewCommand}">
-                    <StackPanel Orientation="Horizontal">
+                    <StackPanel Orientation="Vertical">
                         <Image Source="Icons/sign-add.png"></Image>
                         <TextBlock Margin="3,0,0,0" VerticalAlignment="Center">Neu</TextBlock>
                     </StackPanel>
                 </Button>
                 <Button Command="{Binding SaveCommand}">
-                    <StackPanel Orientation="Horizontal">
+                    <StackPanel Orientation="Vertical">
                         <Image Source="Icons/floppy.png"></Image>
                         <TextBlock Margin="3,0,0,0" VerticalAlignment="Center">Speichern</TextBlock>
                     </StackPanel>
                 </Button>
                 <Button Command="{Binding DeleteCommand}">
-                    <StackPanel Orientation="Horizontal">
+                    <StackPanel Orientation="Vertical">
                         <Image Source="Icons/sign-error.png"></Image>
                         <TextBlock Margin="3,0,0,0" VerticalAlignment="Center">Löschen</TextBlock>
                     </StackPanel>

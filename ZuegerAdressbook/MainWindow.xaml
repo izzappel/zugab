@@ -6,6 +6,18 @@
     xmlns:converter="clr-namespace:ZuegerAdressbook.Converters">
     <Window.Resources>
         <converter:EnumBooleanConverter x:Key="enumBooleanConverter" />
+        <Style TargetType="{x:Type TextBox}">
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+        </Style>
+        <Style TargetType="{x:Type TextBlock}">
+            <Setter Property="VerticalAlignment" Value="Center" />
+        </Style>
+        <Style TargetType="{x:Type CheckBox}">
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+        </Style>
+        <Style TargetType="{x:Type Window}">
+            <Setter Property="FontFamily" Value="fonts/#Frutiger LT Com 55 Roman" />
+        </Style>
     </Window.Resources>
 
     <Grid>
@@ -20,21 +32,41 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <ToolBarTray Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3">
+            <ToolBarTray.Resources>
+                <Style TargetType="{x:Type Image}">
+                    <Setter Property="Width" Value="30"></Setter>
+                </Style>
+            </ToolBarTray.Resources>
             <ToolBar>
                 <Button Command="{Binding NewCommand}">
                     <StackPanel Orientation="Horizontal">
-                        <!--<Image Source=""></Image>-->
-                        <TextBlock Margin="3,0,0,0">Neu</TextBlock>
+                        <Image Source="Icons/sign-add.png"></Image>
+                        <TextBlock Margin="3,0,0,0" VerticalAlignment="Center">Neu</TextBlock>
                     </StackPanel>
                 </Button>
-                <Button Command="{Binding SaveCommand}" Content="Speichern"></Button>
-                <Button Command="{Binding DeleteCommand}" Content="Löschen"></Button>
+                <Button Command="{Binding SaveCommand}">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="Icons/floppy.png"></Image>
+                        <TextBlock Margin="3,0,0,0" VerticalAlignment="Center">Speichern</TextBlock>
+                    </StackPanel>
+                </Button>
+                <Button Command="{Binding DeleteCommand}">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="Icons/sign-error.png"></Image>
+                        <TextBlock Margin="3,0,0,0" VerticalAlignment="Center">Löschen</TextBlock>
+                    </StackPanel>
+                </Button>
             </ToolBar>
         </ToolBarTray>
 
         <Grid Grid.Column="0" Grid.Row="1" Margin="4" DataContext="{Binding SelectedDetailedPerson}">
             <Grid.Resources>
                 <Style TargetType="{x:Type TextBox}">
+                    <Setter Property="Margin" Value="0,2,0,2" />
+                    <Setter Property="VerticalContentAlignment" Value="Center"></Setter>
+                    <Setter Property="FontFamily" Value="fonts/#Frutiger LT Com 55 Roman"></Setter>
+                </Style>
+                <Style TargetType="{x:Type DatePicker}">
                     <Setter Property="Margin" Value="0,2,0,2" />
                 </Style>
             </Grid.Resources>
@@ -45,6 +77,10 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
                 <RowDefinition Height="30"/>
                 <RowDefinition Height="30"/>
                 <RowDefinition Height="30"/>
@@ -66,27 +102,36 @@
             <Label Grid.Column="2" Grid.Row="1" Content="Vorname"/>
             <TextBox Grid.Column="3" Grid.Row="1" Text="{Binding Firstname, UpdateSourceTrigger=PropertyChanged}"/>
 
-            <Label Grid.Column="0" Grid.Row="2">Strasse / Nr.</Label>
-            <TextBox Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="3" Text="{Binding Street1}"></TextBox>
+            <Label Grid.Column="0" Grid.Row="2">Geburtsdatum</Label>
+            <DatePicker Grid.Column="1" Grid.Row="2" SelectedDate="{Binding Birthdate}"></DatePicker>
 
-            <Label Grid.Column="0" Grid.Row="3">Strasse 2</Label>
-            <TextBox Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="3" Text="{Binding Street2}"></TextBox>
+            <Label Grid.Column="0" Grid.Row="3">Strasse / Nr.</Label>
+            <TextBox Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="3" Text="{Binding Street1}"></TextBox>
 
-            <Label Grid.Column="0" Grid.Row="4">PLZ</Label>
-            <TextBox Grid.Column="1" Grid.Row="4" Text="{Binding Plz}"></TextBox>
-            <Label Grid.Column="2" Grid.Row="4">Ort</Label>
-            <TextBox Grid.Column="3" Grid.Row="4" Text="{Binding City}"></TextBox>
+            <Label Grid.Column="0" Grid.Row="4">Strasse 2</Label>
+            <TextBox Grid.Column="1" Grid.Row="4" Grid.ColumnSpan="3" Text="{Binding Street2}"></TextBox>
 
-            <Separator Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="4"></Separator>
+            <Label Grid.Column="0" Grid.Row="5">PLZ</Label>
+            <TextBox Grid.Column="1" Grid.Row="5" Text="{Binding Plz}"></TextBox>
+            <Label Grid.Column="2" Grid.Row="5">Ort</Label>
+            <TextBox Grid.Column="3" Grid.Row="5" Text="{Binding City}"></TextBox>
 
-            <Label Grid.Column="0" Grid.Row="6">Tel P</Label>
-            <TextBox Grid.Column="1" Grid.Row="6" Text="{Binding PhoneNumber}"></TextBox>
+            <Separator Grid.Column="0" Grid.Row="6" Grid.ColumnSpan="4"></Separator>
 
-            <Label Grid.Column="2" Grid.Row="6">Tel Mobile</Label>
-            <TextBox Grid.Column="3" Grid.Row="6" Text="{Binding MobileNumber}"></TextBox>
+            <Label Grid.Column="0" Grid.Row="7">Tel P</Label>
+            <TextBox Grid.Column="1" Grid.Row="7" Text="{Binding PhoneNumber}"></TextBox>
+            <Label Grid.Column="2" Grid.Row="7">Tel Mobile</Label>
+            <TextBox Grid.Column="3" Grid.Row="7" Text="{Binding MobileNumber}"></TextBox>
 
-            <Label Grid.Column="0" Grid.Row="7">E-Mail</Label>
-            <TextBox Grid.Column="1" Grid.Row="7" Text="{Binding EmailAddress}"></TextBox>
+            <Label Grid.Column="0" Grid.Row="8">E-Mail</Label>
+            <TextBox Grid.Column="1" Grid.Row="8" Text="{Binding EmailAddress}"></TextBox>
+
+            <Separator Grid.Column="0" Grid.Row="9" Grid.ColumnSpan="4"></Separator>
+
+            <Label Grid.Column="0" Grid.Row="10">Halbtax</Label>
+            <CheckBox Grid.Column="1" Grid.Row="10" IsChecked="{Binding HasHalbtax}"></CheckBox>
+            <Label Grid.Column="2" Grid.Row="10">GA</Label>
+            <CheckBox Grid.Column="3" Grid.Row="10" IsChecked="{Binding HasGeneralAbo}"></CheckBox>
         </Grid>
         <GridSplitter Grid.Column="1" Grid.Row="1" Width="5" HorizontalAlignment="Stretch" />
         <Grid Grid.Column="2" Grid.Row="1">

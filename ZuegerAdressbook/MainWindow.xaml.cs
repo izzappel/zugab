@@ -16,14 +16,10 @@ namespace ZuegerAdressbook
         {
             InitializeComponent();
 
+            Style = (Style)FindResource(typeof(Window));
+
             _viewModel = new MainViewModel();
             DataContext = _viewModel;
         }
-
-        //private void Selector_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
-        //{
-        //    _viewModel.ChangeSelectedDetailedPerson();
-            
-        //}
     }
 }

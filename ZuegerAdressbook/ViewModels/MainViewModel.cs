@@ -117,7 +117,7 @@ namespace ZuegerAdressbook.ViewModels
         {
             get
             {
-                _deleteCommand = new RelayCommand(DeleteSelectedPerson, CanDeleteSelectedPerson);
+                _deleteCommand = new RelayCommand(DeleteSelectedPerson);
                 return _deleteCommand;
             }
             set
@@ -171,7 +171,7 @@ namespace ZuegerAdressbook.ViewModels
 
         private bool CanSaveSelectedPerson()
         {
-            return SelectedDetailedPerson != null;
+            return IsNewModeActive || (SelectedDetailedPerson != null && SelectedDetailedPerson.IsChanged);
         }
 
         private void SaveSelectedPerson()
@@ -239,11 +239,7 @@ namespace ZuegerAdressbook.ViewModels
         [NotifyPropertyChangedInvocator]
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
-            var handler = PropertyChanged;
-            if (handler != null)
-            {
-                handler(this, new PropertyChangedEventArgs(propertyName));
-            }
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

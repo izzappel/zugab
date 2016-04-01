@@ -93,6 +93,20 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <Resource Include="Fonts\FrutigerLTCom-Black.ttf" />
+    <Resource Include="Fonts\FrutigerLTCom-BlackCn.ttf" />
+    <Resource Include="Fonts\FrutigerLTCom-BlackItalic.ttf" />
+    <Resource Include="Fonts\FrutigerLTCom-Bold.ttf" />
+    <Resource Include="Fonts\FrutigerLTCom-BoldCn.ttf" />
+    <Resource Include="Fonts\FrutigerLTCom-BoldItalic.ttf" />
+    <Resource Include="Fonts\FrutigerLTCom-Condensed.ttf" />
+    <Resource Include="Fonts\FrutigerLTCom-ExtraBlackCn.ttf" />
+    <Resource Include="Fonts\FrutigerLTCom-Italic.ttf" />
+    <Resource Include="Fonts\FrutigerLTCom-Light.ttf" />
+    <Resource Include="Fonts\FrutigerLTCom-LightCn.ttf" />
+    <Resource Include="Fonts\FrutigerLTCom-LightItalic.ttf" />
+    <Resource Include="Fonts\FrutigerLTCom-Roman.ttf" />
+    <Resource Include="Fonts\FrutigerLTCom-UltraBlack.ttf" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -101,6 +115,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Icons\floppy.png" />
+    <Resource Include="Icons\sign-add.png" />
+    <Resource Include="Icons\sign-error.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

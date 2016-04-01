@@ -4,17 +4,30 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Windows;
+using System.Windows.Threading;
 
 using ZuegerAdressbook.Annotations;
 using ZuegerAdressbook.Commands;
 using ZuegerAdressbook.Extensions;
 using ZuegerAdressbook.Model;
+using ZuegerAdressbook.Service;
 
 namespace ZuegerAdressbook.ViewModels
 {
     public class MainViewModel : INotifyPropertyChanged
     {
+        private bool IsNewModeActive => SelectedDetailedPerson != null && SelectedDetailedPerson.Id.IsNullOrEmpty();
+
         private Person _selectedListPerson;
+
+        private Person _selectedDetailedPerson;
+
+        private RelayCommand _newCommand;
+
+        private RelayCommand _saveCommand;
+
+        private RelayCommand _deleteCommand;
 
         public Person SelectedListPerson
         {
@@ -28,12 +41,32 @@ namespace ZuegerAdressbook.ViewModels
                 {
                     return;
                 }
+
+                var origValue = _selectedListPerson;
+
                 _selectedListPerson = value;
-                OnPropertyChanged();
+
+                if (ChangeSelectedDetailedPerson() == false)
+                {
+                    Application.Current.Dispatcher.BeginInvoke(
+                        new Action(
+                            () =>
+                            {
+                                // Do this against the underlying value so 
+                                //  that we don't invoke the cancellation question again.
+                                _selectedListPerson = origValue;
+                                OnPropertyChanged();
+                            }),
+                        DispatcherPriority.ContextIdle,
+                        null);
+                }
+                else
+                {
+                    _selectedListPerson = value;
+                    OnPropertyChanged();
+                }
             }
         }
-
-        private Person _selectedDetailedPerson;
 
         public Person SelectedDetailedPerson
         {
@@ -54,12 +87,11 @@ namespace ZuegerAdressbook.ViewModels
 
         public ObservableCollection<Person> Persons { get; set; }
 
-        private RelayCommand _newCommand;
         public RelayCommand NewCommand
         {
             get
             {
-                _newCommand = new RelayCommand(NewPerson);
+                _newCommand = new RelayCommand(CreateNewPerson);
                 return _newCommand;
             }
             set
@@ -67,8 +99,6 @@ namespace ZuegerAdressbook.ViewModels
                 _newCommand = value;
             }
         }
-
-        private RelayCommand _saveCommand;
 
         public RelayCommand SaveCommand
         {
@@ -82,7 +112,20 @@ namespace ZuegerAdressbook.ViewModels
                 _saveCommand = value;
             }
         }
-        
+
+        public RelayCommand DeleteCommand
+        {
+            get
+            {
+                _deleteCommand = new RelayCommand(DeleteSelectedPerson, CanDeleteSelectedPerson);
+                return _deleteCommand;
+            }
+            set
+            {
+                _deleteCommand = value;
+            }
+        }
+
         public MainViewModel()
         {
             var listOfPersons = new List<Person>();
@@ -113,30 +156,41 @@ namespace ZuegerAdressbook.ViewModels
                     Birthdate = new DateTime(1991, 02, 11)
                 });
 
+            listOfPersons.ForEach(person => person.AcceptChanges());
+
 
             Persons = new ObservableCollection<Person>(listOfPersons.OrderBy(t => t.Lastname).ThenBy(t => t.Firstname));
 
             SelectedListPerson = Persons.First();
         }
 
-        private void NewPerson()
+        private void CreateNewPerson()
         {
             SelectedDetailedPerson = new Person();
         }
 
+        private bool CanSaveSelectedPerson()
+        {
+            return SelectedDetailedPerson != null;
+        }
+
         private void SaveSelectedPerson()
         {
-            if (SelectedDetailedPerson != null && SelectedDetailedPerson.Id.IsNullOrEmpty())
+            if (IsNewModeActive)
             {
                 SelectedDetailedPerson.Id = Person.GenerateId();
 
                 AddPerson(SelectedDetailedPerson);
                 SelectedListPerson = SelectedDetailedPerson;
+
+                // TODO: save new person
             }
             else
             {
-                // save existing person
+                // TODO: save existing person
             }
+
+            SelectedDetailedPerson?.AcceptChanges();
         }
 
         private void AddPerson(Person person)
@@ -144,17 +198,40 @@ namespace ZuegerAdressbook.ViewModels
             Persons.Add(person);
         }
 
-        public void ChangeSelectedDetailedPerson()
+        private bool CanDeleteSelectedPerson()
         {
-            if (CanChangeSelectedDetailedPerson())
+            return SelectedListPerson != null && !IsNewModeActive;
+        }
+
+        private void DeleteSelectedPerson()
+        {
+            if (MessageDialogService.OpenConfirmationDialog("Löschen", $"Wollen Sie '{SelectedDetailedPerson.Firstname} {SelectedDetailedPerson.Lastname}' wirklich löschen?"))
             {
-                SelectedDetailedPerson = SelectedListPerson;
+                Persons.Remove(SelectedDetailedPerson);
+                SelectedDetailedPerson = Persons.FirstOrDefault();
+                SelectedListPerson = Persons.FirstOrDefault();
+
+                // TODO: delete person
             }
         }
 
-        private bool CanChangeSelectedDetailedPerson()
+        public bool ChangeSelectedDetailedPerson()
         {
-            return SelectedDetailedPerson == null || !SelectedDetailedPerson.Id.IsNullOrEmpty();
+            var canChangeSelectedDetaiedPerson = true;
+
+            if (IsNewModeActive || (SelectedDetailedPerson != null && SelectedDetailedPerson.IsChanged))
+            {
+                canChangeSelectedDetaiedPerson = MessageDialogService.OpenConfirmationDialog("Änderungen verwerfen", "Wollen Sie die Änderungen verwerfen?");
+            }
+
+            if (canChangeSelectedDetaiedPerson)
+            {
+                // TODO: reload person
+                SelectedDetailedPerson?.AcceptChanges();
+                SelectedDetailedPerson = SelectedListPerson;
+            }
+
+            return canChangeSelectedDetaiedPerson;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

@@ -2,46 +2,311 @@
 
 namespace ZuegerAdressbook.Model
 {
-    public enum Gender
+    public class Person : BaseModel
     {
-        Male,
+        private string _id;
 
-        Female
-    }
+        private string _firstname;
 
-    public class Person
-    {
-        public string Id { get; set; }
+        private string _lastname;
 
-        public string Firstname { get; set; }
+        private Gender _gender;
 
-        public string Lastname { get; set; }
+        private string _title;
 
-        public Gender Gender { get; set; }
+        private string _street1;
 
-        public string Title { get; set; }
+        private string _street2;
 
-        public string Street1 { get; set; }
+        private string _city;
 
-        public string Street2 { get; set; }
+        private string _plz;
 
-        public string City { get; set; }
+        private DateTime? _birthdate;
 
-        public string Plz { get; set; }
+        private string _emailAddress;
 
-        public DateTime? Birthdate { get; set; }
+        private string _phoneNumber;
 
-        public string EmailAddress { get; set; }
+        private string _mobileNumber;
 
-        public string PhoneNumber { get; set; }
+        private bool _hasGeneralAbo;
 
-        public string MobileNumber { get; set; }
+        private bool _hasHalbtax;
 
-        public bool HasGeneralAbo { get; set; }
+        private string _notes;
 
-        public bool HasHalbtax { get; set; }
+        public string Id
+        {
+            get
+            {
+                return _id;
+            }
+            set
+            {
+                if (value == _id)
+                {
+                    return;
+                }
+                _id = value;
+                OnPropertyChanged();
+            }
+        }
 
-        public string Notes { get; set; }
+        public string Firstname
+        {
+            get
+            {
+                return _firstname;
+            }
+            set
+            {
+                if (value == _firstname)
+                {
+                    return;
+                }
+                _firstname = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string Lastname
+        {
+            get
+            {
+                return _lastname;
+            }
+            set
+            {
+                if (value == _lastname)
+                {
+                    return;
+                }
+                _lastname = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public Gender Gender
+        {
+            get
+            {
+                return _gender;
+            }
+            set
+            {
+                if (value == _gender)
+                {
+                    return;
+                }
+                _gender = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string Title
+        {
+            get
+            {
+                return _title;
+            }
+            set
+            {
+                if (value == _title)
+                {
+                    return;
+                }
+                _title = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string Street1
+        {
+            get
+            {
+                return _street1;
+            }
+            set
+            {
+                if (value == _street1)
+                {
+                    return;
+                }
+                _street1 = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string Street2
+        {
+            get
+            {
+                return _street2;
+            }
+            set
+            {
+                if (value == _street2)
+                {
+                    return;
+                }
+                _street2 = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string City
+        {
+            get
+            {
+                return _city;
+            }
+            set
+            {
+                if (value == _city)
+                {
+                    return;
+                }
+                _city = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string Plz
+        {
+            get
+            {
+                return _plz;
+            }
+            set
+            {
+                if (value == _plz)
+                {
+                    return;
+                }
+                _plz = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public DateTime? Birthdate
+        {
+            get
+            {
+                return _birthdate;
+            }
+            set
+            {
+                if (value.Equals(_birthdate))
+                {
+                    return;
+                }
+                _birthdate = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string EmailAddress
+        {
+            get
+            {
+                return _emailAddress;
+            }
+            set
+            {
+                if (value == _emailAddress)
+                {
+                    return;
+                }
+                _emailAddress = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string PhoneNumber
+        {
+            get
+            {
+                return _phoneNumber;
+            }
+            set
+            {
+                if (value == _phoneNumber)
+                {
+                    return;
+                }
+                _phoneNumber = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string MobileNumber
+        {
+            get
+            {
+                return _mobileNumber;
+            }
+            set
+            {
+                if (value == _mobileNumber)
+                {
+                    return;
+                }
+                _mobileNumber = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public bool HasGeneralAbo
+        {
+            get
+            {
+                return _hasGeneralAbo;
+            }
+            set
+            {
+                if (value == _hasGeneralAbo)
+                {
+                    return;
+                }
+                _hasGeneralAbo = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public bool HasHalbtax
+        {
+            get
+            {
+                return _hasHalbtax;
+            }
+            set
+            {
+                if (value == _hasHalbtax)
+                {
+                    return;
+                }
+                _hasHalbtax = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string Notes
+        {
+            get
+            {
+                return _notes;
+            }
+            set
+            {
+                if (value == _notes)
+                {
+                    return;
+                }
+                _notes = value;
+                OnPropertyChanged();
+            }
+        }
 
         public static string GenerateId()
         {

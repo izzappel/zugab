@@ -56,7 +56,10 @@
     <Compile Include="Commands\RelayCommand.cs" />
     <Compile Include="Converters\EnumBooleanConverter.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
+    <Compile Include="Model\BaseModel.cs" />
+    <Compile Include="Model\Gender.cs" />
     <Compile Include="Properties\Annotations.cs" />
+    <Compile Include="Service\MessageDialogService.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>

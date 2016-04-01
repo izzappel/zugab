@@ -20,9 +20,10 @@ namespace ZuegerAdressbook
             DataContext = _viewModel;
         }
 
-        private void Selector_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            _viewModel.ChangeSelectedDetailedPerson();
-        }
+        //private void Selector_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+        //{
+        //    _viewModel.ChangeSelectedDetailedPerson();
+            
+        //}
     }
 }

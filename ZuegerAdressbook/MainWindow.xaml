@@ -16,7 +16,7 @@
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
-            <RowDefinition Height="50"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <ToolBarTray Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3">
@@ -28,6 +28,7 @@
                     </StackPanel>
                 </Button>
                 <Button Command="{Binding SaveCommand}" Content="Speichern"></Button>
+                <Button Command="{Binding DeleteCommand}" Content="Löschen"></Button>
             </ToolBar>
         </ToolBarTray>
 
@@ -61,9 +62,9 @@
             </StackPanel>
 
             <Label Grid.Column="0" Grid.Row="1" Content="Nachname"/>
-            <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding Lastname}"/>
+            <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding Lastname, UpdateSourceTrigger=PropertyChanged}"/>
             <Label Grid.Column="2" Grid.Row="1" Content="Vorname"/>
-            <TextBox Grid.Column="3" Grid.Row="1" Text="{Binding Firstname}"/>
+            <TextBox Grid.Column="3" Grid.Row="1" Text="{Binding Firstname, UpdateSourceTrigger=PropertyChanged}"/>
 
             <Label Grid.Column="0" Grid.Row="2">Strasse / Nr.</Label>
             <TextBox Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="3" Text="{Binding Street1}"></TextBox>
@@ -89,7 +90,7 @@
         </Grid>
         <GridSplitter Grid.Column="1" Grid.Row="1" Width="5" HorizontalAlignment="Stretch" />
         <Grid Grid.Column="2" Grid.Row="1">
-            <ListBox ItemsSource="{Binding Persons}" SelectedItem="{Binding SelectedListPerson}" SelectionChanged="Selector_OnSelectionChanged">
+            <ListBox ItemsSource="{Binding Persons}" SelectedItem="{Binding SelectedListPerson}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock >

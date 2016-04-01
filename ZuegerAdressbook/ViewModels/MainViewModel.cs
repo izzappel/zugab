@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
@@ -6,27 +7,47 @@ using System.Runtime.CompilerServices;
 
 using ZuegerAdressbook.Annotations;
 using ZuegerAdressbook.Commands;
+using ZuegerAdressbook.Extensions;
 using ZuegerAdressbook.Model;
 
 namespace ZuegerAdressbook.ViewModels
 {
     public class MainViewModel : INotifyPropertyChanged
     {
-        private Person _selectedPerson;
+        private Person _selectedListPerson;
 
-        public Person SelectedPerson
+        public Person SelectedListPerson
         {
             get
             {
-                return _selectedPerson;
+                return _selectedListPerson;
             }
             set
             {
-                if (Equals(value, _selectedPerson))
+                if (Equals(value, _selectedListPerson))
                 {
                     return;
                 }
-                _selectedPerson = value;
+                _selectedListPerson = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private Person _selectedDetailedPerson;
+
+        public Person SelectedDetailedPerson
+        {
+            get
+            {
+                return _selectedDetailedPerson;
+            }
+            set
+            {
+                if (Equals(value, _selectedDetailedPerson))
+                {
+                    return;
+                }
+                _selectedDetailedPerson = value;
                 OnPropertyChanged();
             }
         }
@@ -47,13 +68,28 @@ namespace ZuegerAdressbook.ViewModels
             }
         }
 
+        private RelayCommand _saveCommand;
+
+        public RelayCommand SaveCommand
+        {
+            get
+            {
+                _saveCommand = new RelayCommand(SaveSelectedPerson);
+                return _saveCommand;
+            }
+            set
+            {
+                _saveCommand = value;
+            }
+        }
+        
         public MainViewModel()
         {
-            Persons = new ObservableCollection<Person>();
-            Persons.Add(
+            var listOfPersons = new List<Person>();
+            listOfPersons.Add(
                 new Person
                 {
-                    Id = 1,
+                    Id = Person.GenerateId(),
                     Gender = Gender.Female,
                     Firstname = "Isabel",
                     Lastname = "Züger",
@@ -64,13 +100,61 @@ namespace ZuegerAdressbook.ViewModels
                     Birthdate = new DateTime(1990, 10, 24),
                     EmailAddress = "isabel.zueger@gmail.com"
                 });
+            listOfPersons.Add(
+                new Person
+                {
+                    Id = Person.GenerateId(),
+                    Gender = Gender.Male,
+                    Firstname = "David",
+                    Lastname = "Boos",
+                    Street1 = "Neuwiesenstrasse 10",
+                    City = "Sirnach",
+                    Plz = "8370",
+                    Birthdate = new DateTime(1991, 02, 11)
+                });
 
-            SelectedPerson = Persons.First();
+
+            Persons = new ObservableCollection<Person>(listOfPersons.OrderBy(t => t.Lastname).ThenBy(t => t.Firstname));
+
+            SelectedListPerson = Persons.First();
         }
 
         private void NewPerson()
         {
-            SelectedPerson = null;
+            SelectedDetailedPerson = new Person();
+        }
+
+        private void SaveSelectedPerson()
+        {
+            if (SelectedDetailedPerson != null && SelectedDetailedPerson.Id.IsNullOrEmpty())
+            {
+                SelectedDetailedPerson.Id = Person.GenerateId();
+
+                AddPerson(SelectedDetailedPerson);
+                SelectedListPerson = SelectedDetailedPerson;
+            }
+            else
+            {
+                // save existing person
+            }
+        }
+
+        private void AddPerson(Person person)
+        {
+            Persons.Add(person);
+        }
+
+        public void ChangeSelectedDetailedPerson()
+        {
+            if (CanChangeSelectedDetailedPerson())
+            {
+                SelectedDetailedPerson = SelectedListPerson;
+            }
+        }
+
+        private bool CanChangeSelectedDetailedPerson()
+        {
+            return SelectedDetailedPerson == null || !SelectedDetailedPerson.Id.IsNullOrEmpty();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

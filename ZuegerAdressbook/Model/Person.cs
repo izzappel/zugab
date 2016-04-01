@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ZuegerAdressbook.Model
 {
@@ -15,7 +11,7 @@ namespace ZuegerAdressbook.Model
 
     public class Person
     {
-        public long Id { get; set; }
+        public string Id { get; set; }
 
         public string Firstname { get; set; }
 
@@ -46,5 +42,10 @@ namespace ZuegerAdressbook.Model
         public bool HasHalbtax { get; set; }
 
         public string Notes { get; set; }
+
+        public static string GenerateId()
+        {
+            return Guid.NewGuid().ToString();
+        }
     }
 }

@@ -21,5 +21,11 @@ namespace ZuegerAdressbook
             _viewModel = new MainViewModel();
             DataContext = _viewModel;
         }
+
+        private void BirthdateButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            var dialog = new BirthdateDialog();
+            dialog.ShowDialog();
+        }
     }
 }

@@ -36,6 +36,10 @@ namespace ZuegerAdressbook.Model
 
         private string _notes;
 
+        private string _nameOnPassport;
+
+        private string _passportNumber;
+
         public string Id
         {
             get
@@ -304,6 +308,40 @@ namespace ZuegerAdressbook.Model
                     return;
                 }
                 _notes = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string NameOnPassport
+        {
+            get
+            {
+                return _nameOnPassport;
+            }
+            set
+            {
+                if (value == _nameOnPassport)
+                {
+                    return;
+                }
+                _nameOnPassport = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string PassportNumber
+        {
+            get
+            {
+                return _passportNumber;
+            }
+            set
+            {
+                if (value == _passportNumber)
+                {
+                    return;
+                }
+                _passportNumber = value;
                 OnPropertyChanged();
             }
         }

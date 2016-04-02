@@ -166,7 +166,19 @@ namespace ZuegerAdressbook.ViewModels
 
         private void CreateNewPerson()
         {
-            SelectedDetailedPerson = new Person();
+            var canChangeSelectedDetaiedPerson = true;
+
+            if (SelectedDetailedPerson != null && SelectedDetailedPerson.IsChanged)
+            {
+                canChangeSelectedDetaiedPerson = MessageDialogService.OpenConfirmationDialog("Änderungen verwerfen", "Wollen Sie die Änderungen verwerfen?");
+            }
+
+            if (canChangeSelectedDetaiedPerson)
+            {
+                // TODO: reload person
+                SelectedDetailedPerson?.AcceptChanges();
+                SelectedDetailedPerson = new Person();
+            }
         }
 
         private bool CanSaveSelectedPerson()
@@ -179,6 +191,7 @@ namespace ZuegerAdressbook.ViewModels
             if (IsNewModeActive)
             {
                 SelectedDetailedPerson.Id = Person.GenerateId();
+                SelectedDetailedPerson?.AcceptChanges();
 
                 AddPerson(SelectedDetailedPerson);
                 SelectedListPerson = SelectedDetailedPerson;

@@ -53,6 +53,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="BirthdateDialog.xaml.cs">
+      <DependentUpon>BirthdateDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Commands\RelayCommand.cs" />
     <Compile Include="Converters\EnumBooleanConverter.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
@@ -61,6 +64,10 @@
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Service\MessageDialogService.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
+    <Page Include="BirthdateDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -117,16 +124,178 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Icons\user.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Icons\floppy.png" />
-    <Resource Include="Icons\sign-add.png" />
-    <Resource Include="Icons\sign-error.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Icons\user-group.png" />
     <Resource Include="Icons\user-id.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\48\address-book-alt.png" />
+    <Resource Include="Icons\48\address-book.png" />
+    <Resource Include="Icons\48\bag.png" />
+    <Resource Include="Icons\48\basket.png" />
+    <Resource Include="Icons\48\beer.png" />
+    <Resource Include="Icons\48\bell.png" />
+    <Resource Include="Icons\48\bitcoin.png" />
+    <Resource Include="Icons\48\book-bookmark.png" />
+    <Resource Include="Icons\48\book.png" />
+    <Resource Include="Icons\48\box-full.png" />
+    <Resource Include="Icons\48\box-in.png" />
+    <Resource Include="Icons\48\box-out.png" />
+    <Resource Include="Icons\48\box.png" />
+    <Resource Include="Icons\48\brick-alt.png" />
+    <Resource Include="Icons\48\brick.png" />
+    <Resource Include="Icons\48\bubble.png" />
+    <Resource Include="Icons\48\bubbles-alt.png" />
+    <Resource Include="Icons\48\bubbles.png" />
+    <Resource Include="Icons\48\building.png" />
+    <Resource Include="Icons\48\bullhorn.png" />
+    <Resource Include="Icons\48\calculator.png" />
+    <Resource Include="Icons\48\calendar-clock.png" />
+    <Resource Include="Icons\48\calendar.png" />
+    <Resource Include="Icons\48\carton.png" />
+    <Resource Include="Icons\48\cat.png" />
+    <Resource Include="Icons\48\clock.png" />
+    <Resource Include="Icons\48\cloud-down.png" />
+    <Resource Include="Icons\48\cloud-sync.png" />
+    <Resource Include="Icons\48\cloud-up.png" />
+    <Resource Include="Icons\48\cloud.png" />
+    <Resource Include="Icons\48\cog.png" />
+    <Resource Include="Icons\48\cogs.png" />
+    <Resource Include="Icons\48\compass.png" />
+    <Resource Include="Icons\48\cone.png" />
+    <Resource Include="Icons\48\dashboard-alt.png" />
+    <Resource Include="Icons\48\dashboard.png" />
+    <Resource Include="Icons\48\database.png" />
+    <Resource Include="Icons\48\device-camera.png" />
+    <Resource Include="Icons\48\device-computer.png" />
+    <Resource Include="Icons\48\device-drive.png" />
+    <Resource Include="Icons\48\device-laptop.png" />
+    <Resource Include="Icons\48\device-mobile-phone.png" />
+    <Resource Include="Icons\48\device-tablet.png" />
+    <Resource Include="Icons\48\device-tv.png" />
+    <Resource Include="Icons\48\disc-vinyl.png" />
+    <Resource Include="Icons\48\disc.png" />
+    <Resource Include="Icons\48\drop.png" />
+    <Resource Include="Icons\48\envelope-letter.png" />
+    <Resource Include="Icons\48\envelope.png" />
+    <Resource Include="Icons\48\file-bookmark.png" />
+    <Resource Include="Icons\48\file-code.png" />
+    <Resource Include="Icons\48\file-empty.png" />
+    <Resource Include="Icons\48\file-excel.png" />
+    <Resource Include="Icons\48\file-exe.png" />
+    <Resource Include="Icons\48\file-font.png" />
+    <Resource Include="Icons\48\file-illustrator.png" />
+    <Resource Include="Icons\48\file-indesign.png" />
+    <Resource Include="Icons\48\file-link.png" />
+    <Resource Include="Icons\48\file-note.png" />
+    <Resource Include="Icons\48\file-pdf.png" />
+    <Resource Include="Icons\48\file-photoshop.png" />
+    <Resource Include="Icons\48\file-picture.png" />
+    <Resource Include="Icons\48\file-powerpoint.png" />
+    <Resource Include="Icons\48\file-premiere.png" />
+    <Resource Include="Icons\48\file-sound.png" />
+    <Resource Include="Icons\48\file-text.png" />
+    <Resource Include="Icons\48\file-video.png" />
+    <Resource Include="Icons\48\file-word.png" />
+    <Resource Include="Icons\48\file-zip.png" />
+    <Resource Include="Icons\48\flag-alt.png" />
+    <Resource Include="Icons\48\flag.png" />
+    <Resource Include="Icons\48\flask.png" />
+    <Resource Include="Icons\48\floppy.png" />
+    <Resource Include="Icons\48\flower.png" />
+    <Resource Include="Icons\48\folder-document.png" />
+    <Resource Include="Icons\48\folder-house.png" />
+    <Resource Include="Icons\48\folder-music.png" />
+    <Resource Include="Icons\48\folder-picture.png" />
+    <Resource Include="Icons\48\folder-video.png" />
+    <Resource Include="Icons\48\folder.png" />
+    <Resource Include="Icons\48\funnel.png" />
+    <Resource Include="Icons\48\gamepad.png" />
+    <Resource Include="Icons\48\gift.png" />
+    <Resource Include="Icons\48\globe.png" />
+    <Resource Include="Icons\48\handshake.png" />
+    <Resource Include="Icons\48\headphone.png" />
+    <Resource Include="Icons\48\heart.png" />
+    <Resource Include="Icons\48\house.png" />
+    <Resource Include="Icons\48\institution.png" />
+    <Resource Include="Icons\48\key.png" />
+    <Resource Include="Icons\48\keyring.png" />
+    <Resource Include="Icons\48\layers.png" />
+    <Resource Include="Icons\48\life-buoy.png" />
+    <Resource Include="Icons\48\light-bulb.png" />
+    <Resource Include="Icons\48\lightning.png" />
+    <Resource Include="Icons\48\lock-open.png" />
+    <Resource Include="Icons\48\lock.png" />
+    <Resource Include="Icons\48\magnify-less.png" />
+    <Resource Include="Icons\48\magnify.png" />
+    <Resource Include="Icons\48\map-map-marker.png" />
+    <Resource Include="Icons\48\map-marker.png" />
+    <Resource Include="Icons\48\map.png" />
+    <Resource Include="Icons\48\microphone.png" />
+    <Resource Include="Icons\48\mixer.png" />
+    <Resource Include="Icons\48\money.png" />
+    <Resource Include="Icons\48\monitor.png" />
+    <Resource Include="Icons\48\news.png" />
+    <Resource Include="Icons\48\notepad.png" />
+    <Resource Include="Icons\48\paper-plane.png" />
+    <Resource Include="Icons\48\paperclip.png" />
+    <Resource Include="Icons\48\pencil.png" />
+    <Resource Include="Icons\48\phone.png" />
+    <Resource Include="Icons\48\pin.png" />
+    <Resource Include="Icons\48\post-it.png" />
+    <Resource Include="Icons\48\profile-group.png" />
+    <Resource Include="Icons\48\profile.png" />
+    <Resource Include="Icons\48\puzzle.png" />
+    <Resource Include="Icons\48\radio.png" />
+    <Resource Include="Icons\48\rss.png" />
+    <Resource Include="Icons\48\safe.png" />
+    <Resource Include="Icons\48\search.png" />
+    <Resource Include="Icons\48\shield-error.png" />
+    <Resource Include="Icons\48\shield-ok.png" />
+    <Resource Include="Icons\48\shield-warning.png" />
+    <Resource Include="Icons\48\shield.png" />
+    <Resource Include="Icons\48\shop.png" />
+    <Resource Include="Icons\48\sign-add.png" />
+    <Resource Include="Icons\48\sign-ban.png" />
+    <Resource Include="Icons\48\sign-check.png" />
+    <Resource Include="Icons\48\sign-delete.png" />
+    <Resource Include="Icons\48\sign-down.png" />
+    <Resource Include="Icons\48\sign-error.png" />
+    <Resource Include="Icons\48\sign-info.png" />
+    <Resource Include="Icons\48\sign-left.png" />
+    <Resource Include="Icons\48\sign-question.png" />
+    <Resource Include="Icons\48\sign-right.png" />
+    <Resource Include="Icons\48\sign-sync.png" />
+    <Resource Include="Icons\48\sign-up.png" />
+    <Resource Include="Icons\48\sign-warning.png" />
+    <Resource Include="Icons\48\skull.png" />
+    <Resource Include="Icons\48\snow-flake.png" />
+    <Resource Include="Icons\48\social-facebook.png" />
+    <Resource Include="Icons\48\social-google-plus.png" />
+    <Resource Include="Icons\48\social-twitter.png" />
+    <Resource Include="Icons\48\social-youtube.png" />
+    <Resource Include="Icons\48\stamp.png" />
+    <Resource Include="Icons\48\star-alt.png" />
+    <Resource Include="Icons\48\star.png" />
+    <Resource Include="Icons\48\sun.png" />
+    <Resource Include="Icons\48\switch-off.png" />
+    <Resource Include="Icons\48\switch-on.png" />
+    <Resource Include="Icons\48\tag-alt.png" />
+    <Resource Include="Icons\48\tag.png" />
+    <Resource Include="Icons\48\terminal.png" />
+    <Resource Include="Icons\48\thumb-up.png" />
+    <Resource Include="Icons\48\trashcan-full.png" />
+    <Resource Include="Icons\48\trashcan.png" />
+    <Resource Include="Icons\48\user-female-alt.png" />
+    <Resource Include="Icons\48\user-female.png" />
+    <Resource Include="Icons\48\user-id.png" />
+    <Resource Include="Icons\48\user-male-alt.png" />
+    <Resource Include="Icons\48\user-male.png" />
+    <Resource Include="Icons\48\webcam.png" />
+    <Resource Include="Icons\48\window-layout.png" />
+    <Resource Include="Icons\48\window-system.png" />
+    <Resource Include="Icons\48\window.png" />
+    <Resource Include="Icons\48\wine.png" />
+    <Resource Include="Icons\48\wrench-screwdriver.png" />
+    <Resource Include="Icons\48\wrench.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

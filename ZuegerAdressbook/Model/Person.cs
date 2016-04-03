@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Raven.Imports.Newtonsoft.Json;
+using System;
 
 namespace ZuegerAdressbook.Model
 {
@@ -42,6 +43,12 @@ namespace ZuegerAdressbook.Model
         public bool HasHalbtax { get; set; }
 
         public string Notes { get; set; }
+
+		[JsonIgnore]
+		public string FullName 
+		{
+			get { return (this.Firstname + " " + this.Lastname).Trim(); }
+		}
 
         public static string GenerateId()
         {

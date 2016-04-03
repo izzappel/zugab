@@ -63,6 +63,7 @@
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Model\BaseModel.cs" />
     <Compile Include="Model\Gender.cs" />
+    <Compile Include="Model\Relationship.cs" />
     <Compile Include="Model\RelationshipType.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Service\MessageDialogService.cs" />

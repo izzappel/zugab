@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 
 namespace ZuegerAdressbook.Model
@@ -52,6 +55,13 @@ namespace ZuegerAdressbook.Model
         private string _nameOnPassport;
 
         private string _passportNumber;
+
+        private IList<string> _documents;
+
+        public Person()
+        {
+            _documents = new List<string>();
+        }
 
         public string Id
         {
@@ -477,6 +487,21 @@ namespace ZuegerAdressbook.Model
                 }
 
                 return Age <= 16;
+            }
+        }
+
+        public IList<string> Documents
+        {
+            get
+            {
+                return _documents;
+            }
+
+            set
+            {
+                if (Equals(value, _documents)) return;
+                _documents = value;
+                OnPropertyChanged();
             }
         }
 

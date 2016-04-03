@@ -15,11 +15,11 @@
             <Setter Property="FontSize" Value="20"></Setter>
             <Setter Property="VerticalAlignment" Value="Center" />
         </Style>
-        
+
         <Style TargetType="{x:Type TextBox}">
             <Setter Property="VerticalContentAlignment" Value="Center" />
             <Setter Property="BorderThickness" Value="0,0,0,1"></Setter>
-            <Setter Property="Background" Value="#FFEFEFEF"></Setter>
+            <Setter Property="Background" Value="#FFF4F4F4"></Setter>
             <Setter Property="FontFamily" Value="fonts/#Frutiger LT Com 55 Roman"></Setter>
         </Style>
         <Style TargetType="{x:Type DatePicker}">
@@ -93,6 +93,12 @@
             <TabControl.Resources>
                 <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
                     <Setter Property="Margin" Value="5,0,0,0"></Setter>
+                </Style>
+                <Style x:Key="MultilineTextBox" TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
+                    <Setter Property="VerticalContentAlignment" Value="Top"></Setter>
+                    <Setter Property="AcceptsReturn" Value="True"></Setter>
+                    <Setter Property="TextWrapping" Value="Wrap"></Setter>
+                    <Setter Property="VerticalScrollBarVisibility" Value="Auto"></Setter>
                 </Style>
                 <Style x:Key="TopLabel" TargetType="{x:Type Label}" BasedOn="{StaticResource {x:Type Label}}">
                     <Setter Property="Margin" Value="0,5,0,0"></Setter>
@@ -244,7 +250,41 @@
                     <TextBox Grid.Column="2" Grid.Row="1" Text="{Binding PassportNumber}"></TextBox>
                 </Grid>
             </TabItem>
-            <TabItem Header="Dokumente und Notizen" Margin="0"></TabItem>
+            <TabItem Header="Dokumente und Notizen" Margin="0">
+                <Grid DataContext="{Binding SelectedDetailedPerson}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="100"/>
+                        <RowDefinition Height="10"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <Label Grid.Column="0" Grid.Row="0">Notizen</Label>
+                    <TextBox Grid.Column="0" Grid.Row="1" Text="{Binding Notes}" Style="{StaticResource MultilineTextBox}"></TextBox>
+
+                    <DockPanel Grid.Column="0" Grid.Row="3" LastChildFill="False" >
+                        <Label Style="{StaticResource TopLabel}" DockPanel.Dock="Left">Dokumente</Label>
+                        <Button Background="#FFEFEFEF" DockPanel.Dock="Right" Width="30" Height="30" Command="{Binding AddDocumentCommand}">
+                            <TextBlock Style="{StaticResource FontAwesomeIcon}" Margin="5">&#xf067;</TextBlock>
+                        </Button>
+                    </DockPanel>
+
+                    <ListView Grid.Column="0" Grid.Row="4" ItemsSource="{Binding Documents}" BorderThickness="0">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <DockPanel>
+                                    <TextBlock Style="{StaticResource FontAwesomeIcon}" Margin="0,0,5,0">&#xf0c6;</TextBlock>
+                                    <TextBlock Text="{Binding}" VerticalAlignment="Center"></TextBlock>
+                                </DockPanel>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </Grid>
+            </TabItem>
         </TabControl>
         <GridSplitter Grid.Column="1" Grid.Row="1" Width="5" HorizontalAlignment="Stretch" />
         <Grid Grid.Column="2" Grid.Row="1">

@@ -27,5 +27,17 @@ namespace ZuegerAdressbook
             var dialog = new BirthdateDialog();
             dialog.ShowDialog();
         }
+
+        private void AddDocumentButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            Microsoft.Win32.OpenFileDialog fileDialog = new Microsoft.Win32.OpenFileDialog();
+
+            var result = fileDialog.ShowDialog();
+            if (result == true)
+            {
+                // Open document 
+                string filename = fileDialog.FileName;
+            }
+        }
     }
 }

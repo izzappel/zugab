@@ -29,6 +29,8 @@ namespace ZuegerAdressbook.ViewModels
 
         private RelayCommand _deleteCommand;
 
+        private RelayCommand _addDocumentCommand;
+
         public Person SelectedListPerson
         {
             get
@@ -126,6 +128,19 @@ namespace ZuegerAdressbook.ViewModels
             }
         }
 
+        public RelayCommand AddDocumentCommand
+        {
+            get
+            {
+                _addDocumentCommand = new RelayCommand(AddDocument);
+                return _addDocumentCommand;
+            }
+            set
+            {
+                _addDocumentCommand = value;
+            }
+        }
+
         public MainViewModel()
         {
             var listOfPersons = new List<Person>();
@@ -141,7 +156,12 @@ namespace ZuegerAdressbook.ViewModels
                     Plz = "8404",
                     MobileNumber = "+41764767838",
                     Birthdate = new DateTime(1990, 10, 24),
-                    EmailAddress = "isabel.zueger@gmail.com"
+                    EmailAddress = "isabel.zueger@gmail.com",
+                    Documents = new List<string>
+                                {
+                                    "C:\\temp\\datei.txt",
+                                    "C:\\temp\\andereDatei.txt"
+                                }
                 });
             listOfPersons.Add(
                 new Person
@@ -225,6 +245,19 @@ namespace ZuegerAdressbook.ViewModels
                 SelectedListPerson = Persons.FirstOrDefault();
 
                 // TODO: delete person
+            }
+        }
+
+        private void AddDocument()
+        {
+            if (SelectedDetailedPerson != null)
+            {
+                var filename = MessageDialogService.OpenFileDialog();
+                if (filename.IsNullOrEmpty() == false)
+                {
+                    SelectedDetailedPerson.Documents.Add(filename);
+                    
+                }
             }
         }
 

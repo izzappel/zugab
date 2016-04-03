@@ -3,18 +3,36 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" x:Class="ZuegerAdressbook.MainWindow"
         Title="Züger Reisen - Adressbuch" d:DesignWidth="1133.582"
-    xmlns:converter="clr-namespace:ZuegerAdressbook.Converters" Icon="Icons/48/address-book.png">
+    xmlns:zugab="clr-namespace:ZuegerAdressbook"
+    xmlns:converter="clr-namespace:ZuegerAdressbook.Converters" Icon="Icons/48/address-book.png" d:DesignHeight="1093.225">
     <Window.Resources>
         <converter:EnumBooleanConverter x:Key="enumBooleanConverter" />
+        <converter:BooleanVisibilityConverter x:Key="booleanVisibilityConverter"/>
+        <converter:EnumVisibilityConverter x:Key="enumVisibilityConverter"/>
+
+        <Style TargetType="{x:Type TextBlock}" x:Key="FontAwesomeIcon">
+            <Setter Property="FontFamily" Value="fonts/#FontAwesome"></Setter>
+            <Setter Property="FontSize" Value="20"></Setter>
+            <Setter Property="VerticalAlignment" Value="Center" />
+        </Style>
+        
         <Style TargetType="{x:Type TextBox}">
             <Setter Property="VerticalContentAlignment" Value="Center" />
-            <!--<Setter Property="BorderThickness" Value="0,0,0,1"></Setter>-->
+            <Setter Property="BorderThickness" Value="0,0,0,1"></Setter>
+            <Setter Property="Background" Value="#FFEFEFEF"></Setter>
+            <Setter Property="FontFamily" Value="fonts/#Frutiger LT Com 55 Roman"></Setter>
+        </Style>
+        <Style TargetType="{x:Type DatePicker}">
+            <Setter Property="BorderThickness" Value="0,0,0,1"></Setter>
+            <Setter Property="FontFamily" Value="fonts/#Frutiger LT Com 55 Roman"></Setter>
         </Style>
         <Style TargetType="{x:Type TextBlock}">
             <Setter Property="VerticalAlignment" Value="Center" />
         </Style>
         <Style TargetType="{x:Type Label}">
             <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="HorizontalAlignment" Value="Left" />
+            <Setter Property="HorizontalContentAlignment" Value="Left" />
         </Style>
         <Style TargetType="{x:Type CheckBox}">
             <Setter Property="VerticalContentAlignment" Value="Center" />
@@ -27,7 +45,7 @@
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1.5*"/>
-            <ColumnDefinition Width="5" />
+            <ColumnDefinition Width="10" />
             <ColumnDefinition Width="1.5*"/>
         </Grid.ColumnDefinitions>
 
@@ -71,89 +89,163 @@
             </ToolBar>
         </ToolBarTray>
 
-        <Grid Grid.Column="0" Grid.Row="1" Margin="4" DataContext="{Binding SelectedDetailedPerson}">
-            <Grid.Resources>
+        <TabControl Grid.Column="0" Grid.Row="1" BorderThickness="0,1,1,1">
+            <TabControl.Resources>
                 <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
-                    <Setter Property="Height" Value="25" />
-                    <Setter Property="FontFamily" Value="fonts/#Frutiger LT Com 55 Roman"></Setter>
+                    <Setter Property="Margin" Value="5,0,0,0"></Setter>
                 </Style>
-                <Style TargetType="{x:Type DatePicker}">
-                    <Setter Property="Height" Value="25"/>
+                <Style x:Key="TopLabel" TargetType="{x:Type Label}" BasedOn="{StaticResource {x:Type Label}}">
+                    <Setter Property="Margin" Value="0,5,0,0"></Setter>
+                </Style>
+                <Style TargetType="{x:Type DatePicker}" BasedOn="{StaticResource {x:Type DatePicker}}">
+                    <Setter Property="Margin" Value="5,0,0,0"></Setter>
                     <Setter Property="VerticalContentAlignment" Value="Center"></Setter>
                 </Style>
-            </Grid.Resources>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="15"/>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="40"/>
-                <RowDefinition Height="40"/>
-                <RowDefinition Height="40"/>
-                <RowDefinition Height="40"/>
-                <RowDefinition Height="40"/>
-                <RowDefinition Height="40"/>
-                <RowDefinition Height="40"/>
-                <RowDefinition Height="40"/>
-                <RowDefinition Height="40"/>
-                <RowDefinition Height="40"/>
-                <RowDefinition Height="40"/>
-                <RowDefinition Height="40"/>
-                <RowDefinition Height="40"/>
-            </Grid.RowDefinitions>
+                <Style TargetType="{x:Type RadioButton}">
+                    <Setter Property="VerticalContentAlignment" Value="Center"></Setter>
+                </Style>
+                <Style x:Key="SeparatorText" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource {x:Type TextBlock}}">
+                    <Setter Property="Margin" Value="5,0,5,0"></Setter>
+                    <Setter Property="Foreground" Value="#FF888888"></Setter>
+                </Style>
+                <Style TargetType="{x:Type TabItem}">
+                    <Setter Property="Height" Value="30"></Setter>
+                    <Setter Property="MinWidth" Value="70"></Setter>
+                    <Setter Property="Margin" Value="0"></Setter>
+                </Style>
+            </TabControl.Resources>
+            <TabItem Header="Kontakt" Margin="0">
+                <ScrollViewer Grid.Column="0" Grid.Row="1">
+                    <Grid Margin="4" DataContext="{Binding SelectedDetailedPerson}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="15"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="30"/>
+                        </Grid.RowDefinitions>
 
-            <Label Grid.Column="0" Grid.Row="0" Content="Anrede"/>
-            <StackPanel Grid.Column="1" Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Center">
-                <RadioButton Margin="0,0,20,0" IsChecked="{Binding Path=Gender, Converter={StaticResource enumBooleanConverter}, ConverterParameter=Male}">Herr</RadioButton>
-                <RadioButton IsChecked="{Binding Path=Gender, Converter={StaticResource enumBooleanConverter}, ConverterParameter=Female}">Frau</RadioButton>
-            </StackPanel>
+                        <StackPanel Grid.Column="0" Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Center">
+                            <Label Content="Anrede" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
+                            <RadioButton Margin="20,0,20,0" IsChecked="{Binding Path=Gender, Converter={StaticResource enumBooleanConverter}, ConverterParameter=Male}">Herr</RadioButton>
+                            <RadioButton IsChecked="{Binding Path=Gender, Converter={StaticResource enumBooleanConverter}, ConverterParameter=Female}">Frau</RadioButton>
+                        </StackPanel>
 
-            <Label Grid.Column="0" Grid.Row="1" Content="Nachname"/>
-            <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding Lastname, UpdateSourceTrigger=PropertyChanged}"/>
-            <Label Grid.Column="3" Grid.Row="1" Content="Vorname"/>
-            <TextBox Grid.Column="4" Grid.Row="1" Text="{Binding Firstname, UpdateSourceTrigger=PropertyChanged}"/>
+                        <TextBlock Grid.Column="2" Grid.Row="0" Style="{StaticResource FontAwesomeIcon}" Visibility="{Binding Path=Gender, Converter={StaticResource enumVisibilityConverter}, ConverterParameter=Female}">&#xf182;</TextBlock>
+                        <TextBlock Grid.Column="2" Grid.Row="0" Style="{StaticResource FontAwesomeIcon}" Visibility="{Binding Path=Gender, Converter={StaticResource enumVisibilityConverter}, ConverterParameter=Male}">&#xf183;</TextBlock>
 
-            <Label Grid.Column="0" Grid.Row="2">Geburtsdatum</Label>
-            <DatePicker Grid.Column="1" Grid.Row="2" SelectedDate="{Binding Birthdate}"></DatePicker>
+                        <Label Grid.Column="0" Grid.Row="1" Content="Nachname" Style="{StaticResource TopLabel}"/>
+                        <TextBox Grid.Column="0" Grid.Row="2" Text="{Binding Lastname, UpdateSourceTrigger=PropertyChanged}" Margin="5,0,0,0"/>
+                        <Label Grid.Column="2" Grid.Row="1" Content="Vorname" Style="{StaticResource TopLabel}"/>
+                        <TextBox Grid.Column="2" Grid.Row="2" Text="{Binding Firstname, UpdateSourceTrigger=PropertyChanged}"/>
 
-            <Label Grid.Column="0" Grid.Row="3">Strasse / Nr.</Label>
-            <TextBox Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="4" Text="{Binding Street1}"></TextBox>
+                        <Label Grid.Column="0" Grid.Row="3" Style="{StaticResource TopLabel}">Geburtsdatum</Label>
+                        <DatePicker Grid.Column="0" Grid.Row="4" SelectedDate="{Binding Birthdate}"></DatePicker>
+                        <StackPanel Grid.Column="2" Grid.Row="4" Orientation="Horizontal">
+                            <TextBlock Text="{Binding Age}" Margin="0,0,5,0"/>
+                            <TextBlock Text="Jahre" Margin="0,0,5,0"></TextBlock>
+                            <TextBlock Text="-" Margin="0,0,5,0" Visibility="{Binding Path=IsChild, Converter={StaticResource booleanVisibilityConverter}}"></TextBlock>
+                            <TextBlock Style="{StaticResource FontAwesomeIcon}" Visibility="{Binding Path=IsChild, Converter={StaticResource booleanVisibilityConverter}}">&#xf1ae;</TextBlock>
+                        </StackPanel>
 
-            <Label Grid.Column="0" Grid.Row="4">Strasse 2</Label>
-            <TextBox Grid.Column="1" Grid.Row="4" Grid.ColumnSpan="4" Text="{Binding Street2}"></TextBox>
+                        <Label Grid.Column="0" Grid.Row="5" Style="{StaticResource TopLabel}">Strasse / Nr.</Label>
+                        <TextBox Grid.Column="0" Grid.Row="6" Grid.ColumnSpan="5" Text="{Binding Street1}"></TextBox>
 
-            <Label Grid.Column="0" Grid.Row="5">PLZ</Label>
-            <TextBox Grid.Column="1" Grid.Row="5" Text="{Binding Plz}"></TextBox>
-            <Label Grid.Column="3" Grid.Row="5">Ort</Label>
-            <TextBox Grid.Column="4" Grid.Row="5" Text="{Binding City}"></TextBox>
+                        <Label Grid.Column="0" Grid.Row="7" Style="{StaticResource TopLabel}">Strasse 2</Label>
+                        <TextBox Grid.Column="0" Grid.Row="8" Grid.ColumnSpan="5" Text="{Binding Street2}"></TextBox>
 
-            <Separator Grid.Column="0" Grid.Row="6" Grid.ColumnSpan="5"></Separator>
+                        <Label Grid.Column="0" Grid.Row="9" Style="{StaticResource TopLabel}">PLZ</Label>
+                        <TextBox Grid.Column="0" Grid.Row="10" Text="{Binding Plz}"></TextBox>
+                        <Label Grid.Column="2" Grid.Row="9" Style="{StaticResource TopLabel}">Ort</Label>
+                        <TextBox Grid.Column="2" Grid.Row="10" Text="{Binding City}"></TextBox>
 
-            <Label Grid.Column="0" Grid.Row="7">Tel P</Label>
-            <TextBox Grid.Column="1" Grid.Row="7" Text="{Binding PhoneNumber}"></TextBox>
-            <Label Grid.Column="3" Grid.Row="7">Tel Mobile</Label>
-            <TextBox Grid.Column="4" Grid.Row="7" Text="{Binding MobileNumber}"></TextBox>
+                        <DockPanel Grid.Column="0" Grid.Row="11" Grid.ColumnSpan="3" LastChildFill="True">
+                            <Separator Width="30"/>
+                            <TextBlock DockPanel.Dock="Left" Style="{StaticResource SeparatorText}">Zusätzliche Kontaktdaten</TextBlock>
+                            <Separator />
+                        </DockPanel>
 
-            <Label Grid.Column="0" Grid.Row="8">E-Mail</Label>
-            <TextBox Grid.Column="1" Grid.Row="8" Text="{Binding EmailAddress}"></TextBox>
+                        <Label Grid.Column="0" Grid.Row="12" Style="{StaticResource TopLabel}">Tel P</Label>
+                        <TextBox Grid.Column="0" Grid.Row="13" Text="{Binding PhoneNumber}"></TextBox>
+                        <Label Grid.Column="2" Grid.Row="12" Style="{StaticResource TopLabel}">Tel Mobile</Label>
+                        <TextBox Grid.Column="2" Grid.Row="13" Text="{Binding MobileNumber}"></TextBox>
 
-            <Separator Grid.Column="0" Grid.Row="9" Grid.ColumnSpan="5"></Separator>
+                        <Label Grid.Column="0" Grid.Row="14" Style="{StaticResource TopLabel}">E-Mail</Label>
+                        <TextBox Grid.Column="0" Grid.Row="15" Text="{Binding EmailAddress}"></TextBox>
+                    </Grid>
+                </ScrollViewer>
+            </TabItem>
+            <TabItem Header="Familie" Margin="0"></TabItem>
+            <TabItem Header="SBB" Margin="0">
+                <Grid Margin="4" DataContext="{Binding SelectedDetailedPerson}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="15"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                    </Grid.RowDefinitions>
+                    <CheckBox Grid.Column="0" Grid.Row="0" IsChecked="{Binding HasHalbtax}" Content="Halbtax"></CheckBox>
+                    <Label Grid.Column="2" Grid.Row="0" Visibility="{Binding HasHalbtax, Converter={StaticResource booleanVisibilityConverter}}">Ablaufdatum</Label>
+                    <DatePicker Grid.Column="3" Grid.Row="0" DisplayDate="{Binding HalbtaxExpirationDate}"  Visibility="{Binding HasHalbtax, Converter={StaticResource booleanVisibilityConverter}}"></DatePicker>
 
-            <Label Grid.Column="0" Grid.Row="10">Halbtax</Label>
-            <CheckBox Grid.Column="1" Grid.Row="10" IsChecked="{Binding HasHalbtax}"></CheckBox>
-            <Label Grid.Column="3" Grid.Row="10">GA</Label>
-            <CheckBox Grid.Column="4" Grid.Row="10" IsChecked="{Binding HasGeneralAbo}"></CheckBox>
+                    <CheckBox  Grid.Column="0" Grid.Row="1" IsChecked="{Binding HasGeneralAbo}" Content="GA"></CheckBox>
+                    <Label Grid.Column="2" Grid.Row="1" Visibility="{Binding HasGeneralAbo, Converter={StaticResource booleanVisibilityConverter}}" >Ablaufdatum</Label>
+                    <DatePicker Grid.Column="3" Grid.Row="1" DisplayDate="{Binding GeneralAboExpirationDate}" Visibility="{Binding HasGeneralAbo, Converter={StaticResource booleanVisibilityConverter}}"></DatePicker>
 
-            <Separator Grid.Column="0" Grid.Row="11" Grid.ColumnSpan="5"></Separator>
+                    <CheckBox  Grid.Column="0" Grid.Row="2" IsChecked="{Binding HasJuniorKarte}" Content="Junior-Karte" Visibility="{Binding IsChild, Converter={StaticResource booleanVisibilityConverter}}"></CheckBox>
+                    <Label Grid.Column="2" Grid.Row="2" Visibility="{Binding HasJuniorKarte, Converter={StaticResource booleanVisibilityConverter}}" >Ablaufdatum</Label>
+                    <DatePicker Grid.Column="3" Grid.Row="2" DisplayDate="{Binding JuniorKarteExpirationDate}" Visibility="{Binding HasJuniorKarte, Converter={StaticResource booleanVisibilityConverter}}"></DatePicker>
 
-            <Label Grid.Column="0" Grid.Row="12">Name auf Pass</Label>
-            <TextBox Grid.Column="1" Grid.Row="12" Text="{Binding NameOnPassport}"></TextBox>
-            <Label Grid.Column="3" Grid.Row="12">Passnummer</Label>
-            <TextBox Grid.Column="4" Grid.Row="12" Text="{Binding PassportNumber}"></TextBox>
-        </Grid>
+                    <CheckBox  Grid.Column="0" Grid.Row="3" IsChecked="{Binding HasEnkelKarte}" Content="Enkel-Karte" Visibility="{Binding IsChild, Converter={StaticResource booleanVisibilityConverter}}"></CheckBox>
+                    <Label Grid.Column="2" Grid.Row="3" Visibility="{Binding HasEnkelKarte, Converter={StaticResource booleanVisibilityConverter}}" >Ablaufdatum</Label>
+                    <DatePicker Grid.Column="3" Grid.Row="3" DisplayDate="{Binding EnkelKarteExpirationDate}" Visibility="{Binding HasEnkelKarte, Converter={StaticResource booleanVisibilityConverter}}"></DatePicker>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Reiseagentur" Margin="0">
+                <Grid Margin="4" DataContext="{Binding SelectedDetailedPerson}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="15"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="30"/>
+                    </Grid.RowDefinitions>
+
+                    <Label Grid.Column="0" Grid.Row="0" Style="{StaticResource TopLabel}">Name auf Pass</Label>
+                    <TextBox Grid.Column="0" Grid.Row="1" Text="{Binding NameOnPassport}"></TextBox>
+                    <Label Grid.Column="2" Grid.Row="0" Style="{StaticResource TopLabel}">Passnummer</Label>
+                    <TextBox Grid.Column="2" Grid.Row="1" Text="{Binding PassportNumber}"></TextBox>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Dokumente und Notizen" Margin="0"></TabItem>
+        </TabControl>
         <GridSplitter Grid.Column="1" Grid.Row="1" Width="5" HorizontalAlignment="Stretch" />
         <Grid Grid.Column="2" Grid.Row="1">
             <ListBox ItemsSource="{Binding Persons}" SelectedItem="{Binding SelectedListPerson}">

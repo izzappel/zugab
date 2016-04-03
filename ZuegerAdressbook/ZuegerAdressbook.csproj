@@ -57,10 +57,13 @@
       <DependentUpon>BirthdateDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Commands\RelayCommand.cs" />
+    <Compile Include="Converters\BooleanVisibilityConverter.cs" />
+    <Compile Include="Converters\EnumVisibilityConverter.cs" />
     <Compile Include="Converters\EnumBooleanConverter.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Model\BaseModel.cs" />
     <Compile Include="Model\Gender.cs" />
+    <Compile Include="Model\RelationshipType.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Service\MessageDialogService.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
@@ -114,6 +117,7 @@
     <Resource Include="Fonts\FrutigerLTCom-LightItalic.ttf" />
     <Resource Include="Fonts\FrutigerLTCom-Roman.ttf" />
     <Resource Include="Fonts\FrutigerLTCom-UltraBlack.ttf" />
+    <Resource Include="Fonts\fontawesome-webfont.ttf" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace ZuegerAdressbook.Model
 {
@@ -32,7 +33,19 @@ namespace ZuegerAdressbook.Model
 
         private bool _hasGeneralAbo;
 
+        private DateTime? _generalAboExpirationDate;
+
         private bool _hasHalbtax;
+
+        private DateTime? _halbtaxExpirationDate;
+
+        private bool _hasJuniorKarte;
+
+        private DateTime? _juniorKarteExpirationDate;
+
+        private bool _hasEnkelKarte;
+
+        private DateTime? _enkelKarteExpirationDate;
 
         private string _notes;
 
@@ -207,6 +220,9 @@ namespace ZuegerAdressbook.Model
                 }
                 _birthdate = value;
                 OnPropertyChanged();
+
+                OnPropertyChanged("IsChild");
+                OnPropertyChanged("Age");
             }
         }
 
@@ -343,6 +359,124 @@ namespace ZuegerAdressbook.Model
                 }
                 _passportNumber = value;
                 OnPropertyChanged();
+            }
+        }
+
+        public DateTime? GeneralAboExpirationDate
+        {
+            get
+            {
+                return _generalAboExpirationDate;
+            }
+            set
+            {
+                if (value.Equals(_generalAboExpirationDate)) return;
+                _generalAboExpirationDate = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public DateTime? HalbtaxExpirationDate
+        {
+            get
+            {
+                return _halbtaxExpirationDate;
+            }
+            set
+            {
+                if (value.Equals(_halbtaxExpirationDate)) return;
+                _halbtaxExpirationDate = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public bool HasJuniorKarte
+        {
+            get
+            {
+                return _hasJuniorKarte;
+            }
+            set
+            {
+                if (value == _hasJuniorKarte) return;
+                _hasJuniorKarte = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public DateTime? JuniorKarteExpirationDate
+        {
+            get
+            {
+                return _juniorKarteExpirationDate;
+            }
+            set
+            {
+                if (value.Equals(_juniorKarteExpirationDate)) return;
+                _juniorKarteExpirationDate = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public bool HasEnkelKarte
+        {
+            get
+            {
+                return _hasEnkelKarte;
+            }
+            set
+            {
+                if (value == _hasEnkelKarte) return;
+                _hasEnkelKarte = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public DateTime? EnkelKarteExpirationDate
+        {
+            get
+            {
+                return _enkelKarteExpirationDate;
+            }
+            set
+            {
+                if (value.Equals(_enkelKarteExpirationDate)) return;
+                _enkelKarteExpirationDate = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public int? Age
+        {
+            get
+            {
+                if (Birthdate.HasValue == false)
+                {
+                    return null;
+                }
+
+                var today = DateTime.Today;
+                var age = today.Year - Birthdate.Value.Year;
+
+                if (today < Birthdate.Value.AddYears(age).Date)
+                {
+                    age--;
+                }
+
+                return age;
+            }
+        }
+
+        public bool? IsChild
+        {
+            get
+            {
+                if (Age.HasValue == false)
+                {
+                    return null;
+                }
+
+                return Age <= 16;
             }
         }
 

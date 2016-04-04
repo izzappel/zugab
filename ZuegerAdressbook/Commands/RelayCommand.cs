@@ -15,6 +15,8 @@ namespace ZuegerAdressbook.Commands
             _canExecuteEvaluator = canExecuteEvaluator;
         }
 
+        public event EventHandler CanExecuteChanged;
+
         public bool CanExecute(object parameter)
         {
             if (_canExecuteEvaluator == null)
@@ -30,6 +32,12 @@ namespace ZuegerAdressbook.Commands
             _methodToExecute.Invoke();
         }
 
-        public event EventHandler CanExecuteChanged;
+        public void RaiseCanExecuteChanged()
+        {
+            if (CanExecuteChanged != null)
+            {
+                CanExecuteChanged(this, EventArgs.Empty);
+            }
+        }
     }
 }

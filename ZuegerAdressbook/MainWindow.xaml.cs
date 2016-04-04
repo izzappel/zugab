@@ -16,13 +16,28 @@ namespace ZuegerAdressbook
         {
             InitializeComponent();
 
+            Style = (Style)FindResource(typeof(Window));
+
             _viewModel = new MainViewModel();
             DataContext = _viewModel;
         }
 
-        private void Selector_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void BirthdateButton_OnClick(object sender, RoutedEventArgs e)
         {
-            _viewModel.ChangeSelectedDetailedPerson();
+            var dialog = new BirthdateDialog();
+            dialog.ShowDialog();
+        }
+
+        private void AddDocumentButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            Microsoft.Win32.OpenFileDialog fileDialog = new Microsoft.Win32.OpenFileDialog();
+
+            var result = fileDialog.ShowDialog();
+            if (result == true)
+            {
+                // Open document 
+                string filename = fileDialog.FileName;
+            }
         }
     }
 }

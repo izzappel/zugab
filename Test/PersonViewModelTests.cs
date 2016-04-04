@@ -1,17 +1,16 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-
-using ZuegerAdressbook.Model;
+using ZuegerAdressbook.ViewModels;
 
 namespace Test
 {
     [TestClass]
-    public class PersonChildTests
+    public class PersonViewModelTests
     {
         [TestMethod]
         public void GivenSevenYearsOldThenIsChild()
         {
-            var person = new Person
+            var person = new PersonViewModel()
                          {
                              Birthdate = DateTime.Now.AddYears(-7)
                          };
@@ -23,7 +22,7 @@ namespace Test
         public void GivenSixteenAndOneDayYearsOldThenIsChild()
         {
             // wurde gestern 16
-            var person = new Person
+            var person = new PersonViewModel
                          {
                              Birthdate = DateTime.Now.AddYears(-16).AddDays(-1)
                          };
@@ -34,8 +33,8 @@ namespace Test
         [TestMethod]
         public void GivenSixteenYearsOldThenIsChild()
         {
-            var person = new Person
-                         {
+            var person = new PersonViewModel
+            {
                              Birthdate = DateTime.Now.AddYears(-16)
                          };
 
@@ -46,7 +45,7 @@ namespace Test
         public void GivenSixteenSubtractOneDayYearsOldThenIsAdult()
         {
             // wird am nächsten tag 16 (ist noch 15)
-            var person = new Person
+            var person = new PersonViewModel
             {
                 Birthdate = DateTime.Now.AddYears(-16).AddDays(1)
             };
@@ -58,7 +57,7 @@ namespace Test
         public void GivenSeventeenSubtractOneDayYearsOldThenIsChild()
         {
             // wird am nächsten tag 17 (ist noch 16)
-            var person = new Person
+            var person = new PersonViewModel
             {
                 Birthdate = DateTime.Now.AddYears(-17).AddDays(1)
             };
@@ -69,7 +68,7 @@ namespace Test
         [TestMethod]
         public void GivenSeventeenYearsOldThenIsChild()
         {
-            var person = new Person
+            var person = new PersonViewModel
             {
                 Birthdate = DateTime.Now.AddYears(-17)
             };
@@ -80,7 +79,7 @@ namespace Test
         [TestMethod]
         public void GivenTwentyYearsOldThenIsAdult()
         {
-            var person = new Person
+            var person = new PersonViewModel
             {
                 Birthdate = DateTime.Now.AddYears(-20)
             };
@@ -91,7 +90,7 @@ namespace Test
         [TestMethod]
         public void GivenUnknownBirthdateThenIsUnknown()
         {
-            var person = new Person();
+            var person = new PersonViewModel();
 
             Assert.IsNull(person.IsChild);
         }

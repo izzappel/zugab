@@ -9,7 +9,7 @@ namespace ZuegerAdressbook.ViewModels
 		public event PropertyChangedEventHandler PropertyChanged;
 
 		[NotifyPropertyChangedInvocator]
-		protected bool ChangeAndNotify<T>(T value, ref T field, [CallerMemberName]string propertyName = null)
+		protected virtual bool ChangeAndNotify<T>(T value, ref T field, [CallerMemberName]string propertyName = null)
 		{
 			if (Equals(field, value))
 			{

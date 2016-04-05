@@ -123,13 +123,21 @@ namespace ZuegerAdressbook.ViewModels
         public string Firstname
         {
             get { return _firstname; }
-            set { ChangeAndNotify(value, ref _firstname); }
+            set
+            {
+                ChangeAndNotify(value, ref _firstname);
+                Notify("FullName");
+            }
         }
 
         public string Lastname
         {
             get { return _lastname; }
-            set { ChangeAndNotify(value, ref _lastname); }
+            set
+            {
+                ChangeAndNotify(value, ref _lastname);
+                Notify("FullName");
+            }
         }
 
         public Gender Gender

@@ -86,7 +86,6 @@
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
-                            <!--<Border Background="{TemplateBinding Background}" Grid.ColumnSpan="3" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" />-->
                             <Image Source="/ZuegerAdressbook;component/View/Controls/Search.png" Margin="2"/>
                             <TextBox Style="{StaticResource FilterTextBoxStyle}" x:Name="PART_FilterBox" AutoWordSelection="True" Grid.Column="1" Margin="0,1,0,1" VerticalAlignment="Center" Text="{Binding RelativeSource={RelativeSource AncestorType={x:Type controls:FilterControl}}, Path=FilterText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                             <TextBlock x:Name="PART_Header" Text="{TemplateBinding Header}" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2,0,0,0" Grid.Column="1" IsHitTestVisible="False" Foreground="#ADADAD"/>
@@ -97,15 +96,6 @@
                         <Trigger Property="IsFocused" Value="True" SourceName="PART_FilterBox" >
                             <Setter Property="BorderBrush" Value="#FF3399FF" TargetName="border" />
                         </Trigger>
-                        <!--<Trigger Property="IsFocused" Value="True" SourceName="PART_FilterBox" >
-                            <Setter Property="Background" Value="{StaticResource FocusBackground}" TargetName="border" />
-                        </Trigger>
-                        <Trigger Property="IsFocused" Value="True" SourceName="PART_ClearButton" >
-                            <Setter Property="Background" Value="{StaticResource FocusBackground}" TargetName="border" />
-                        </Trigger>
-                        <Trigger Property="IsFocused" Value="True" >
-                            <Setter Property="Background" Value="{StaticResource FocusBackground}" TargetName="border" />
-                        </Trigger>-->
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>

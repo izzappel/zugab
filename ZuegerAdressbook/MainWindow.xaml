@@ -306,10 +306,20 @@
             <ListBox x:Name="listBox" Grid.Column="0" Grid.Row="2" ItemsSource="{Binding Persons}" SelectedItem="{Binding SelectedListPerson}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <TextBlock >
-                            <Run Text="{Binding Lastname}" />
-                            <Run Text="{Binding Firstname}" />
-                        </TextBlock>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="20" />
+                                <ColumnDefinition Width="5" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Grid.Row="0" Style="{StaticResource FontAwesomeIcon}" Visibility="{Binding Path=Gender, Converter={StaticResource enumVisibilityConverter}, ConverterParameter=Female}">&#xf182;</TextBlock>
+                            <TextBlock Grid.Column="0" Grid.Row="0"  Style="{StaticResource FontAwesomeIcon}" Visibility="{Binding Path=Gender, Converter={StaticResource enumVisibilityConverter}, ConverterParameter=Male}">&#xf183;</TextBlock>
+
+                            <TextBlock Grid.Column="2" Grid.Row="0" VerticalAlignment="Center">
+                                <Run Text="{Binding Lastname}" />
+                                <Run Text="{Binding Firstname}" />
+                            </TextBlock>
+                        </Grid>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>

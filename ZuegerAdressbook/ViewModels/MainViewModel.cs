@@ -159,11 +159,14 @@ namespace ZuegerAdressbook.ViewModels
             if (SelectedDetailedPerson != null && SelectedDetailedPerson.HasChanges)
             {
                 canChangeSelectedDetaiedPerson = MessageDialogService.OpenConfirmationDialog("Änderungen verwerfen", "Wollen Sie die Änderungen verwerfen?");
+                if (canChangeSelectedDetaiedPerson)
+                {
+                    SelectedDetailedPerson.ResetChanges();
+                }
             }
 
             if (canChangeSelectedDetaiedPerson)
             {
-                SelectedDetailedPerson?.ResetChanges();
                 SelectedDetailedPerson = new PersonViewModel(this);
             }
         }
@@ -249,11 +252,14 @@ namespace ZuegerAdressbook.ViewModels
             if (IsNewModeActive || (SelectedDetailedPerson != null && SelectedDetailedPerson.HasChanges))
             {
                 canChangeSelectedDetaiedPerson = MessageDialogService.OpenConfirmationDialog("Änderungen verwerfen", "Wollen Sie die Änderungen verwerfen?");
+                if (canChangeSelectedDetaiedPerson)
+                {
+                    SelectedDetailedPerson.ResetChanges();
+                }
             }
 
             if (canChangeSelectedDetaiedPerson)
             {
-                SelectedDetailedPerson?.ResetChanges();
                 SelectedDetailedPerson = SelectedListPerson;
             }
 

@@ -27,7 +27,7 @@ namespace ZuegerAdressbook.Converters
                 return Visibility.Visible;
             }
 
-            return Visibility.Hidden;
+            return Visibility.Collapsed;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)

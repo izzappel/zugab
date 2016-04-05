@@ -61,15 +61,19 @@ namespace ZuegerAdressbook.ViewModels
 
         private IList<string> _documents;
 
-        public PersonViewModel()
+        private MainViewModel _parent;
+
+        public PersonViewModel(MainViewModel parent = null)
         {
             _person = new Person();
+            _parent = parent;
         }
 
-        public PersonViewModel(Person person)
+        public PersonViewModel(Person person, MainViewModel parent)
         {
             CopyFromEntity(person);
             _person = person;
+            _parent = parent;
 
             // TODO: not sure wheter we should use the properties or not
         }
@@ -307,6 +311,7 @@ namespace ZuegerAdressbook.ViewModels
             if (hasChanged)
             {
                 HasChanges = true;
+                _parent.SaveCommand.RaiseCanExecuteChanged();
             }
 
             return hasChanged;

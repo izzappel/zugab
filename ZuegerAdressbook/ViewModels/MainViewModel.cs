@@ -68,7 +68,11 @@ namespace ZuegerAdressbook.ViewModels
         public PersonViewModel SelectedDetailedPerson
         {
             get { return _selectedDetailedPerson; }
-            set { ChangeAndNotify(value, ref _selectedDetailedPerson); }
+            set
+            {
+                ChangeAndNotify(value, ref _selectedDetailedPerson); 
+                SaveCommand.RaiseCanExecuteChanged();
+            }
         }
 
         public ObservableCollection<PersonViewModel> Persons { get; set; }
@@ -97,10 +101,15 @@ namespace ZuegerAdressbook.ViewModels
 					GenerateTestData(personList, session);
 				}
 
-				Persons = new ObservableCollection<PersonViewModel>(personList.OrderBy(t => t.Lastname).ThenBy(t => t.Firstname).Select(s => new PersonViewModel(s)).ToList());
+				Persons = new ObservableCollection<PersonViewModel>(personList.OrderBy(t => t.Lastname).ThenBy(t => t.Firstname).Select(s => new PersonViewModel(s, this)).ToList());
 			}
 
 			SelectedListPerson = Persons.First();
+        }
+
+        private void OnSelectedDetailedPersonChanged()
+        {
+            SaveCommand.RaiseCanExecuteChanged();
         }
 
 		private static void InitializeDocumentStore()
@@ -182,7 +191,7 @@ namespace ZuegerAdressbook.ViewModels
             if (canChangeSelectedDetaiedPerson)
             {
                 // TODO: reload person
-                SelectedDetailedPerson = new PersonViewModel();
+                SelectedDetailedPerson = new PersonViewModel(this);
             }
         }
 

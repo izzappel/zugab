@@ -82,6 +82,7 @@
     <Compile Include="Index\PersonByBirthdate.cs" />
     <Compile Include="Model\BaseModel.cs" />
     <Compile Include="Model\Gender.cs" />
+    <Compile Include="ViewModels\IChangeListener.cs" />
     <Compile Include="ViewModels\PersonViewModel.cs" />
     <Compile Include="Model\Relationship.cs" />
     <Compile Include="Model\RelationshipType.cs" />

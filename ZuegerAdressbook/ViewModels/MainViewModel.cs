@@ -16,7 +16,7 @@ using ZuegerAdressbook.Service;
 
 namespace ZuegerAdressbook.ViewModels
 {
-    public class MainViewModel : ViewModelBase, INotifyPropertyChanged
+    public class MainViewModel : ViewModelBase, INotifyPropertyChanged, IChangeListener
     {
 		private static IDocumentStore _documentStore;
 
@@ -264,6 +264,13 @@ namespace ZuegerAdressbook.ViewModels
             }
 
             return canChangeSelectedDetaiedPerson;
+        }
+
+        public void ReportChange()
+        {
+            SaveCommand.RaiseCanExecuteChanged();
+            DeleteCommand.RaiseCanExecuteChanged();
+            RevertCommand.RaiseCanExecuteChanged();
         }
     }
 }

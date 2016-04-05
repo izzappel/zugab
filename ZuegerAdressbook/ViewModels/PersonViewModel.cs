@@ -63,9 +63,9 @@ namespace ZuegerAdressbook.ViewModels
 
         private IList<string> _documents;
 
-        private MainViewModel _parent;
+        private IChangeListener _parent;
 
-        public PersonViewModel(MainViewModel parent = null)
+        public PersonViewModel(IChangeListener parent = null)
         {
             _person = new Person();
             _parent = parent;
@@ -349,9 +349,7 @@ namespace ZuegerAdressbook.ViewModels
                     HasChanges = true;
                 }
 
-                _parent.SaveCommand.RaiseCanExecuteChanged();
-                _parent.DeleteCommand.RaiseCanExecuteChanged();
-                _parent.RevertCommand.RaiseCanExecuteChanged();
+                _parent.ReportChange();
             }
 
             return hasChanged;

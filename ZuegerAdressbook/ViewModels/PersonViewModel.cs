@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+
 using Raven.Imports.Newtonsoft.Json;
 using ZuegerAdressbook.Model;
 
@@ -300,18 +302,48 @@ namespace ZuegerAdressbook.ViewModels
 
         public void ResetChanges()
         {
-            // TODO: reset the state in the viewmodel (copy values from wrapped entity)
+            Id = _person.Id;
+            Birthdate = _person.Birthdate;
+            PassportNumber = _person.PassportNumber;
+            City = _person.City;
+            EmailAddress = _person.EmailAddress;
+            EnkelKarteExpirationDate = _person.EnkelKarteExpirationDate;
+            Firstname = _person.Firstname;
+            Gender = _person.Gender;
+            GeneralAboExpirationDate = _person.GeneralAboExpirationDate;
+            HalbTaxExpirationDate = _person.HalbtaxExpirationDate;
+            HasEnkelKarte = _person.HasEnkelKarte;
+            HasGeneralAbo = _person.HasGeneralAbo;
+            HasJuniorKarte = _person.HasJuniorKarte;
+            JuniorKarteExpirationDate = _person.JuniorKarteExpirationDate;
+            Lastname = _person.Lastname;
+            MobileNumber = _person.MobileNumber;
+            NameOnPassport = _person.NameOnPassport;
+            Notes = _person.Notes;
+            PhoneNumber = _person.PhoneNumber;
+            Plz = _person.Plz;
+            Street1 = _person.Street1;
+            Street2 = _person.Street2;
+            Title = _person.Title;
+
+            HasChanges = false;
         }
 
-        protected override bool ChangeAndNotify<T>(T value, ref T field, string propertyName = null)
+        protected override bool ChangeAndNotify<T>(T value, ref T field, [CallerMemberName] string propertyName = null)
         {
             // Note: we should extract this into a superclass ChangeTrackingViewModel if needed for further entities
             var hasChanged = base.ChangeAndNotify(value, ref field, propertyName);
 
             if (hasChanged)
             {
-                HasChanges = true;
+                if (propertyName != "HasChanges")
+                {
+                    HasChanges = true;
+                }
+
                 _parent.SaveCommand.RaiseCanExecuteChanged();
+                _parent.DeleteCommand.RaiseCanExecuteChanged();
+                _parent.RevertCommand.RaiseCanExecuteChanged();
             }
 
             return hasChanged;

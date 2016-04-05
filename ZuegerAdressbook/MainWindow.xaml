@@ -67,6 +67,12 @@
                         <TextBlock VerticalAlignment="Center">Neu</TextBlock>
                     </StackPanel>
                 </Button>
+                <Button Command="{Binding RevertCommand}">
+                    <StackPanel Orientation="Vertical">
+                        <Image Source="Icons/48/sign-error.png"></Image>
+                        <TextBlock VerticalAlignment="Center">Verwerfen</TextBlock>
+                    </StackPanel>
+                </Button>
                 <Button Command="{Binding SaveCommand}">
                     <StackPanel Orientation="Vertical">
                         <Image Source="Icons/48/floppy.png"></Image>

@@ -70,8 +70,8 @@ namespace ZuegerAdressbook.ViewModels
             get { return _selectedDetailedPerson; }
             set
             {
-                ChangeAndNotify(value, ref _selectedDetailedPerson); 
-                SaveCommand.RaiseCanExecuteChanged();
+                ChangeAndNotify(value, ref _selectedDetailedPerson);
+                OnSelectedDetailedPersonChanged();
             }
         }
 
@@ -80,14 +80,16 @@ namespace ZuegerAdressbook.ViewModels
         public RelayCommand NewCommand { get; set; }
         public RelayCommand SaveCommand { get; set; }
         public RelayCommand DeleteCommand { get; set; }
+        public RelayCommand RevertCommand { get; set; }
         public RelayCommand AddDocumentCommand { get; set; }
 
         public MainViewModel()
         {
 			NewCommand = new RelayCommand(CreateNewPerson);
 			SaveCommand = new RelayCommand(SaveSelectedPerson, CanSaveSelectedPerson);
-			DeleteCommand = new RelayCommand(DeleteSelectedPerson);
-			AddDocumentCommand = new RelayCommand(CreateNewPerson);
+			DeleteCommand = new RelayCommand(DeleteSelectedPerson, CanDeleteSelectedPerson);
+            RevertCommand = new RelayCommand(RevertChanges, CanRevertChanges);
+            AddDocumentCommand = new RelayCommand(CreateNewPerson);
 
 			InitializeDocumentStore();
 
@@ -110,6 +112,8 @@ namespace ZuegerAdressbook.ViewModels
         private void OnSelectedDetailedPersonChanged()
         {
             SaveCommand.RaiseCanExecuteChanged();
+            DeleteCommand.RaiseCanExecuteChanged();
+            RevertCommand.RaiseCanExecuteChanged();
         }
 
 		private static void InitializeDocumentStore()
@@ -126,37 +130,6 @@ namespace ZuegerAdressbook.ViewModels
 
 		private static void GenerateTestData(List<Person> listOfPersons, IDocumentSession session)
 		{
-			   listOfPersons.Add(
-                new Person
-                {
-                    Gender = Gender.Female,
-                    Firstname = "Isabel",
-                    Lastname = "Züger",
-                    Street1 = "Hegistrasses 39d",
-                    City = "Winterthur",
-                    Plz = "8404",
-                    MobileNumber = "+41764767838",
-                    Birthdate = new DateTime(1990, 10, 24),
-                    EmailAddress = "isabel.zueger@gmail.com",
-                    Documents = new List<string>
-                                {
-                                    "C:\\temp\\datei.txt",
-                                    "C:\\temp\\andereDatei.txt"
-                                }
-                });
-
-            listOfPersons.Add(
-                new Person
-                {
-                    Gender = Gender.Male,
-                    Firstname = "David",
-                    Lastname = "Boos",
-                    Street1 = "Neuwiesenstrasse 10",
-                    City = "Sirnach",
-                    Plz = "8370",
-                    Birthdate = new DateTime(1991, 02, 11)
-                });
-
 			Enumerable.Range(0, 800).ToList().ForEach(n =>
 			{
 				listOfPersons.Add(new Person
@@ -190,7 +163,7 @@ namespace ZuegerAdressbook.ViewModels
 
             if (canChangeSelectedDetaiedPerson)
             {
-                // TODO: reload person
+                SelectedDetailedPerson?.ResetChanges();
                 SelectedDetailedPerson = new PersonViewModel(this);
             }
         }
@@ -243,6 +216,19 @@ namespace ZuegerAdressbook.ViewModels
             }
         }
 
+        private bool CanRevertChanges()
+        {
+            return IsNewModeActive || (SelectedDetailedPerson != null && SelectedDetailedPerson.HasChanges);
+        }
+
+        private void RevertChanges()
+        {
+            if (MessageDialogService.OpenConfirmationDialog("Änderungen verwerfen", "Wollen Sie die Änderungen verwerfen?"))
+            {
+                SelectedDetailedPerson?.ResetChanges();
+            }
+        }
+
         private void AddDocument()
         {
             if (SelectedDetailedPerson != null)
@@ -256,7 +242,7 @@ namespace ZuegerAdressbook.ViewModels
             }
         }
 
-        public bool ChangeSelectedDetailedPerson()
+        private bool ChangeSelectedDetailedPerson()
         {
             var canChangeSelectedDetaiedPerson = true;
 
@@ -267,8 +253,7 @@ namespace ZuegerAdressbook.ViewModels
 
             if (canChangeSelectedDetaiedPerson)
             {
-                // TODO: reload person
-                //SelectedDetailedPerson?.AcceptChanges();
+                SelectedDetailedPerson?.ResetChanges();
                 SelectedDetailedPerson = SelectedListPerson;
             }
 

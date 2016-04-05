@@ -288,16 +288,25 @@
             </TabItem>
         </TabControl>
         <GridSplitter Grid.Column="1" Grid.Row="1" Width="5" HorizontalAlignment="Stretch" />
-        <controls:FilterControl Grid.Column="2" Grid.Row="1" VerticalAlignment="Top" Height="25" Header="Tippen zum filtern..." TargetControl="{Binding ElementName=listBox}" FilterTextBindingPath="FullName"/>
-        <ListBox x:Name="listBox" Grid.Column="2" Grid.Row="1" ItemsSource="{Binding Persons}" SelectedItem="{Binding SelectedListPerson}" Margin="0,33,0,0">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <TextBlock >
+        <Grid Grid.Column="2" Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30"></RowDefinition>
+                <RowDefinition Height="10"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+            </Grid.RowDefinitions>
+            
+            <controls:FilterControl Grid.Column="0" Grid.Row="0" Margin="0,1,1,0" Height="30" Header="Tippen zum filtern..." TargetControl="{Binding ElementName=listBox}" FilterTextBindingPath="FullName"/>
+
+            <ListBox x:Name="listBox" Grid.Column="0" Grid.Row="2" ItemsSource="{Binding Persons}" SelectedItem="{Binding SelectedListPerson}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock >
                             <Run Text="{Binding Lastname}" />
                             <Run Text="{Binding Firstname}" />
-                    </TextBlock>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
+                        </TextBlock>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </Grid>
     </Grid>
 </Window>

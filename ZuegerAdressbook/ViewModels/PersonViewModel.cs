@@ -320,6 +320,7 @@ namespace ZuegerAdressbook.ViewModels
             Gender = _person.Gender;
             GeneralAboExpirationDate = _person.GeneralAboExpirationDate;
             HalbTaxExpirationDate = _person.HalbtaxExpirationDate;
+            HasHalbTax = _person.HasHalbtax;
             HasEnkelKarte = _person.HasEnkelKarte;
             HasGeneralAbo = _person.HasGeneralAbo;
             HasJuniorKarte = _person.HasJuniorKarte;

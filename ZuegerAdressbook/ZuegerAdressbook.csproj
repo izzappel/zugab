@@ -70,9 +70,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="BirthdateDialog.xaml.cs">
-      <DependentUpon>BirthdateDialog.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Commands\RelayCommand.cs" />
     <Compile Include="Converters\BooleanVisibilityConverter.cs" />
     <Compile Include="Converters\EnumVisibilityConverter.cs" />
@@ -96,10 +93,6 @@
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="View\Controls\FilterControl.cs" />
-    <Page Include="BirthdateDialog.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

@@ -23,12 +23,6 @@ namespace ZuegerAdressbook
             DataContext = _viewModel;
         }
 
-        private void BirthdateButton_OnClick(object sender, RoutedEventArgs e)
-        {
-            var dialog = new BirthdateDialog();
-            dialog.ShowDialog();
-        }
-
         private void AddDocumentButton_OnClick(object sender, RoutedEventArgs e)
         {
             Microsoft.Win32.OpenFileDialog fileDialog = new Microsoft.Win32.OpenFileDialog();

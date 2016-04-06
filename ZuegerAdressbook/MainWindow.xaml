@@ -160,8 +160,8 @@
                             <RadioButton IsChecked="{Binding Path=Gender, Converter={StaticResource enumBooleanConverter}, ConverterParameter=Female}">Frau</RadioButton>
                         </StackPanel>
 
-                        <TextBlock Grid.Column="2" Grid.Row="0" Style="{StaticResource FontAwesomeIcon}" Visibility="{Binding Path=Gender, Converter={StaticResource enumVisibilityConverter}, ConverterParameter=Female}">&#xf182;</TextBlock>
-                        <TextBlock Grid.Column="2" Grid.Row="0" Style="{StaticResource FontAwesomeIcon}" Visibility="{Binding Path=Gender, Converter={StaticResource enumVisibilityConverter}, ConverterParameter=Male}">&#xf183;</TextBlock>
+                        <TextBlock Grid.Column="2" Grid.Row="0" Style="{StaticResource FontAwesomeIcon}" Visibility="{Binding Path=Gender, Converter={StaticResource enumVisibilityConverter}, ConverterParameter=Female, FallbackValue=Collapsed}">&#xf182;</TextBlock>
+                        <TextBlock Grid.Column="2" Grid.Row="0" Style="{StaticResource FontAwesomeIcon}" Visibility="{Binding Path=Gender, Converter={StaticResource enumVisibilityConverter}, ConverterParameter=Male, FallbackValue=Collapsed}">&#xf183;</TextBlock>
 
                         <Label Grid.Column="0" Grid.Row="1" Content="Nachname" Style="{StaticResource TopLabel}"/>
                         <TextBox Grid.Column="0" Grid.Row="2" Text="{Binding Lastname, UpdateSourceTrigger=PropertyChanged}" Margin="5,0,0,0"/>
@@ -171,10 +171,10 @@
                         <Label Grid.Column="0" Grid.Row="3" Style="{StaticResource TopLabel}">Geburtsdatum</Label>
                         <DatePicker Grid.Column="0" Grid.Row="4" SelectedDate="{Binding Birthdate}"></DatePicker>
                         <StackPanel Grid.Column="2" Grid.Row="4" Orientation="Horizontal">
-                            <TextBlock Text="{Binding Age}" Margin="0,0,5,0"/>
+                            <TextBlock Text="{Binding Age, FallbackValue=?, TargetNullValue=?}" Margin="0,0,5,0"/>
                             <TextBlock Text="Jahre" Margin="0,0,5,0"></TextBlock>
-                            <TextBlock Text="-" Margin="0,0,5,0" Visibility="{Binding Path=IsChild, Converter={StaticResource booleanVisibilityConverter}}"></TextBlock>
-                            <TextBlock Style="{StaticResource FontAwesomeIcon}" Visibility="{Binding Path=IsChild, Converter={StaticResource booleanVisibilityConverter}}">&#xf1ae;</TextBlock>
+                            <TextBlock Text="-" Margin="0,0,5,0" Visibility="{Binding Path=IsChild, Converter={StaticResource booleanVisibilityConverter}, FallbackValue=Collapsed}"></TextBlock>
+                            <TextBlock Style="{StaticResource FontAwesomeIcon}" Visibility="{Binding Path=IsChild, Converter={StaticResource booleanVisibilityConverter}, FallbackValue=Collapsed}">&#xf1ae;</TextBlock>
                         </StackPanel>
 
                         <Label Grid.Column="0" Grid.Row="5" Style="{StaticResource TopLabel}">Strasse / Nr.</Label>

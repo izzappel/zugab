@@ -344,7 +344,7 @@ namespace ZuegerAdressbook.ViewModels
 
             if (hasChanged)
             {
-                if (propertyName != "HasChanges")
+                if (propertyName != "HasChanges" && propertyName != "Id") // Id will never be set from UI and should never trigger the change tracking
                 {
                     HasChanges = true;
                 }

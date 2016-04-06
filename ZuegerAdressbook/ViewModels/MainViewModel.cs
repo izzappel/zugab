@@ -156,7 +156,7 @@ namespace ZuegerAdressbook.ViewModels
         {
             var canChangeSelectedDetaiedPerson = true;
 
-            if (SelectedDetailedPerson != null && SelectedDetailedPerson.HasChanges)
+            if (IsNewModeActive || SelectedDetailedPerson != null && SelectedDetailedPerson.HasChanges)
             {
                 canChangeSelectedDetaiedPerson = MessageDialogService.OpenConfirmationDialog("Änderungen verwerfen", "Wollen Sie die Änderungen verwerfen?");
                 if (canChangeSelectedDetaiedPerson)
@@ -167,6 +167,7 @@ namespace ZuegerAdressbook.ViewModels
 
             if (canChangeSelectedDetaiedPerson)
             {
+                SelectedListPerson = null;
                 SelectedDetailedPerson = new PersonViewModel(this);
             }
         }
@@ -181,7 +182,6 @@ namespace ZuegerAdressbook.ViewModels
             if (IsNewModeActive)
             {
                 Persons.Add(SelectedDetailedPerson);
-                SelectedListPerson = SelectedDetailedPerson;
             }
 
 	        var entity = SelectedDetailedPerson?.AcceptChanges();
@@ -191,7 +191,9 @@ namespace ZuegerAdressbook.ViewModels
 				session.Store(entity);
 			    SelectedDetailedPerson.Id = entity.Id;
 				session.SaveChanges();
-			}
+            }
+
+            SelectedListPerson = SelectedDetailedPerson;
         }
 
         private bool CanDeleteSelectedPerson()
@@ -229,6 +231,12 @@ namespace ZuegerAdressbook.ViewModels
             if (MessageDialogService.OpenConfirmationDialog("Änderungen verwerfen", "Wollen Sie die Änderungen verwerfen?"))
             {
                 SelectedDetailedPerson?.ResetChanges();
+
+                if (IsNewModeActive)
+                {
+                    SelectedDetailedPerson = null;
+                    SelectedListPerson = Persons.FirstOrDefault();
+                }
             }
         }
 

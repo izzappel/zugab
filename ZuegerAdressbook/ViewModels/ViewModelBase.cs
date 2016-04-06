@@ -4,7 +4,7 @@ using ZuegerAdressbook.Annotations;
 
 namespace ZuegerAdressbook.ViewModels
 {
-	public abstract class ViewModelBase
+	public abstract class ViewModelBase : INotifyPropertyChanged
 	{
 		public event PropertyChangedEventHandler PropertyChanged;
 

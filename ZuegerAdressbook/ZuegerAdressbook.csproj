@@ -77,11 +77,16 @@
     <Compile Include="Converters\BooleanVisibilityConverter.cs" />
     <Compile Include="Converters\EnumVisibilityConverter.cs" />
     <Compile Include="Converters\EnumBooleanConverter.cs" />
+    <Compile Include="DataAccess\DataAccess.cs" />
+    <Compile Include="DataAccess\IDataAccess.cs" />
     <Compile Include="Extensions\RavenDb.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Index\PersonByBirthdate.cs" />
     <Compile Include="Model\BaseModel.cs" />
     <Compile Include="Model\Gender.cs" />
+    <Compile Include="Service\ApplicationDispatcher.cs" />
+    <Compile Include="Service\IDispatcher.cs" />
+    <Compile Include="Service\IMessageDialogService.cs" />
     <Compile Include="ViewModels\IChangeListener.cs" />
     <Compile Include="ViewModels\PersonViewModel.cs" />
     <Compile Include="Model\Relationship.cs" />

@@ -349,7 +349,7 @@ namespace ZuegerAdressbook.ViewModels
                     HasChanges = true;
                 }
 
-                _parent.ReportChange();
+                _parent?.ReportChange();
             }
 
             return hasChanged;

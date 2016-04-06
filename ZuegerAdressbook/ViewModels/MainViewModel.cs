@@ -1,24 +1,24 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Threading;
-using ParkSquare.Testing.Helpers;
-using Raven.Client;
-using Raven.Client.Embedded;
+
 using ZuegerAdressbook.Commands;
+using ZuegerAdressbook.DataAccess;
 using ZuegerAdressbook.Extensions;
-using ZuegerAdressbook.Model;
 using ZuegerAdressbook.Service;
 
 namespace ZuegerAdressbook.ViewModels
 {
     public class MainViewModel : ViewModelBase, INotifyPropertyChanged, IChangeListener
     {
-		private static IDocumentStore _documentStore;
+        private readonly IDataAccess _dataAccess;
+
+        private readonly IDispatcher _dispatcher;
+
+        private readonly IMessageDialogService _messageDialogService;
 
         private bool IsNewModeActive => SelectedDetailedPerson != null && SelectedDetailedPerson.Id.IsNullOrEmpty();
 
@@ -45,17 +45,14 @@ namespace ZuegerAdressbook.ViewModels
 
                 if (ChangeSelectedDetailedPerson() == false)
                 {
-                    Application.Current.Dispatcher.BeginInvoke(
-                        new Action(
+                    _dispatcher.Dispatch(new Action(
                             () =>
                             {
                                 // Do this against the underlying value so 
                                 //  that we don't invoke the cancellation question again.
                                 _selectedListPerson = origValue;
                                 OnPropertyChanged();
-                            }),
-                        DispatcherPriority.ContextIdle,
-                        null);
+                            }));
                 }
                 else
                 {
@@ -83,30 +80,21 @@ namespace ZuegerAdressbook.ViewModels
         public RelayCommand RevertCommand { get; set; }
         public RelayCommand AddDocumentCommand { get; set; }
 
-        public MainViewModel()
+        public MainViewModel(IDataAccess dataAccess, IDispatcher dispatcher, IMessageDialogService messageDialogService)
         {
-			NewCommand = new RelayCommand(CreateNewPerson);
-			SaveCommand = new RelayCommand(SaveSelectedPerson, CanSaveSelectedPerson);
-			DeleteCommand = new RelayCommand(DeleteSelectedPerson, CanDeleteSelectedPerson);
+            _dataAccess = dataAccess;
+            _dispatcher = dispatcher;
+            _messageDialogService = messageDialogService;
+
+            NewCommand = new RelayCommand(CreateNewPerson);
+            SaveCommand = new RelayCommand(SaveSelectedPerson, CanSaveSelectedPerson);
+            DeleteCommand = new RelayCommand(DeleteSelectedPerson, CanDeleteSelectedPerson);
             RevertCommand = new RelayCommand(RevertChanges, CanRevertChanges);
             AddDocumentCommand = new RelayCommand(CreateNewPerson);
 
-			InitializeDocumentStore();
+            Persons = new ObservableCollection<PersonViewModel>(_dataAccess.LoadPersons().OrderBy(t => t.Lastname).ThenBy(t => t.Firstname).Select(s => new PersonViewModel(s, this)).ToList());
 
-         	using (var session = _documentStore.OpenSession())
-			{
-				var personList = session.LoadAll<Person>();
-
-				if (personList.Count == 0)
-				{
-					// TODO: remove for production :-)
-					GenerateTestData(personList, session);
-				}
-
-				Persons = new ObservableCollection<PersonViewModel>(personList.OrderBy(t => t.Lastname).ThenBy(t => t.Firstname).Select(s => new PersonViewModel(s, this)).ToList());
-			}
-
-			SelectedListPerson = Persons.First();
+            SelectedListPerson = Persons.FirstOrDefault();
         }
 
         private void OnSelectedDetailedPersonChanged()
@@ -116,49 +104,13 @@ namespace ZuegerAdressbook.ViewModels
             RevertCommand.RaiseCanExecuteChanged();
         }
 
-		private static void InitializeDocumentStore()
-		{
-			var appDataFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "zugab");
-
-			_documentStore = new EmbeddableDocumentStore
-			{
-				DataDirectory = Path.Combine(appDataFolder, "data")
-			};
-
-			_documentStore.Initialize();
-		}
-
-		private static void GenerateTestData(List<Person> listOfPersons, IDocumentSession session)
-		{
-			Enumerable.Range(0, 800).ToList().ForEach(n =>
-			{
-				listOfPersons.Add(new Person
-				{
-					Firstname = NameGenerator.AnyForename(),
-					Lastname = NameGenerator.AnyName(),
-					Gender = Gender.Female,
-					EmailAddress = EmailAddressGenerator.AnyEmailAddress(),
-					Birthdate = DateTimeGenerator.AnyDateBetween(new DateTime(1930, 1, 1), DateTime.Now),
-					PhoneNumber = TelephoneNumberGenerator.AnyTelephoneNumber(),
-					MobileNumber = TelephoneNumberGenerator.AnyMobileNumber()
-				});
-			});
-			
-			listOfPersons.ForEach(person =>
-			{
-				session.Store(person);
-			});
-
-			session.SaveChanges();
-		}
-        
         private void CreateNewPerson()
         {
             var canChangeSelectedDetaiedPerson = true;
 
             if (IsNewModeActive || SelectedDetailedPerson != null && SelectedDetailedPerson.HasChanges)
             {
-                canChangeSelectedDetaiedPerson = MessageDialogService.OpenConfirmationDialog("Änderungen verwerfen", "Wollen Sie die Änderungen verwerfen?");
+                canChangeSelectedDetaiedPerson = _messageDialogService.OpenConfirmationDialog("Änderungen verwerfen", "Wollen Sie die Änderungen verwerfen?");
                 if (canChangeSelectedDetaiedPerson)
                 {
                     SelectedDetailedPerson.ResetChanges();
@@ -184,14 +136,9 @@ namespace ZuegerAdressbook.ViewModels
                 Persons.Add(SelectedDetailedPerson);
             }
 
-	        var entity = SelectedDetailedPerson?.AcceptChanges();
+            var entity = SelectedDetailedPerson?.AcceptChanges();
 
-			using (var session = _documentStore.OpenSession())
-			{
-				session.Store(entity);
-			    SelectedDetailedPerson.Id = entity.Id;
-				session.SaveChanges();
-            }
+            SelectedDetailedPerson.Id = _dataAccess.SavePerson(entity);
 
             SelectedListPerson = SelectedDetailedPerson;
         }
@@ -203,7 +150,7 @@ namespace ZuegerAdressbook.ViewModels
 
         private void DeleteSelectedPerson()
         {
-            if (MessageDialogService.OpenConfirmationDialog("Löschen", $"Wollen Sie '{SelectedDetailedPerson.Firstname} {SelectedDetailedPerson.Lastname}' wirklich löschen?"))
+            if (_messageDialogService.OpenConfirmationDialog("Löschen", $"Wollen Sie '{SelectedDetailedPerson.Firstname} {SelectedDetailedPerson.Lastname}' wirklich löschen?"))
             {
                 var toDelete = SelectedDetailedPerson;
                 Persons.Remove(SelectedDetailedPerson);
@@ -212,11 +159,7 @@ namespace ZuegerAdressbook.ViewModels
 
                 if (string.IsNullOrEmpty(toDelete.Id) == false)
                 {
-                    using (var session = _documentStore.OpenSession())
-                    {
-                        session.Delete(toDelete.Id);
-                        session.SaveChanges();
-                    }
+                    _dataAccess.DeletePerson(toDelete.Id);
                 }
             }
         }
@@ -228,7 +171,7 @@ namespace ZuegerAdressbook.ViewModels
 
         private void RevertChanges()
         {
-            if (MessageDialogService.OpenConfirmationDialog("Änderungen verwerfen", "Wollen Sie die Änderungen verwerfen?"))
+            if (_messageDialogService.OpenConfirmationDialog("Änderungen verwerfen", "Wollen Sie die Änderungen verwerfen?"))
             {
                 SelectedDetailedPerson?.ResetChanges();
 
@@ -244,11 +187,11 @@ namespace ZuegerAdressbook.ViewModels
         {
             if (SelectedDetailedPerson != null)
             {
-                var filename = MessageDialogService.OpenFileDialog();
+                var filename = _messageDialogService.OpenFileDialog();
                 if (filename.IsNullOrEmpty() == false)
                 {
                     //SelectedDetailedPerson.Documents.Add(filename);
-                    
+
                 }
             }
         }
@@ -259,7 +202,7 @@ namespace ZuegerAdressbook.ViewModels
 
             if (IsNewModeActive || (SelectedDetailedPerson != null && SelectedDetailedPerson.HasChanges))
             {
-                canChangeSelectedDetaiedPerson = MessageDialogService.OpenConfirmationDialog("Änderungen verwerfen", "Wollen Sie die Änderungen verwerfen?");
+                canChangeSelectedDetaiedPerson = _messageDialogService.OpenConfirmationDialog("Änderungen verwerfen", "Wollen Sie die Änderungen verwerfen?");
                 if (canChangeSelectedDetaiedPerson)
                 {
                     SelectedDetailedPerson.ResetChanges();

@@ -39,5 +39,17 @@ namespace ZuegerAdressbook
                 string filename = fileDialog.FileName;
             }
         }
+
+        private void BirthdayFilterToggle_OnChecked(object sender, RoutedEventArgs e)
+        {
+            if (BirthdayFilterToggle.IsChecked.GetValueOrDefault())
+            {
+                //_viewModel.SortPersonsByBirthday();
+            }
+            else
+            {
+                //_viewModel.SortPersonsByName();
+            }
+        }
     }
 }

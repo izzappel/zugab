@@ -60,7 +60,16 @@
                     <Setter Property="Width" Value="30"></Setter>
                 </Style>
             </ToolBarTray.Resources>
-            <ToolBar>
+            <ToolBar Header="Editieren">
+                <ToolBar.HeaderTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="Editieren" Foreground="LightGray">
+                            <TextBlock.LayoutTransform>
+                                <RotateTransform Angle="-90"></RotateTransform>
+                            </TextBlock.LayoutTransform>
+                        </TextBlock>
+                    </DataTemplate>
+                </ToolBar.HeaderTemplate>
                 <Button Command="{Binding NewCommand}">
                     <StackPanel Orientation="Vertical">
                         <Image Source="Icons/48/sign-add.png"></Image>
@@ -86,11 +95,34 @@
                     </StackPanel>
                 </Button>
             </ToolBar>
-            <ToolBar>
+            <!--<ToolBar>
                 <Button Click="BirthdateButton_OnClick">
                     <StackPanel Orientation="Vertical">
                         <Image Source="Icons/48/gift.png"></Image>
                         <TextBlock VerticalAlignment="Center">Geburtstage</TextBlock>
+                    </StackPanel>
+                </Button>
+            </ToolBar>-->
+            <ToolBar Header="Drucken">
+                <ToolBar.HeaderTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="Drucken" Foreground="LightGray">
+                            <TextBlock.LayoutTransform>
+                                <RotateTransform Angle="-90"></RotateTransform>
+                            </TextBlock.LayoutTransform>
+                        </TextBlock>
+                    </DataTemplate>
+                </ToolBar.HeaderTemplate>
+                <Button>
+                    <StackPanel Orientation="Vertical">
+                        <Image Source="Icons/48/profile-group.png"></Image>
+                        <TextBlock VerticalAlignment="Center">Personen</TextBlock>
+                    </StackPanel>
+                </Button>
+                <Button>
+                    <StackPanel Orientation="Vertical">
+                        <Image Source="Icons/48/user-id.png"></Image>
+                        <TextBlock VerticalAlignment="Center">Etiketten</TextBlock>
                     </StackPanel>
                 </Button>
             </ToolBar>
@@ -295,15 +327,23 @@
         </TabControl>
         <GridSplitter Grid.Column="1" Grid.Row="1" Width="5" HorizontalAlignment="Stretch" />
         <Grid Grid.Column="2" Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="40"/>
+            </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"></RowDefinition>
                 <RowDefinition Height="10"></RowDefinition>
                 <RowDefinition Height="*"></RowDefinition>
             </Grid.RowDefinitions>
-            
+
             <controls:FilterControl Grid.Column="0" Grid.Row="0" Margin="0,2,2,0" Height="30" Header="Tippen zum filtern..." TargetControl="{Binding ElementName=listBox}" FilterTextBindingPath="FullName"/>
 
-            <ListBox x:Name="listBox" Grid.Column="0" Grid.Row="2" ItemsSource="{Binding Persons}" SelectedItem="{Binding SelectedListPerson}">
+            <ToggleButton Grid.Column="1" Grid.Row="0" Background="Transparent" BorderThickness="0" Margin="2" Padding="3" Checked="BirthdayFilterToggle_OnChecked" x:Name="BirthdayFilterToggle">
+                <Image Source="Icons/48/gift.png"></Image>
+            </ToggleButton>
+            
+            <ListBox x:Name="listBox" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" ItemsSource="{Binding Persons}" SelectedItem="{Binding SelectedListPerson}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <Grid>

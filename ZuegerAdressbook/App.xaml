@@ -3,8 +3,10 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-        <Style TargetType="{x:Type Window}">
-            <Setter Property="FontFamily" Value="fonts/#Frutiger LT Com 55 Roman" />
-        </Style>
+        <ResourceDictionary>
+            <Style TargetType="{x:Type Window}">
+                <Setter Property="FontFamily" Value="fonts/#Frutiger LT Com 55 Roman" />
+            </Style>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>

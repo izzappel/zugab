@@ -10,59 +10,32 @@ namespace ZuegerAdressbook.ViewModels
     public class PersonViewModel : ViewModelBase
     {
         private Person _person;
-
         private bool _hasChanges;
-
         private string _id;
-
         private string _firstname;
-
         private string _lastname;
-
         private Gender _gender;
-
         private string _title;
-
         private string _street1;
-
         private string _street2;
-
         private string _city;
-
         private string _plz;
-
         private DateTime? _birthdate;
-
         private string _emailAddress;
-
         private string _phoneNumber;
-
         private string _mobileNumber;
-
         private bool _hasGeneralAbo;
-
         private DateTime? _generalAboExpirationDate;
-
         private bool _hasHalbtax;
-
         private DateTime? _halbtaxExpirationDate;
-
         private bool _hasJuniorKarte;
-
         private DateTime? _juniorKarteExpirationDate;
-
         private bool _hasEnkelKarte;
-
         private DateTime? _enkelKarteExpirationDate;
-
         private string _notes;
-
         private string _nameOnPassport;
-
         private string _passportNumber;
-
         private IList<string> _documents;
-
         private IChangeListener _parent;
 
         public PersonViewModel(IChangeListener parent = null)

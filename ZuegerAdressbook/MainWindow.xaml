@@ -1,31 +1,32 @@
 ﻿<Window
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" x:Class="ZuegerAdressbook.MainWindow"
-        Title="Züger Reisen - Adressbuch" d:DesignWidth="1133.582"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:zugab="clr-namespace:ZuegerAdressbook"
     xmlns:controls="clr-namespace:ZuegerAdressbook.View.Controls"
-    xmlns:converter="clr-namespace:ZuegerAdressbook.Converters" Icon="Icons/48/address-book.png" d:DesignHeight="1093.225">
+    xmlns:converter="clr-namespace:ZuegerAdressbook.Converters" xmlns:System="clr-namespace:System;assembly=mscorlib" mc:Ignorable="d" x:Class="ZuegerAdressbook.MainWindow"
+        Title="Züger Reisen - Adressbuch" d:DesignWidth="1133.582"
+    Icon="Icons/48/address-book.png" d:DesignHeight="1093.225">
     <Window.Resources>
         <converter:EnumBooleanConverter x:Key="enumBooleanConverter" />
         <converter:BooleanVisibilityConverter x:Key="booleanVisibilityConverter"/>
         <converter:EnumVisibilityConverter x:Key="enumVisibilityConverter"/>
 
         <Style TargetType="{x:Type TextBlock}" x:Key="FontAwesomeIcon">
-            <Setter Property="FontFamily" Value="fonts/#FontAwesome"></Setter>
-            <Setter Property="FontSize" Value="20"></Setter>
+            <Setter Property="FontFamily" Value="fonts/#FontAwesome"/>
+            <Setter Property="FontSize" Value="20"/>
             <Setter Property="VerticalAlignment" Value="Center" />
         </Style>
 
         <Style TargetType="{x:Type TextBox}">
             <Setter Property="VerticalContentAlignment" Value="Center" />
-            <Setter Property="BorderThickness" Value="0,0,0,1"></Setter>
-            <Setter Property="Background" Value="#FFF4F4F4"></Setter>
-            <Setter Property="FontFamily" Value="fonts/#Frutiger LT Com 55 Roman"></Setter>
+            <Setter Property="BorderThickness" Value="0,0,0,1"/>
+            <Setter Property="Background" Value="#FFF4F4F4"/>
+            <Setter Property="FontFamily" Value="fonts/#Frutiger LT Com 55 Roman"/>
         </Style>
         <Style TargetType="{x:Type DatePicker}">
-            <Setter Property="BorderThickness" Value="0,0,0,1"></Setter>
-            <Setter Property="FontFamily" Value="fonts/#Frutiger LT Com 55 Roman"></Setter>
+            <Setter Property="BorderThickness" Value="0,0,0,1"/>
+            <Setter Property="FontFamily" Value="fonts/#Frutiger LT Com 55 Roman"/>
         </Style>
         <Style TargetType="{x:Type TextBlock}">
             <Setter Property="VerticalAlignment" Value="Center" />
@@ -46,7 +47,7 @@
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1.5*"/>
-            <ColumnDefinition Width="10" />
+            <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="1.5*"/>
         </Grid.ColumnDefinitions>
 
@@ -54,256 +55,311 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <ToolBarTray Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3">
-            <ToolBarTray.Resources>
-                <Style TargetType="{x:Type Image}">
-                    <Setter Property="Width" Value="30"></Setter>
-                </Style>
-            </ToolBarTray.Resources>
-            <ToolBar>
-                <Button Command="{Binding NewCommand}">
-                    <StackPanel Orientation="Vertical">
-                        <Image Source="Icons/48/sign-add.png"></Image>
-                        <TextBlock VerticalAlignment="Center">Neu</TextBlock>
-                    </StackPanel>
-                </Button>
-                <Button Command="{Binding RevertCommand}">
-                    <StackPanel Orientation="Vertical">
-                        <Image Source="Icons/48/sign-error.png"></Image>
-                        <TextBlock VerticalAlignment="Center">Verwerfen</TextBlock>
-                    </StackPanel>
-                </Button>
-                <Button Command="{Binding SaveCommand}">
-                    <StackPanel Orientation="Vertical">
-                        <Image Source="Icons/48/floppy.png"></Image>
-                        <TextBlock VerticalAlignment="Center">Speichern</TextBlock>
-                    </StackPanel>
-                </Button>
-                <Button Command="{Binding DeleteCommand}">
-                    <StackPanel Orientation="Vertical">
-                        <Image Source="Icons/48/trashcan.png"></Image>
-                        <TextBlock VerticalAlignment="Center">Löschen</TextBlock>
-                    </StackPanel>
-                </Button>
-            </ToolBar>
-            <ToolBar>
+        <Border Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3" BorderThickness="0,0,0,1" BorderBrush="DarkGray">
+            <ToolBarTray Background="#FFF9F9F9">
+                <ToolBarTray.Resources>
+                    <Style TargetType="{x:Type Image}">
+                        <Setter Property="Width" Value="30"/>
+                        <Setter Property="Height" Value="Auto"/>
+                        <Setter Property="Margin" Value="10,0,10,2"></Setter>
+                    </Style>
+                    <Style TargetType="{x:Type ToolBar}">
+                        <Setter Property="Background" Value="#FFF9F9F9"/>
+                        <Setter Property="HeaderTemplate">
+                            <Setter.Value>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding}" Foreground="DarkGray" SnapsToDevicePixels="True">
+                                        <TextBlock.LayoutTransform>
+                                            <RotateTransform Angle="-90"/>
+                                        </TextBlock.LayoutTransform>
+                                    </TextBlock>
+                                </DataTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </ToolBarTray.Resources>
+                <ToolBar Header="Editieren" Loaded="FrameworkElement_OnLoaded">
+                    <Button Command="{Binding NewCommand}" ToolBar.OverflowMode="Never">
+                        <StackPanel Orientation="Vertical">
+                            <Image Source="Icons/48/sign-add.png"/>
+                            <TextBlock HorizontalAlignment="Center"><Run Text="Neu"/></TextBlock>
+                        </StackPanel>
+                    </Button>
+                    <Button Command="{Binding RevertCommand}" ToolBar.OverflowMode="Never">
+                        <StackPanel Orientation="Vertical">
+                            <Image Source="Icons/48/sign-error.png"/>
+                            <TextBlock HorizontalAlignment="Center"><Run Text="Verwerfen"/></TextBlock>
+                        </StackPanel>
+                    </Button>
+                    <Button Command="{Binding SaveCommand}" ToolBar.OverflowMode="Never">
+                        <StackPanel Orientation="Vertical">
+                            <Image Source="Icons/48/floppy.png"/>
+                            <TextBlock HorizontalAlignment="Center"><Run Text="Speichern"/></TextBlock>
+                        </StackPanel>
+                    </Button>
+                    <Button Command="{Binding DeleteCommand}" ToolBar.OverflowMode="Never">
+                        <StackPanel Orientation="Vertical">
+                            <Image Source="Icons/48/trashcan.png"/>
+                            <TextBlock HorizontalAlignment="Center"><Run Text="Löschen"/></TextBlock>
+                        </StackPanel>
+                    </Button>
+                </ToolBar>
+                <!--<ToolBar>
                 <Button Click="BirthdateButton_OnClick">
                     <StackPanel Orientation="Vertical">
                         <Image Source="Icons/48/gift.png"></Image>
                         <TextBlock VerticalAlignment="Center">Geburtstage</TextBlock>
                     </StackPanel>
                 </Button>
-            </ToolBar>
-        </ToolBarTray>
-
-        <TabControl Grid.Column="0" Grid.Row="1" BorderThickness="0,1,1,1">
-            <TabControl.Resources>
-                <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
-                    <Setter Property="Margin" Value="5,0,0,0"></Setter>
-                </Style>
-                <Style x:Key="MultilineTextBox" TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
-                    <Setter Property="VerticalContentAlignment" Value="Top"></Setter>
-                    <Setter Property="AcceptsReturn" Value="True"></Setter>
-                    <Setter Property="TextWrapping" Value="Wrap"></Setter>
-                    <Setter Property="VerticalScrollBarVisibility" Value="Auto"></Setter>
-                </Style>
-                <Style x:Key="TopLabel" TargetType="{x:Type Label}" BasedOn="{StaticResource {x:Type Label}}">
-                    <Setter Property="Margin" Value="0,5,0,0"></Setter>
-                </Style>
-                <Style TargetType="{x:Type DatePicker}" BasedOn="{StaticResource {x:Type DatePicker}}">
-                    <Setter Property="Margin" Value="5,0,0,0"></Setter>
-                    <Setter Property="VerticalContentAlignment" Value="Center"></Setter>
-                </Style>
-                <Style TargetType="{x:Type RadioButton}">
-                    <Setter Property="VerticalContentAlignment" Value="Center"></Setter>
-                </Style>
-                <Style x:Key="SeparatorText" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource {x:Type TextBlock}}">
-                    <Setter Property="Margin" Value="5,0,5,0"></Setter>
-                    <Setter Property="Foreground" Value="#FF888888"></Setter>
-                </Style>
-                <Style TargetType="{x:Type TabItem}">
-                    <Setter Property="Height" Value="30"></Setter>
-                    <Setter Property="MinWidth" Value="70"></Setter>
-                    <Setter Property="Margin" Value="0"></Setter>
-                </Style>
-            </TabControl.Resources>
-            <TabItem Header="Kontakt" Margin="0">
-                <ScrollViewer Grid.Column="0" Grid.Row="1">
-                    <Grid Margin="4" DataContext="{Binding SelectedDetailedPerson}">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="15"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="30"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="30"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="30"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="30"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="30"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="30"/>
-                            <RowDefinition Height="30"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="30"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="30"/>
-                        </Grid.RowDefinitions>
-
-                        <StackPanel Grid.Column="0" Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Center">
-                            <Label Content="Anrede" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
-                            <RadioButton Margin="20,0,20,0" IsChecked="{Binding Path=Gender, Converter={StaticResource enumBooleanConverter}, ConverterParameter=Male}">Herr</RadioButton>
-                            <RadioButton IsChecked="{Binding Path=Gender, Converter={StaticResource enumBooleanConverter}, ConverterParameter=Female}">Frau</RadioButton>
+            </ToolBar>-->
+                <ToolBar Header="Drucken" Loaded="FrameworkElement_OnLoaded">
+                    <Button ToolBar.OverflowMode="Never">
+                        <StackPanel Orientation="Vertical">
+                            <Image Source="Icons/48/profile-group.png"/>
+                            <TextBlock HorizontalAlignment="Center"><Run Text="Personen"/></TextBlock>
                         </StackPanel>
-
-                        <TextBlock Grid.Column="2" Grid.Row="0" Style="{StaticResource FontAwesomeIcon}" Visibility="{Binding Path=Gender, Converter={StaticResource enumVisibilityConverter}, ConverterParameter=Female}">&#xf182;</TextBlock>
-                        <TextBlock Grid.Column="2" Grid.Row="0" Style="{StaticResource FontAwesomeIcon}" Visibility="{Binding Path=Gender, Converter={StaticResource enumVisibilityConverter}, ConverterParameter=Male}">&#xf183;</TextBlock>
-
-                        <Label Grid.Column="0" Grid.Row="1" Content="Nachname" Style="{StaticResource TopLabel}"/>
-                        <TextBox Grid.Column="0" Grid.Row="2" Text="{Binding Lastname, UpdateSourceTrigger=PropertyChanged}" Margin="5,0,0,0"/>
-                        <Label Grid.Column="2" Grid.Row="1" Content="Vorname" Style="{StaticResource TopLabel}"/>
-                        <TextBox Grid.Column="2" Grid.Row="2" Text="{Binding Firstname, UpdateSourceTrigger=PropertyChanged}"/>
-
-                        <Label Grid.Column="0" Grid.Row="3" Style="{StaticResource TopLabel}">Geburtsdatum</Label>
-                        <DatePicker Grid.Column="0" Grid.Row="4" SelectedDate="{Binding Birthdate}"></DatePicker>
-                        <StackPanel Grid.Column="2" Grid.Row="4" Orientation="Horizontal">
-                            <TextBlock Text="{Binding Age}" Margin="0,0,5,0"/>
-                            <TextBlock Text="Jahre" Margin="0,0,5,0"></TextBlock>
-                            <TextBlock Text="-" Margin="0,0,5,0" Visibility="{Binding Path=IsChild, Converter={StaticResource booleanVisibilityConverter}}"></TextBlock>
-                            <TextBlock Style="{StaticResource FontAwesomeIcon}" Visibility="{Binding Path=IsChild, Converter={StaticResource booleanVisibilityConverter}}">&#xf1ae;</TextBlock>
+                    </Button>
+                    <Button ToolBar.OverflowMode="Never">
+                        <StackPanel Orientation="Vertical">
+                            <Image Source="Icons/48/user-id.png"/>
+                            <TextBlock HorizontalAlignment="Center"><Run Text="Etiketten"/></TextBlock>
                         </StackPanel>
-
-                        <Label Grid.Column="0" Grid.Row="5" Style="{StaticResource TopLabel}">Strasse / Nr.</Label>
-                        <TextBox Grid.Column="0" Grid.Row="6" Grid.ColumnSpan="5" Text="{Binding Street1}"></TextBox>
-
-                        <Label Grid.Column="0" Grid.Row="7" Style="{StaticResource TopLabel}">Strasse 2</Label>
-                        <TextBox Grid.Column="0" Grid.Row="8" Grid.ColumnSpan="5" Text="{Binding Street2}"></TextBox>
-
-                        <Label Grid.Column="0" Grid.Row="9" Style="{StaticResource TopLabel}">PLZ</Label>
-                        <TextBox Grid.Column="0" Grid.Row="10" Text="{Binding Plz}"></TextBox>
-                        <Label Grid.Column="2" Grid.Row="9" Style="{StaticResource TopLabel}">Ort</Label>
-                        <TextBox Grid.Column="2" Grid.Row="10" Text="{Binding City}"></TextBox>
-
-                        <DockPanel Grid.Column="0" Grid.Row="11" Grid.ColumnSpan="3" LastChildFill="True">
-                            <Separator Width="30"/>
-                            <TextBlock DockPanel.Dock="Left" Style="{StaticResource SeparatorText}">Zusätzliche Kontaktdaten</TextBlock>
-                            <Separator />
-                        </DockPanel>
-
-                        <Label Grid.Column="0" Grid.Row="12" Style="{StaticResource TopLabel}">Tel P</Label>
-                        <TextBox Grid.Column="0" Grid.Row="13" Text="{Binding PhoneNumber}"></TextBox>
-                        <Label Grid.Column="2" Grid.Row="12" Style="{StaticResource TopLabel}">Tel Mobile</Label>
-                        <TextBox Grid.Column="2" Grid.Row="13" Text="{Binding MobileNumber}"></TextBox>
-
-                        <Label Grid.Column="0" Grid.Row="14" Style="{StaticResource TopLabel}">E-Mail</Label>
-                        <TextBox Grid.Column="0" Grid.Row="15" Text="{Binding EmailAddress}"></TextBox>
-                    </Grid>
-                </ScrollViewer>
-            </TabItem>
-            <TabItem Header="Familie" Margin="0"></TabItem>
-            <TabItem Header="SBB" Margin="0">
-                <Grid Margin="4" DataContext="{Binding SelectedDetailedPerson}">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="15"/>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="30"/>
-                        <RowDefinition Height="30"/>
-                        <RowDefinition Height="30"/>
-                        <RowDefinition Height="30"/>
-                        <RowDefinition Height="30"/>
-                    </Grid.RowDefinitions>
-                    <CheckBox Grid.Column="0" Grid.Row="0" IsChecked="{Binding HasHalbTax}" Content="HalbTax"></CheckBox>
-                    <Label Grid.Column="2" Grid.Row="0" Visibility="{Binding HasHalbTax, Converter={StaticResource booleanVisibilityConverter}}">Ablaufdatum</Label>
-                    <DatePicker Grid.Column="3" Grid.Row="0" DisplayDate="{Binding HalbTaxExpirationDate}"  Visibility="{Binding HasHalbTax, Converter={StaticResource booleanVisibilityConverter}}"></DatePicker>
-
-                    <CheckBox  Grid.Column="0" Grid.Row="1" IsChecked="{Binding HasGeneralAbo}" Content="GA"></CheckBox>
-                    <Label Grid.Column="2" Grid.Row="1" Visibility="{Binding HasGeneralAbo, Converter={StaticResource booleanVisibilityConverter}}" >Ablaufdatum</Label>
-                    <DatePicker Grid.Column="3" Grid.Row="1" DisplayDate="{Binding GeneralAboExpirationDate}" Visibility="{Binding HasGeneralAbo, Converter={StaticResource booleanVisibilityConverter}}"></DatePicker>
-
-                    <CheckBox  Grid.Column="0" Grid.Row="2" IsChecked="{Binding HasJuniorKarte}" Content="Junior-Karte" Visibility="{Binding IsChild, Converter={StaticResource booleanVisibilityConverter}}"></CheckBox>
-                    <Label Grid.Column="2" Grid.Row="2" Visibility="{Binding HasJuniorKarte, Converter={StaticResource booleanVisibilityConverter}}" >Ablaufdatum</Label>
-                    <DatePicker Grid.Column="3" Grid.Row="2" DisplayDate="{Binding JuniorKarteExpirationDate}" Visibility="{Binding HasJuniorKarte, Converter={StaticResource booleanVisibilityConverter}}"></DatePicker>
-
-                    <CheckBox  Grid.Column="0" Grid.Row="3" IsChecked="{Binding HasEnkelKarte}" Content="Enkel-Karte" Visibility="{Binding IsChild, Converter={StaticResource booleanVisibilityConverter}}"></CheckBox>
-                    <Label Grid.Column="2" Grid.Row="3" Visibility="{Binding HasEnkelKarte, Converter={StaticResource booleanVisibilityConverter}}" >Ablaufdatum</Label>
-                    <DatePicker Grid.Column="3" Grid.Row="3" DisplayDate="{Binding EnkelKarteExpirationDate}" Visibility="{Binding HasEnkelKarte, Converter={StaticResource booleanVisibilityConverter}}"></DatePicker>
-                </Grid>
-            </TabItem>
-            <TabItem Header="Reiseagentur" Margin="0">
-                <Grid Margin="4" DataContext="{Binding SelectedDetailedPerson}">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="15"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="30"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="30"/>
-                    </Grid.RowDefinitions>
-
-                    <Label Grid.Column="0" Grid.Row="0" Style="{StaticResource TopLabel}">Name auf Pass</Label>
-                    <TextBox Grid.Column="0" Grid.Row="1" Text="{Binding NameOnPassport}"></TextBox>
-                    <Label Grid.Column="2" Grid.Row="0" Style="{StaticResource TopLabel}">Passnummer</Label>
-                    <TextBox Grid.Column="2" Grid.Row="1" Text="{Binding PassportNumber}"></TextBox>
-                </Grid>
-            </TabItem>
-            <TabItem Header="Dokumente und Notizen" Margin="0">
-                <Grid DataContext="{Binding SelectedDetailedPerson}">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition />
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="100"/>
-                        <RowDefinition Height="10"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
-
-                    <Label Grid.Column="0" Grid.Row="0">Notizen</Label>
-                    <TextBox Grid.Column="0" Grid.Row="1" Text="{Binding Notes}" Style="{StaticResource MultilineTextBox}"></TextBox>
-
-                    <DockPanel Grid.Column="0" Grid.Row="3" LastChildFill="False" >
-                        <Label Style="{StaticResource TopLabel}" DockPanel.Dock="Left">Dokumente</Label>
-                        <Button Background="#FFEFEFEF" DockPanel.Dock="Right" Width="30" Height="30" Command="{Binding AddDocumentCommand}">
-                            <TextBlock Style="{StaticResource FontAwesomeIcon}" Margin="5">&#xf067;</TextBlock>
-                        </Button>
-                    </DockPanel>
-
-                    <ListView Grid.Column="0" Grid.Row="4" ItemsSource="{Binding Documents}" BorderThickness="0">
-                        <ListView.ItemTemplate>
-                            <DataTemplate>
-                                <DockPanel>
-                                    <TextBlock Style="{StaticResource FontAwesomeIcon}" Margin="0,0,5,0">&#xf0c6;</TextBlock>
-                                    <TextBlock Text="{Binding}" VerticalAlignment="Center"></TextBlock>
-                                </DockPanel>
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
-                    </ListView>
-                </Grid>
-            </TabItem>
-        </TabControl>
-        <GridSplitter Grid.Column="1" Grid.Row="1" Width="5" HorizontalAlignment="Stretch" />
-        <Grid Grid.Column="2" Grid.Row="1">
+                    </Button>
+                </ToolBar>
+                <ToolBar Header="Export" Loaded="FrameworkElement_OnLoaded" >
+                    <Button ToolBar.OverflowMode="Never">
+                        <StackPanel Orientation="Vertical">
+                            <Image Source="Icons/48/file-excel.png"/>
+                            <TextBlock HorizontalAlignment="Center"><Run Text="Excel"/></TextBlock>
+                        </StackPanel>
+                    </Button>
+                </ToolBar>
+            </ToolBarTray>
+        </Border>
+        <Grid Grid.Column="0" Grid.Row="1">
             <Grid.RowDefinitions>
-                <RowDefinition Height="30"></RowDefinition>
-                <RowDefinition Height="10"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
                 <RowDefinition Height="*"></RowDefinition>
             </Grid.RowDefinitions>
-            
-            <controls:FilterControl Grid.Column="0" Grid.Row="0" Margin="0,1,1,0" Height="30" Header="Tippen zum filtern..." TargetControl="{Binding ElementName=listBox}" FilterTextBindingPath="FullName"/>
+            <TextBlock Grid.Column="0" Grid.Row="0" Text="{Binding SelectedDetailedPerson.FullName}" Margin="5" FontSize="18pt"></TextBlock>
+            <TabControl Grid.Column="0" Grid.Row="1"  BorderThickness="0,1,1,1">
+                <TabControl.Resources>
+                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
+                        <Setter Property="Margin" Value="5,0,0,0"/>
+                    </Style>
+                    <Style x:Key="MultilineTextBox" TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
+                        <Setter Property="VerticalContentAlignment" Value="Top"/>
+                        <Setter Property="AcceptsReturn" Value="True"/>
+                        <Setter Property="TextWrapping" Value="Wrap"/>
+                        <Setter Property="VerticalScrollBarVisibility" Value="Auto"/>
+                    </Style>
+                    <Style x:Key="TopLabel" TargetType="{x:Type Label}" BasedOn="{StaticResource {x:Type Label}}">
+                        <Setter Property="Margin" Value="0,5,0,0"/>
+                    </Style>
+                    <Style TargetType="{x:Type DatePicker}" BasedOn="{StaticResource {x:Type DatePicker}}">
+                        <Setter Property="Margin" Value="5,0,0,0"/>
+                        <Setter Property="VerticalContentAlignment" Value="Center"/>
+                    </Style>
+                    <Style TargetType="{x:Type RadioButton}">
+                        <Setter Property="VerticalContentAlignment" Value="Center"/>
+                    </Style>
+                    <Style x:Key="SeparatorText" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource {x:Type TextBlock}}">
+                        <Setter Property="Margin" Value="5,0,5,0"/>
+                        <Setter Property="Foreground" Value="#FF888888"/>
+                    </Style>
+                    <Style TargetType="{x:Type TabItem}">
+                        <Setter Property="Height" Value="30"/>
+                        <Setter Property="MinWidth" Value="70"/>
+                        <Setter Property="Margin" Value="0"/>
+                    </Style>
+                </TabControl.Resources>
+                <TabItem Header="Kontakt" Margin="0">
+                    <ScrollViewer Grid.Column="0" Grid.Row="1">
+                        <Grid Margin="4" DataContext="{Binding SelectedDetailedPerson}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="15"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="30"/>
+                            </Grid.RowDefinitions>
 
-            <ListBox x:Name="listBox" Grid.Column="0" Grid.Row="2" ItemsSource="{Binding Persons}" SelectedItem="{Binding SelectedListPerson}">
+                            <StackPanel Grid.Column="0" Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Center">
+                                <Label Content="Anrede" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
+                                <RadioButton Margin="20,0,20,0" IsChecked="{Binding Gender, ConverterParameter=Male, Converter={StaticResource enumBooleanConverter}}" Content="Herr"/>
+                                <RadioButton IsChecked="{Binding Gender, ConverterParameter=Female, Converter={StaticResource enumBooleanConverter}}" Content="Frau"/>
+                            </StackPanel>
+
+                            <TextBlock Grid.Column="2" Grid.Row="0" Style="{StaticResource FontAwesomeIcon}" Visibility="{Binding Gender, ConverterParameter=Female, Converter={StaticResource enumVisibilityConverter}, FallbackValue=Collapsed}"><Run Text="&#xF182;"/></TextBlock>
+                            <TextBlock Grid.Column="2" Grid.Row="0" Style="{StaticResource FontAwesomeIcon}" Visibility="{Binding Gender, ConverterParameter=Male, Converter={StaticResource enumVisibilityConverter}, FallbackValue=Collapsed}"><Run Text="&#xF183;"/></TextBlock>
+
+                            <Label Grid.Column="0" Grid.Row="1" Content="Nachname" Style="{StaticResource TopLabel}"/>
+                            <TextBox Grid.Column="0" Grid.Row="2" Text="{Binding Lastname, UpdateSourceTrigger=PropertyChanged}" Margin="5,0,0,0"/>
+                            <Label Grid.Column="2" Grid.Row="1" Content="Vorname" Style="{StaticResource TopLabel}"/>
+                            <TextBox Grid.Column="2" Grid.Row="2" Text="{Binding Firstname, UpdateSourceTrigger=PropertyChanged}"/>
+
+                            <Label Grid.Column="0" Grid.Row="3" Style="{StaticResource TopLabel}" Content="Geburtsdatum"/>
+                            <DatePicker Grid.Column="0" Grid.Row="4" SelectedDate="{Binding Birthdate}" />
+                            <StackPanel Grid.Column="2" Grid.Row="4" Orientation="Horizontal">
+                                <TextBlock Text="{Binding Age, FallbackValue=?, TargetNullValue=?}" Margin="0,0,5,0"/>
+                                <TextBlock Text="Jahre" Margin="0,0,5,0"/>
+                                <TextBlock Text="-" Margin="0,0,5,0" Visibility="{Binding IsChild, Converter={StaticResource booleanVisibilityConverter}, FallbackValue=Collapsed}"/>
+                                <TextBlock Style="{StaticResource FontAwesomeIcon}" Visibility="{Binding IsChild, Converter={StaticResource booleanVisibilityConverter}, FallbackValue=Collapsed}"><Run Text="&#xF1AE;"/></TextBlock>
+                            </StackPanel>
+
+                            <Label Grid.Column="0" Grid.Row="5" Style="{StaticResource TopLabel}" Content="Strasse / Nr."/>
+                            <TextBox Grid.Column="0" Grid.Row="6" Grid.ColumnSpan="5" Text="{Binding Street1}"/>
+
+                            <Label Grid.Column="0" Grid.Row="7" Style="{StaticResource TopLabel}" Content="Strasse 2"/>
+                            <TextBox Grid.Column="0" Grid.Row="8" Grid.ColumnSpan="5" Text="{Binding Street2}"/>
+
+                            <Label Grid.Column="0" Grid.Row="9" Style="{StaticResource TopLabel}" Content="PLZ"/>
+                            <TextBox Grid.Column="0" Grid.Row="10" Text="{Binding Plz}"/>
+                            <Label Grid.Column="2" Grid.Row="9" Style="{StaticResource TopLabel}" Content="Ort"/>
+                            <TextBox Grid.Column="2" Grid.Row="10" Text="{Binding City}"/>
+
+                            <DockPanel Grid.Column="0" Grid.Row="11" Grid.ColumnSpan="3" LastChildFill="True">
+                                <Separator Width="30"/>
+                                <TextBlock DockPanel.Dock="Left" Style="{StaticResource SeparatorText}"><Run Text="Zusätzliche Kontaktdaten"/></TextBlock>
+                                <Separator />
+                            </DockPanel>
+
+                            <Label Grid.Column="0" Grid.Row="12" Style="{StaticResource TopLabel}" Content="Tel P"/>
+                            <TextBox Grid.Column="0" Grid.Row="13" Text="{Binding PhoneNumber}"/>
+                            <Label Grid.Column="2" Grid.Row="12" Style="{StaticResource TopLabel}" Content="Tel Mobile"/>
+                            <TextBox Grid.Column="2" Grid.Row="13" Text="{Binding MobileNumber}"/>
+
+                            <Label Grid.Column="0" Grid.Row="14" Style="{StaticResource TopLabel}" Content="E-Mail"/>
+                            <TextBox Grid.Column="0" Grid.Row="15" Text="{Binding EmailAddress}"/>
+                        </Grid>
+                    </ScrollViewer>
+                </TabItem>
+                <TabItem Header="Familie" Margin="0"/>
+                <TabItem Header="SBB / Reiseagentur" Margin="0">
+                    <StackPanel Orientation="Vertical">
+                        <Grid Margin="4" DataContext="{Binding SelectedDetailedPerson}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="15"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="30"/>
+                            </Grid.RowDefinitions>
+
+                            <Label Grid.Column="0" Grid.Row="0" Style="{StaticResource TopLabel}" Content="Name auf Pass"/>
+                            <TextBox Grid.Column="0" Grid.Row="1" Text="{Binding NameOnPassport}"/>
+                            <Label Grid.Column="2" Grid.Row="0" Style="{StaticResource TopLabel}" Content="Passnummer"/>
+                            <TextBox Grid.Column="2" Grid.Row="1" Text="{Binding PassportNumber}"/>
+                        </Grid>
+
+                        <Grid Margin="4" DataContext="{Binding SelectedDetailedPerson}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="15"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="30"/>
+                            </Grid.RowDefinitions>
+                            <CheckBox Grid.Column="0" Grid.Row="0" IsChecked="{Binding HasHalbTax}" Content="HalbTax"/>
+                            <Label Grid.Column="2" Grid.Row="0" Visibility="{Binding HasHalbTax, Converter={StaticResource booleanVisibilityConverter}}" Content="Ablaufdatum"/>
+                            <DatePicker Grid.Column="3" Grid.Row="0" DisplayDate="{Binding HalbTaxExpirationDate}"  Visibility="{Binding HasHalbTax, Converter={StaticResource booleanVisibilityConverter}}"/>
+
+                            <CheckBox  Grid.Column="0" Grid.Row="1" IsChecked="{Binding HasGeneralAbo}" Content="GA"/>
+                            <Label Grid.Column="2" Grid.Row="1" Visibility="{Binding HasGeneralAbo, Converter={StaticResource booleanVisibilityConverter}}" Content="Ablaufdatum" />
+                            <DatePicker Grid.Column="3" Grid.Row="1" DisplayDate="{Binding GeneralAboExpirationDate}" Visibility="{Binding HasGeneralAbo, Converter={StaticResource booleanVisibilityConverter}}"/>
+
+                            <CheckBox  Grid.Column="0" Grid.Row="2" IsChecked="{Binding HasJuniorKarte}" Content="Junior-Karte" Visibility="{Binding IsChild, Converter={StaticResource booleanVisibilityConverter}}"/>
+                            <Label Grid.Column="2" Grid.Row="2" Visibility="{Binding HasJuniorKarte, Converter={StaticResource booleanVisibilityConverter}}" Content="Ablaufdatum" />
+                            <DatePicker Grid.Column="3" Grid.Row="2" DisplayDate="{Binding JuniorKarteExpirationDate}" Visibility="{Binding HasJuniorKarte, Converter={StaticResource booleanVisibilityConverter}}"/>
+
+                            <CheckBox  Grid.Column="0" Grid.Row="3" IsChecked="{Binding HasEnkelKarte}" Content="Enkel-Karte" Visibility="{Binding IsChild, Converter={StaticResource booleanVisibilityConverter}}"/>
+                            <Label Grid.Column="2" Grid.Row="3" Visibility="{Binding HasEnkelKarte, Converter={StaticResource booleanVisibilityConverter}}" Content="Ablaufdatum" />
+                            <DatePicker Grid.Column="3" Grid.Row="3" DisplayDate="{Binding EnkelKarteExpirationDate}" Visibility="{Binding HasEnkelKarte, Converter={StaticResource booleanVisibilityConverter}}"/>
+                        </Grid>
+                    </StackPanel>
+                </TabItem>
+                <TabItem Header="Dokumente und Notizen" Margin="0">
+                    <Grid DataContext="{Binding SelectedDetailedPerson}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="100"/>
+                            <RowDefinition Height="10"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <Label Grid.Column="0" Grid.Row="0" Content="Notizen"/>
+                        <TextBox Grid.Column="0" Grid.Row="1" Text="{Binding Notes}" Style="{StaticResource MultilineTextBox}"/>
+
+                        <DockPanel Grid.Column="0" Grid.Row="3" LastChildFill="False" >
+                            <Label Style="{StaticResource TopLabel}" DockPanel.Dock="Left" Content="Dokumente"/>
+                            <Button Background="#FFEFEFEF" DockPanel.Dock="Right" Width="30" Height="30" Command="{Binding AddDocumentCommand}">
+                                <TextBlock Style="{StaticResource FontAwesomeIcon}" Margin="5"><Run Text="&#xF067;"/></TextBlock>
+                            </Button>
+                        </DockPanel>
+
+                        <ListView Grid.Column="0" Grid.Row="4" ItemsSource="{Binding Documents}" BorderThickness="0">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <DockPanel>
+                                        <TextBlock Style="{StaticResource FontAwesomeIcon}" Margin="0,0,5,0"><Run Text="&#xF0C6;"/></TextBlock>
+                                        <TextBlock Text="{Binding}" VerticalAlignment="Center"/>
+                                    </DockPanel>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </Grid>
+                </TabItem>
+            </TabControl>
+        </Grid>
+        <GridSplitter Grid.Column="1" Grid.Row="1" Width="5" HorizontalAlignment="Stretch" />
+        <Grid Grid.Column="2" Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="40"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="10"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <controls:FilterControl Grid.Column="0" Grid.Row="0" Margin="2" Height="30" Header="Tippen zum filtern..." TargetControl="{Binding ElementName=listBox}" FilterTextBindingPath="FullName"/>
+
+            <ToggleButton Grid.Column="1" Grid.Row="0" Background="Transparent" BorderThickness="0" Margin="2" Padding="3" Checked="BirthdayFilterToggle_OnChecked" x:Name="BirthdayFilterToggle">
+                <Image Source="Icons/48/gift.png" Height="25"/>
+            </ToggleButton>
+
+            <ListBox x:Name="listBox" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" ItemsSource="{Binding Persons}" SelectedItem="{Binding SelectedListPerson}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <Grid>
@@ -312,13 +368,10 @@
                                 <ColumnDefinition Width="5" />
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
-                            <TextBlock Grid.Column="0" Grid.Row="0" Style="{StaticResource FontAwesomeIcon}" Visibility="{Binding Path=Gender, Converter={StaticResource enumVisibilityConverter}, ConverterParameter=Female}">&#xf182;</TextBlock>
-                            <TextBlock Grid.Column="0" Grid.Row="0"  Style="{StaticResource FontAwesomeIcon}" Visibility="{Binding Path=Gender, Converter={StaticResource enumVisibilityConverter}, ConverterParameter=Male}">&#xf183;</TextBlock>
+                            <TextBlock Grid.Column="0" Grid.Row="0" Style="{StaticResource FontAwesomeIcon}" Visibility="{Binding Gender, ConverterParameter=Female, Converter={StaticResource enumVisibilityConverter}}"><Run Text="&#xF182;"/></TextBlock>
+                            <TextBlock Grid.Column="0" Grid.Row="0"  Style="{StaticResource FontAwesomeIcon}" Visibility="{Binding Gender, ConverterParameter=Male, Converter={StaticResource enumVisibilityConverter}}"><Run Text="&#xF183;"/></TextBlock>
 
-                            <TextBlock Grid.Column="2" Grid.Row="0" VerticalAlignment="Center">
-                                <Run Text="{Binding Lastname}" />
-                                <Run Text="{Binding Firstname}" />
-                            </TextBlock>
+                            <TextBlock Grid.Column="2" Grid.Row="0" VerticalAlignment="Center"><Run Text="{Binding Lastname}" /><Run Text=" "/><Run Text="{Binding Firstname}" /></TextBlock>
                         </Grid>
                     </DataTemplate>
                 </ListBox.ItemTemplate>

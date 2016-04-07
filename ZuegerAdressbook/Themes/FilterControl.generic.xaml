@@ -76,11 +76,12 @@
     <Style TargetType="{x:Type controls:FilterControl}">
         <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"/>
         <Setter Property="FilterOnEnter" Value="False"/>
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type controls:FilterControl}">
-                    <Border x:Name="border" Background="#FFF4F4F4" BorderThickness="0,0,0,1" BorderBrush="#FFABADB3">
-                        <Grid Margin="1">
+                    <Border x:Name="border" Background="#FFF4F4F4" BorderThickness="0,0,0,1" BorderBrush="#FFABADB3" SnapsToDevicePixels="True">
+                        <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto"/>
                                 <ColumnDefinition Width="*"/>

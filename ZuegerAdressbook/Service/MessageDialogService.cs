@@ -2,15 +2,15 @@
 
 namespace ZuegerAdressbook.Service
 {
-    public class MessageDialogService
+    public class MessageDialogService : IMessageDialogService
     {
-        public static bool OpenConfirmationDialog(string title, string text)
+        public bool OpenConfirmationDialog(string title, string text)
         {
             var result = MessageBox.Show(text, title, MessageBoxButton.YesNo, MessageBoxImage.Question);
             return result == MessageBoxResult.Yes;
         }
 
-        public static string OpenFileDialog()
+        public string OpenFileDialog()
         {
             string filename = null;
 

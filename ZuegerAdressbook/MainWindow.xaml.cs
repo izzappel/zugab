@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 
+using ZuegerAdressbook.Service;
 using ZuegerAdressbook.ViewModels;
 
 namespace ZuegerAdressbook
@@ -18,14 +19,8 @@ namespace ZuegerAdressbook
 
             Style = (Style)FindResource(typeof(Window));
 
-            _viewModel = new MainViewModel();
+            _viewModel = new MainViewModel(new DataAccess.DataAccess(), new ApplicationDispatcher(), new MessageDialogService());
             DataContext = _viewModel;
-        }
-
-        private void BirthdateButton_OnClick(object sender, RoutedEventArgs e)
-        {
-            var dialog = new BirthdateDialog();
-            dialog.ShowDialog();
         }
 
         private void AddDocumentButton_OnClick(object sender, RoutedEventArgs e)
@@ -37,6 +32,34 @@ namespace ZuegerAdressbook
             {
                 // Open document 
                 string filename = fileDialog.FileName;
+            }
+        }
+
+        private void BirthdayFilterToggle_OnChecked(object sender, RoutedEventArgs e)
+        {
+            if (BirthdayFilterToggle.IsChecked.GetValueOrDefault())
+            {
+                //_viewModel.SortPersonsByBirthday();
+            }
+            else
+            {
+                //_viewModel.SortPersonsByName();
+            }
+        }
+
+        private void FrameworkElement_OnLoaded(object sender, RoutedEventArgs e)
+        {
+            ToolBar toolBar = sender as ToolBar;
+            var overflowGrid = toolBar.Template.FindName("OverflowGrid", toolBar) as FrameworkElement;
+            if (overflowGrid != null)
+            {
+                overflowGrid.Visibility = Visibility.Collapsed;
+            }
+
+            var mainPanelBorder = toolBar.Template.FindName("MainPanelBorder", toolBar) as FrameworkElement;
+            if (mainPanelBorder != null)
+            {
+                mainPanelBorder.Margin = new Thickness(0);
             }
         }
     }

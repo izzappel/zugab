@@ -293,6 +293,7 @@ namespace ZuegerAdressbook.ViewModels
             Gender = _person.Gender;
             GeneralAboExpirationDate = _person.GeneralAboExpirationDate;
             HalbTaxExpirationDate = _person.HalbtaxExpirationDate;
+            HasHalbTax = _person.HasHalbtax;
             HasEnkelKarte = _person.HasEnkelKarte;
             HasGeneralAbo = _person.HasGeneralAbo;
             HasJuniorKarte = _person.HasJuniorKarte;
@@ -317,12 +318,12 @@ namespace ZuegerAdressbook.ViewModels
 
             if (hasChanged)
             {
-                if (propertyName != "HasChanges")
+                if (propertyName != "HasChanges" && propertyName != "Id") // Id will never be set from UI and should never trigger the change tracking
                 {
                     HasChanges = true;
                 }
 
-                _parent.ReportChange();
+                _parent?.ReportChange();
             }
 
             return hasChanged;

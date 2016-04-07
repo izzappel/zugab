@@ -80,6 +80,10 @@ namespace ZuegerAdressbook.ViewModels
         public RelayCommand RevertCommand { get; set; }
         public RelayCommand AddDocumentCommand { get; set; }
 
+        public MainViewModel()
+        {
+        }
+
         public MainViewModel(IDataAccess dataAccess, IDispatcher dispatcher, IMessageDialogService messageDialogService)
         {
             _dataAccess = dataAccess;

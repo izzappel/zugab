@@ -359,7 +359,7 @@
                 <Image Source="Icons/48/gift.png" Height="25"/>
             </ToggleButton>
 
-            <ListBox x:Name="listBox" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" ItemsSource="{Binding Persons}" SelectedItem="{Binding SelectedListPerson}">
+            <ListBox x:Name="listBox" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" ItemsSource="{Binding Persons}" SelectedItem="{Binding SelectedListPerson}" Margin="0,0,150,0">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <Grid>
@@ -376,6 +376,8 @@
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
+            
+            <TextBlock Text="bla" Grid.Column="0" Grid.Row="2" HorizontalAlignment="Right" VerticalAlignment="Top" Padding="0" Margin="0"></TextBlock>
         </Grid>
     </Grid>
 </Window>

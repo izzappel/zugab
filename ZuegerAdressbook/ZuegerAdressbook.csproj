@@ -97,10 +97,6 @@
     <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="View\Controls\FilterControl.cs" />
     <Compile Include="View\Controls\QuickAccessListBox.cs" />
-    <Page Include="BirthdateDialog.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

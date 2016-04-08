@@ -11,8 +11,8 @@
     mc:Ignorable="d" 
     x:Class="ZuegerAdressbook.MainWindow"
     Title="Züger Reisen - Adressbuch" 
-    d:DesignWidth="1133.582"
-    d:DesignHeight="1093.225"
+    d:DesignWidth="600"
+    d:DesignHeight="600"
     Icon="Icons/48/address-book.png"
     d:DataContext="{d:DesignInstance vm:MainViewModel, IsDesignTimeCreatable=True}">
     <Window.Resources>
@@ -372,25 +372,32 @@
                 <Image Source="Icons/48/gift.png" Height="25"/>
             </ToggleButton>
 
-            <ListBox x:Name="listBox" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" ItemsSource="{Binding Persons}" SelectedItem="{Binding SelectedListPerson}" Margin="0,0,150,0">
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="20" />
-                                <ColumnDefinition Width="5" />
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
-                            <TextBlock Grid.Column="0" Grid.Row="0" Style="{StaticResource FontAwesomeIcon}" Visibility="{Binding Gender, ConverterParameter=Female, Converter={StaticResource enumVisibilityConverter}}"><Run Text="&#xF182;"/></TextBlock>
-                            <TextBlock Grid.Column="0" Grid.Row="0"  Style="{StaticResource FontAwesomeIcon}" Visibility="{Binding Gender, ConverterParameter=Male, Converter={StaticResource enumVisibilityConverter}}"><Run Text="&#xF183;"/></TextBlock>
+            <Grid Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="100" />
+                </Grid.ColumnDefinitions>
+                <ListBox x:Name="listBox" Grid.Column="0" Grid.Row="9" ItemsSource="{Binding Persons}" SelectedItem="{Binding SelectedListPerson}" ItemContainerStyle="{DynamicResource ListBoxItemStyle1}" Style="{DynamicResource QuickAccessListBoxStyle1}">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="20" />
+                                    <ColumnDefinition Width="5" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" Grid.Row="0" Style="{StaticResource FontAwesomeIcon}" Visibility="{Binding Gender, ConverterParameter=Female, Converter={StaticResource enumVisibilityConverter}}"><Run Text="&#xF182;"/></TextBlock>
+                                <TextBlock Grid.Column="0" Grid.Row="0"  Style="{StaticResource FontAwesomeIcon}" Visibility="{Binding Gender, ConverterParameter=Male, Converter={StaticResource enumVisibilityConverter}}"><Run Text="&#xF183;"/></TextBlock>
 
-                            <TextBlock Grid.Column="2" Grid.Row="0" VerticalAlignment="Center"><Run Text="{Binding Lastname}" /><Run Text=" "/><Run Text="{Binding Firstname}" /></TextBlock>
-                        </Grid>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
+                                <TextBlock Grid.Column="2" Grid.Row="0" VerticalAlignment="Center"><Run Text="{Binding Lastname}" /><Run Text=" "/><Run Text="{Binding Firstname}" /></TextBlock>
+                            </Grid>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+                <controls:QuickAccessListBox Grid.Column="1" VerticalAlignment="Top" />
+            </Grid>
+
             
-            <TextBlock Text="bla" Grid.Column="0" Grid.Row="2" HorizontalAlignment="Right" VerticalAlignment="Top" Padding="0" Margin="0"></TextBlock>
         </Grid>
     </Grid>
 </Window>

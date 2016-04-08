@@ -1,6 +1,7 @@
-﻿<Application x:Class="ZuegerAdressbook.App"
+﻿<Application
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:Controls="clr-namespace:ZuegerAdressbook.View.Controls" x:Class="ZuegerAdressbook.App"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
         <ResourceDictionary>

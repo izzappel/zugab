@@ -29,7 +29,7 @@
         <Style TargetType="{x:Type TextBox}">
             <Setter Property="VerticalContentAlignment" Value="Center" />
             <Setter Property="BorderThickness" Value="0,0,0,1"/>
-            <Setter Property="Background" Value="#FFF4F4F4"/>
+            <Setter Property="Background" Value="{StaticResource ControlBackgroundColor}"/>
             <Setter Property="FontFamily" Value="fonts/#Frutiger LT Com 55 Roman"/>
             <Setter Property="Margin" Value="5,0,0,0"/>
         </Style>
@@ -235,7 +235,7 @@
                         <TextBox Grid.Column="0" Grid.Row="3" Text="{Binding Firstname, UpdateSourceTrigger=PropertyChanged}"/>
 
                         <Label Grid.Column="0" Grid.Row="4" Style="{StaticResource TopLabel}" Content="Geburtsdatum"/>
-                        <DatePicker Grid.Column="0" Grid.Row="5" SelectedDate="{Binding Birthdate}" />
+                        <DatePicker Grid.Column="0" Grid.Row="5" SelectedDate="{Binding Birthdate}" Template="{DynamicResource DatePickerControlTemplate}" />
                         <StackPanel Grid.Column="2" Grid.Row="5" Orientation="Horizontal">
                             <TextBlock Text="{Binding Age, FallbackValue=?, TargetNullValue=?}" Margin="0,0,5,0"/>
                             <TextBlock Text="Jahre" Margin="0,0,5,0"/>
@@ -315,26 +315,28 @@
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="30"/>
+                                <RowDefinition Height="5"/>
                                 <RowDefinition Height="30"/>
+                                <RowDefinition Height="5"/>
                                 <RowDefinition Height="30"/>
-                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="5"/>
                                 <RowDefinition Height="30"/>
                             </Grid.RowDefinitions>
                             <CheckBox Grid.Column="0" Grid.Row="0" IsChecked="{Binding HasHalbTax}" Content="HalbTax"/>
                             <Label Grid.Column="2" Grid.Row="0" Visibility="{Binding HasHalbTax, Converter={StaticResource booleanVisibilityConverter}}" Content="Ablaufdatum"/>
-                            <DatePicker Grid.Column="3" Grid.Row="0" DisplayDate="{Binding HalbTaxExpirationDate}"  Visibility="{Binding HasHalbTax, Converter={StaticResource booleanVisibilityConverter}}"/>
+                            <DatePicker Grid.Column="3" Grid.Row="0" DisplayDate="{Binding HalbTaxExpirationDate}" SnapsToDevicePixels="True" Visibility="{Binding HasHalbTax, Converter={StaticResource booleanVisibilityConverter}}" Template="{DynamicResource DatePickerControlTemplate}" />
 
-                            <CheckBox  Grid.Column="0" Grid.Row="1" IsChecked="{Binding HasGeneralAbo}" Content="GA"/>
-                            <Label Grid.Column="2" Grid.Row="1" Visibility="{Binding HasGeneralAbo, Converter={StaticResource booleanVisibilityConverter}}" Content="Ablaufdatum" />
-                            <DatePicker Grid.Column="3" Grid.Row="1" DisplayDate="{Binding GeneralAboExpirationDate}" Visibility="{Binding HasGeneralAbo, Converter={StaticResource booleanVisibilityConverter}}"/>
+                            <CheckBox  Grid.Column="0" Grid.Row="2" IsChecked="{Binding HasGeneralAbo}" Content="GA"/>
+                            <Label Grid.Column="2" Grid.Row="2" Visibility="{Binding HasGeneralAbo, Converter={StaticResource booleanVisibilityConverter}}" Content="Ablaufdatum" />
+                            <DatePicker Grid.Column="3" Grid.Row="2" DisplayDate="{Binding GeneralAboExpirationDate}" SnapsToDevicePixels="True" Visibility="{Binding HasGeneralAbo, Converter={StaticResource booleanVisibilityConverter}}" Template="{DynamicResource DatePickerControlTemplate}" />
 
-                            <CheckBox  Grid.Column="0" Grid.Row="2" IsChecked="{Binding HasJuniorKarte}" Content="Junior-Karte" Visibility="{Binding IsChild, Converter={StaticResource booleanVisibilityConverter}}"/>
-                            <Label Grid.Column="2" Grid.Row="2" Visibility="{Binding HasJuniorKarte, Converter={StaticResource booleanVisibilityConverter}}" Content="Ablaufdatum" />
-                            <DatePicker Grid.Column="3" Grid.Row="2" DisplayDate="{Binding JuniorKarteExpirationDate}" Visibility="{Binding HasJuniorKarte, Converter={StaticResource booleanVisibilityConverter}}"/>
+                            <CheckBox  Grid.Column="0" Grid.Row="4" IsChecked="{Binding HasJuniorKarte}" Content="Junior-Karte" Visibility="{Binding IsChild, Converter={StaticResource booleanVisibilityConverter}}"/>
+                            <Label Grid.Column="2" Grid.Row="4" Visibility="{Binding HasJuniorKarte, Converter={StaticResource booleanVisibilityConverter}}" Content="Ablaufdatum" />
+                            <DatePicker Grid.Column="3" Grid.Row="4" DisplayDate="{Binding JuniorKarteExpirationDate}" SnapsToDevicePixels="True" Visibility="{Binding HasJuniorKarte, Converter={StaticResource booleanVisibilityConverter}}" Template="{DynamicResource DatePickerControlTemplate}" />
 
-                            <CheckBox  Grid.Column="0" Grid.Row="3" IsChecked="{Binding HasEnkelKarte}" Content="Enkel-Karte" Visibility="{Binding IsChild, Converter={StaticResource booleanVisibilityConverter}}"/>
-                            <Label Grid.Column="2" Grid.Row="3" Visibility="{Binding HasEnkelKarte, Converter={StaticResource booleanVisibilityConverter}}" Content="Ablaufdatum" />
-                            <DatePicker Grid.Column="3" Grid.Row="3" DisplayDate="{Binding EnkelKarteExpirationDate}" Visibility="{Binding HasEnkelKarte, Converter={StaticResource booleanVisibilityConverter}}"/>
+                            <CheckBox  Grid.Column="0" Grid.Row="6" IsChecked="{Binding HasEnkelKarte}" Content="Enkel-Karte" Visibility="{Binding IsChild, Converter={StaticResource booleanVisibilityConverter}}"/>
+                            <Label Grid.Column="2" Grid.Row="6" Visibility="{Binding HasEnkelKarte, Converter={StaticResource booleanVisibilityConverter}}" Content="Ablaufdatum" />
+                            <DatePicker Grid.Column="3" Grid.Row="6" DisplayDate="{Binding EnkelKarteExpirationDate}" SnapsToDevicePixels="True" Visibility="{Binding HasEnkelKarte, Converter={StaticResource booleanVisibilityConverter}}" Template="{DynamicResource DatePickerControlTemplate}" />
                         </Grid>
                         <DockPanel LastChildFill="True" Grid.Row="3">
                             <Separator Width="30"/>

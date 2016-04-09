@@ -3,8 +3,14 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-        <Style TargetType="{x:Type Window}">
-            <Setter Property="FontFamily" Value="fonts/#Frutiger LT Com 55 Roman" />
-        </Style>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Themes/DatePickerControl.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+            <Style TargetType="{x:Type Window}">
+                <Setter Property="FontFamily" Value="fonts/#Frutiger LT Com 55 Roman" />
+            </Style>
+            <SolidColorBrush x:Key="ControlBackgroundColor" Color="#FFF4F4F4" />
+        </ResourceDictionary>
     </Application.Resources>
 </Application>

@@ -84,9 +84,6 @@
     <Compile Include="Service\ApplicationDispatcher.cs" />
     <Compile Include="Service\IDispatcher.cs" />
     <Compile Include="Service\IMessageDialogService.cs" />
-    <Compile Include="UserControl1.xaml.cs">
-      <DependentUpon>UserControl1.xaml</DependentUpon>
-    </Compile>
     <Compile Include="ViewModels\IChangeListener.cs" />
     <Compile Include="ViewModels\PersonViewModel.cs" />
     <Compile Include="Model\Relationship.cs" />
@@ -119,10 +116,6 @@
     <Page Include="Themes\Generic.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </Page>
-    <Page Include="UserControl1.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>

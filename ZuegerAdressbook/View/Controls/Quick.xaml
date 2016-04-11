@@ -5,48 +5,44 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ZuegerAdressbook.View.Controls"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="100"
+             d:DesignHeight="500" d:DesignWidth="100"
              x:Name="LayoutRoot">
 
     <UserControl.Resources>
 
         <Style TargetType="{x:Type Border}">
-            
+
         </Style>
-        
+
         <Style TargetType="{x:Type TextBlock}">
             <Setter Property="FontSize" Value="14" />
             <Setter Property="Foreground" Value="Gray" />
             <Setter Property="VerticalAlignment" Value="Center" />
-            <Setter Property="Margin" Value="10,0,0,0" />
             <Style.Triggers>
-                <!--<Trigger Property="TextBlock.IsMouseOver" Value="True">
-                    <Setter Property="TextBlock.FontSize" Value="50" />
-                    
-                </Trigger>-->
-                
-                    <EventTrigger RoutedEvent="MouseEnter">
-                        <EventTrigger.Actions>
-                            <BeginStoryboard>
-                                <Storyboard>
-                                    <DoubleAnimation Duration="0:0:0.150" Storyboard.TargetProperty="FontSize" To="34" />
-                                </Storyboard>
-                            </BeginStoryboard>
-                        </EventTrigger.Actions>
-                    </EventTrigger>
-                    <EventTrigger RoutedEvent="MouseLeave">
-                        <EventTrigger.Actions>
-                            <BeginStoryboard>
-                                <Storyboard>
-                                    <DoubleAnimation Duration="0:0:0.150" Storyboard.TargetProperty="FontSize" To="14" />
-                                </Storyboard>
-                            </BeginStoryboard>
-                        </EventTrigger.Actions>
-                    </EventTrigger>
-                
+                <Trigger Property="TextBlock.IsMouseOver" Value="True">
+                    <Setter Property="TextBlock.FontWeight" Value="Bold" />
+                </Trigger>
+                <EventTrigger RoutedEvent="MouseEnter">
+                    <EventTrigger.Actions>
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation Duration="0:0:0.080" Storyboard.TargetProperty="FontSize" To="34" />
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger.Actions>
+                </EventTrigger>
+                <EventTrigger RoutedEvent="MouseLeave">
+                    <EventTrigger.Actions>
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation Duration="0:0:0.250" Storyboard.TargetProperty="FontSize" To="14" />
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger.Actions>
+                </EventTrigger>
             </Style.Triggers>
         </Style>
-        
+
     </UserControl.Resources>
 
     <Grid VerticalAlignment="Stretch">

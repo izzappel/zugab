@@ -3,7 +3,7 @@ using System.Windows.Controls;
 
 namespace ZuegerAdressbook.View.Controls
 {
-    public class QuickAccessListBox : FrameworkElement
+    public class QuickAccessListBox : Control
     {
         static QuickAccessListBox()
         {

@@ -377,7 +377,7 @@
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="100" />
                 </Grid.ColumnDefinitions>
-                <ListBox x:Name="listBox" Grid.Column="0" Grid.Row="9" ItemsSource="{Binding Persons}" SelectedItem="{Binding SelectedListPerson}" ItemContainerStyle="{DynamicResource ListBoxItemStyle1}" Style="{DynamicResource QuickAccessListBoxStyle1}">
+                <ListBox x:Name="listBox" Grid.Column="0" Grid.Row="9" ItemsSource="{Binding Persons}" SelectedItem="{Binding SelectedListPerson}">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <Grid>
@@ -394,7 +394,7 @@
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                 </ListBox>
-                <controls:QuickAccessListBox Grid.Column="1" VerticalAlignment="Top" />
+                <controls:Quick Grid.Column="1" VerticalAlignment="Top" />
             </Grid>
 
             

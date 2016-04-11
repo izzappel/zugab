@@ -96,6 +96,9 @@
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="View\Controls\FilterControl.cs" />
+    <Compile Include="View\Controls\Quick.xaml.cs">
+      <DependentUpon>Quick.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Controls\QuickAccessListBox.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -123,6 +126,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Themes\QuickAccessListBox.generic.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Controls\Quick.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

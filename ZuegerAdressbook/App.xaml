@@ -5,9 +5,13 @@
              StartupUri="MainWindow.xaml">
     <Application.Resources>
         <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Themes/DatePickerControl.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
             <Style TargetType="{x:Type Window}">
                 <Setter Property="FontFamily" Value="fonts/#Frutiger LT Com 55 Roman" />
             </Style>
+            <SolidColorBrush x:Key="ControlBackgroundColor" Color="#FFF4F4F4" />
         </ResourceDictionary>
     </Application.Resources>
 </Application>

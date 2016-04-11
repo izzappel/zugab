@@ -96,6 +96,10 @@
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="View\Controls\FilterControl.cs" />
+    <Page Include="Themes\DatePickerControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Compile Include="View\Controls\Quick.xaml.cs">
       <DependentUpon>Quick.xaml</DependentUpon>
     </Compile>

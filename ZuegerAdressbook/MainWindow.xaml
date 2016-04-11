@@ -608,7 +608,7 @@
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                 </ListBox>
-                <controls:Quick Grid.Column="1" VerticalAlignment="Stretch" Margin="10,0,0,0" />
+                <controls:Quick Grid.Column="1" TargetControl="{Binding ElementName=listBox}" TargetPropertyPath="Lastname" VerticalAlignment="Stretch" Margin="10,0,0,0" />
             </Grid>
 
             

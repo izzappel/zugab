@@ -79,8 +79,10 @@
     <Compile Include="Converters\EnumBooleanConverter.cs" />
     <Compile Include="DataAccess\DataAccess.cs" />
     <Compile Include="DataAccess\IDataAccess.cs" />
+    <Compile Include="Extensions\ObjectExtensions.cs" />
     <Compile Include="Extensions\RavenDb.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
+    <Compile Include="Extensions\VisualTreeHelperExtensions.cs" />
     <Compile Include="Index\PersonByBirthdate.cs" />
     <Compile Include="Model\BaseModel.cs" />
     <Compile Include="Model\Gender.cs" />

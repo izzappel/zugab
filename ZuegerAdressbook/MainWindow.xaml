@@ -394,7 +394,7 @@
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                 </ListBox>
-                <controls:Quick Grid.Column="1" VerticalAlignment="Top" />
+                <controls:Quick Grid.Column="1" VerticalAlignment="Stretch" />
             </Grid>
 
             

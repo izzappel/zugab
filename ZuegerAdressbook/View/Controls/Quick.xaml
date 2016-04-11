@@ -48,88 +48,115 @@
         </Style>
         
     </UserControl.Resources>
-    
-    <Grid>
-        <StackPanel>
-            <Border Height="30">
-                <TextBlock Text="A" />
-            </Border>
-            <Border Height="30">
-                <TextBlock Text="B" />
-            </Border>
-            <Border Height="30">
-                <TextBlock Text="C" />
-            </Border>
-            <Border Height="30">
-                <TextBlock Text="D" />
-            </Border>
-            <Border Height="30">
-                <TextBlock Text="E" />
-            </Border>
-            <Border Height="30">
-                <TextBlock Text="F" />
-            </Border>
-            <Border Height="30">
-                <TextBlock Text="G" />
-            </Border>
-            <Border Height="30">
-                <TextBlock Text="H" />
-            </Border>
-            <Border Height="30">
-                <TextBlock Text="I" />
-            </Border>
-            <Border Height="30">
-                <TextBlock Text="J" />
-            </Border>
-            <Border Height="30">
-                <TextBlock Text="K" />
-            </Border>
-            <Border Height="30">
-                <TextBlock Text="L" />
-            </Border>
-            <Border Height="30">
-                <TextBlock Text="M" />
-            </Border>
-            <Border Height="30">
-                <TextBlock Text="N" />
-            </Border>
-            <Border Height="30">
-                <TextBlock Text="O" />
-            </Border>
-            <Border Height="30">
-                <TextBlock Text="P" />
-            </Border>
-            <Border Height="30">
-                <TextBlock Text="Q" />
-            </Border>
-            <Border Height="30">
-                <TextBlock Text="R" />
-            </Border>
-            <Border Height="30">
-                <TextBlock Text="S" />
-            </Border>
-            <Border Height="30">
-                <TextBlock Text="T" />
-            </Border>
-            <Border Height="30">
-                <TextBlock Text="U" />
-            </Border>
-            <Border Height="30">
-                <TextBlock Text="V" />
-            </Border>
-            <Border Height="30">
-                <TextBlock Text="W" />
-            </Border>
-            <Border Height="30">
-                <TextBlock Text="X" />
-            </Border>
-            <Border Height="30">
-                <TextBlock Text="Y" />
-            </Border>
-            <Border Height="30">
-                <TextBlock Text="Z" />
-            </Border>
-            
-        </StackPanel>
+
+    <Grid VerticalAlignment="Stretch">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <Border Grid.Row="0">
+            <TextBlock Text="A" />
+        </Border>
+        <Border Grid.Row="1">
+            <TextBlock Text="B" />
+        </Border>
+        <Border Grid.Row="2">
+            <TextBlock Text="C" />
+        </Border>
+        <Border Grid.Row="3">
+            <TextBlock Text="D" />
+        </Border>
+        <Border Grid.Row="4">
+            <TextBlock Text="E" />
+        </Border>
+        <Border Grid.Row="5">
+            <TextBlock Text="F" />
+        </Border>
+        <Border Grid.Row="6">
+            <TextBlock Text="G" />
+        </Border>
+        <Border Grid.Row="7">
+            <TextBlock Text="H" />
+        </Border>
+        <Border Grid.Row="8">
+            <TextBlock Text="I" />
+        </Border>
+        <Border Grid.Row="9">
+            <TextBlock Text="J" />
+        </Border>
+        <Border Grid.Row="10">
+            <TextBlock Text="K" />
+        </Border>
+        <Border Grid.Row="11">
+            <TextBlock Text="L" />
+        </Border>
+        <Border Grid.Row="12">
+            <TextBlock Text="M" />
+        </Border>
+        <Border Grid.Row="13">
+            <TextBlock Text="N" />
+        </Border>
+        <Border Grid.Row="14">
+            <TextBlock Text="O" />
+        </Border>
+        <Border Grid.Row="15">
+            <TextBlock Text="P" />
+        </Border>
+        <Border Grid.Row="16">
+            <TextBlock Text="Q" />
+        </Border>
+        <Border Grid.Row="17">
+            <TextBlock Text="R" />
+        </Border>
+        <Border Grid.Row="18">
+            <TextBlock Text="S" />
+        </Border>
+        <Border Grid.Row="19">
+            <TextBlock Text="T" />
+        </Border>
+        <Border Grid.Row="20">
+            <TextBlock Text="U" />
+        </Border>
+        <Border Grid.Row="21">
+            <TextBlock Text="V" />
+        </Border>
+        <Border Grid.Row="22">
+            <TextBlock Text="W" />
+        </Border>
+        <Border Grid.Row="23">
+            <TextBlock Text="X" />
+        </Border>
+        <Border Grid.Row="24">
+            <TextBlock Text="Y" />
+        </Border>
+        <Border Grid.Row="25">
+            <TextBlock Text="Z" />
+        </Border>
+
     </Grid>
 </UserControl>

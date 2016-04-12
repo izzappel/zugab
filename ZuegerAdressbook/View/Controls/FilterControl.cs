@@ -58,7 +58,6 @@ namespace ZuegerAdressbook.View.Controls
 			FilterEvent = EventManager.RegisterRoutedEvent("Filter", RoutingStrategy.Bubble, typeof(FilterRoutedEventHandler), typeof(FilterControl));
 			DirectionEvent = EventManager.RegisterRoutedEvent("Direction", RoutingStrategy.Bubble, typeof(DirectionRoutedEventHandler), typeof(FilterControl));
 			ClearFilterEvent = EventManager.RegisterRoutedEvent("ClearFilter", RoutingStrategy.Bubble, typeof(RoutedEventArgs), typeof(FilterControl));
-
 		}
 
 		public FilterControl()
@@ -70,14 +69,8 @@ namespace ZuegerAdressbook.View.Controls
 
 	    public string FilterText
 		{
-			get
-			{
-				return (string)GetValue(FilterTextProperty);
-			}
-			set
-			{
-				SetValue(FilterTextProperty, value);
-			}
+			get { return (string)GetValue(FilterTextProperty); }
+			set { SetValue(FilterTextProperty, value); }
 		}
 
 	    public string Header
@@ -94,14 +87,8 @@ namespace ZuegerAdressbook.View.Controls
 
 	    public string FilterTextBindingPath
 	    {
-	        get
-	        {
-	            return (string)GetValue(FilterTextBindingPathProperty);
-	        }
-	        set
-	        {
-	            SetValue(FilterTextBindingPathProperty, value);
-	        }
+	        get { return (string)GetValue(FilterTextBindingPathProperty); }
+	        set { SetValue(FilterTextBindingPathProperty, value); }
 	    }
 
 	    public bool FilterOnEnter
@@ -118,38 +105,20 @@ namespace ZuegerAdressbook.View.Controls
 
 	    public event FilterRoutedEventHandler Filter
 		{
-			add
-			{
-                AddHandler(FilterEvent, value);
-			}
-			remove
-			{
-                RemoveHandler(FilterEvent, value);
-			}
+			add { AddHandler(FilterEvent, value); }
+			remove { RemoveHandler(FilterEvent, value); }
 		}
 
 	    public event DirectionRoutedEventHandler Direction
 		{
-			add
-			{
-                AddHandler(DirectionEvent, value);
-			}
-			remove
-			{
-                RemoveHandler(DirectionEvent, value);
-			}
+	        add { AddHandler(DirectionEvent, value); }
+	        remove { RemoveHandler(DirectionEvent, value); }
 		}
 
 	    public event RoutedEventHandler ClearFilter
 		{
-			add
-			{
-                AddHandler(ClearFilterEvent, value);
-			}
-			remove
-			{
-                RemoveHandler(ClearFilterEvent, value);
-			}
+			add { AddHandler(ClearFilterEvent, value); }
+			remove{ RemoveHandler(ClearFilterEvent, value); }
 		}
 
 	    private static void OnFilterFiringIntervalChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)

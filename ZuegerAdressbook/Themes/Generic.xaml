@@ -3,7 +3,6 @@
     
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="/ZuegerAdressbook;component/Themes/FilterControl.generic.xaml" />
-        <ResourceDictionary Source="/ZuegerAdressbook;component/Themes/QuickAccessListBox.generic.xaml" />
     </ResourceDictionary.MergedDictionaries>
     
 </ResourceDictionary>

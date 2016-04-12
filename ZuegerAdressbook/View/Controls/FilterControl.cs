@@ -1,13 +1,10 @@
 ﻿using System;
-using System.Windows.Controls;
 using System.Windows;
-using System.Windows.Threading;
+using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
-using System.Collections;
-using System.Reflection;
-using System.ComponentModel;
-using System.Linq;
+using System.Windows.Threading;
+using ZuegerAdressbook.Extensions;
 
 namespace ZuegerAdressbook.View.Controls
 {
@@ -28,9 +25,7 @@ namespace ZuegerAdressbook.View.Controls
 	[TemplatePart(Name = PART_Header, Type = typeof(TextBlock))]
 	public class FilterControl : Control
 	{
-		#region Declarations
-
-		private const string PART_FilterBox = "PART_FilterBox";
+	    private const string PART_FilterBox = "PART_FilterBox";
 		private const string PART_ClearButton = "PART_ClearButton";
 		private const string PART_Header = "PART_Header";
 
@@ -40,20 +35,23 @@ namespace ZuegerAdressbook.View.Controls
 
 		public static readonly RoutedEvent ClearFilterEvent;
 
-		private Button clearButton = null;
+        public static readonly DependencyProperty FilterTextProperty = DependencyProperty.Register("FilterText", typeof(string), typeof(FilterControl), new PropertyMetadata(string.Empty));
+        public static readonly DependencyProperty HeaderProperty = DependencyProperty.Register("Header", typeof(string), typeof(FilterControl), new UIPropertyMetadata(string.Empty));
+        public static readonly DependencyProperty TargetControlProperty = DependencyProperty.Register("TargetControl", typeof(ItemsControl), typeof(FilterControl), new UIPropertyMetadata(null));
+        public static readonly DependencyProperty FilterTextBindingPathProperty = DependencyProperty.Register("FilterTextBindingPath", typeof(string), typeof(FilterControl), new PropertyMetadata(string.Empty));
+        public static readonly DependencyProperty FilterOnEnterProperty = DependencyProperty.Register("FilterOnEnter", typeof(bool), typeof(FilterControl), new UIPropertyMetadata(false));
+        public static readonly DependencyProperty FilterFiringIntervalProperty = DependencyProperty.Register("FilterFiringInterval", typeof(int), typeof(FilterControl), new UIPropertyMetadata(100, new PropertyChangedCallback(OnFilterFiringIntervalChanged)));
+
+        private Button clearButton = null;
 		private TextBox filterBox = null;
 		private TextBlock textBlock = null;
 		private int tickCount;
 
 		private bool byPassEvent = false;
 
-		private DispatcherTimer timer;
+		private readonly DispatcherTimer timer;
 
-		#endregion
-
-		#region Constructors
-
-		static FilterControl()
+	    static FilterControl()
 		{
 			DefaultStyleKeyProperty.OverrideMetadata(typeof(FilterControl), new FrameworkPropertyMetadata(typeof(FilterControl)));
 
@@ -70,11 +68,7 @@ namespace ZuegerAdressbook.View.Controls
 			timer.Tick += new EventHandler(OnDispatcherTimerTick);
 		}
 
-		#endregion
-
-		#region FilterText property
-
-		public string FilterText
+	    public string FilterText
 		{
 			get
 			{
@@ -86,144 +80,92 @@ namespace ZuegerAdressbook.View.Controls
 			}
 		}
 
-		public static readonly DependencyProperty FilterTextProperty = DependencyProperty.Register("FilterText", typeof(string), typeof(FilterControl), new PropertyMetadata(string.Empty));
+	    public string Header
+	    {
+	        get { return (string)GetValue(HeaderProperty); }
+	        set { SetValue(HeaderProperty, value); }
+	    }
 
-		#endregion
+	    public ItemsControl TargetControl
+	    {
+	        get { return (ItemsControl)GetValue(TargetControlProperty); }
+	        set { SetValue(TargetControlProperty, value); }
+	    }
 
-		#region Header property
+	    public string FilterTextBindingPath
+	    {
+	        get
+	        {
+	            return (string)GetValue(FilterTextBindingPathProperty);
+	        }
+	        set
+	        {
+	            SetValue(FilterTextBindingPathProperty, value);
+	        }
+	    }
 
-		public string Header
-		{
-			get { return (string)GetValue(HeaderProperty); }
-			set { SetValue(HeaderProperty, value); }
-		}
+	    public bool FilterOnEnter
+	    {
+	        get { return (bool)GetValue(FilterOnEnterProperty); }
+	        set { SetValue(FilterOnEnterProperty, value); }
+	    }
 
-		public static readonly DependencyProperty HeaderProperty = DependencyProperty.Register("Header", typeof(string), typeof(FilterControl), new UIPropertyMetadata(string.Empty));
+	    public int FilterFiringInterval
+	    {
+	        get { return (int)GetValue(FilterFiringIntervalProperty); }
+	        set { SetValue(FilterFiringIntervalProperty, value); }
+	    }
 
-		#endregion
-
-		#region TargetControl property
-
-		public ItemsControl TargetControl
-		{
-			get { return (ItemsControl)GetValue(TargetControlProperty); }
-			set { SetValue(TargetControlProperty, value); }
-		}
-
-		public static readonly DependencyProperty TargetControlProperty = DependencyProperty.Register("TargetControl", typeof(ItemsControl), typeof(FilterControl), new UIPropertyMetadata(null));
-
-		#endregion
-
-		#region FilterTextBindingPath property
-
-		public string FilterTextBindingPath
-		{
-			get
-			{
-				return (string)GetValue(FilterTextBindingPathProperty);
-			}
-			set
-			{
-				SetValue(FilterTextBindingPathProperty, value);
-			}
-		}
-
-		public static readonly DependencyProperty FilterTextBindingPathProperty = DependencyProperty.Register("FilterTextBindingPath", typeof(string), typeof(FilterControl), new PropertyMetadata(string.Empty));
-
-		#endregion
-
-		#region FilterOnEnter property
-
-		public bool FilterOnEnter
-		{
-			get { return (bool)GetValue(FilterOnEnterProperty); }
-			set { SetValue(FilterOnEnterProperty, value); }
-		}
-
-		public static readonly DependencyProperty FilterOnEnterProperty = DependencyProperty.Register("FilterOnEnter", typeof(bool), typeof(FilterControl), new UIPropertyMetadata(false));
-
-		#endregion
-
-		#region FilterFiringInterval property
-
-		public int FilterFiringInterval
-		{
-			get { return (int)GetValue(FilterFiringIntervalProperty); }
-			set { SetValue(FilterFiringIntervalProperty, value); }
-		}
-
-		public static readonly DependencyProperty FilterFiringIntervalProperty = DependencyProperty.Register("FilterFiringInterval", typeof(int), typeof(FilterControl), new UIPropertyMetadata(100, new PropertyChangedCallback(OnFilterFiringIntervalChanged)));
-
-		private static void OnFilterFiringIntervalChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-		{
-			FilterControl filterBox = d as FilterControl;
-			filterBox.timer.Interval = new TimeSpan(0, 0, 0, 0, filterBox.FilterFiringInterval);
-		}
-
-		#endregion
-
-		#region Filter event
-
-		public event FilterRoutedEventHandler Filter
+	    public event FilterRoutedEventHandler Filter
 		{
 			add
 			{
-				base.AddHandler(FilterEvent, value);
+                AddHandler(FilterEvent, value);
 			}
 			remove
 			{
-				base.RemoveHandler(FilterEvent, value);
+                RemoveHandler(FilterEvent, value);
 			}
 		}
 
-		#endregion
-
-		#region Direction event
-
-		public event DirectionRoutedEventHandler Direction
+	    public event DirectionRoutedEventHandler Direction
 		{
 			add
 			{
-				base.AddHandler(DirectionEvent, value);
+                AddHandler(DirectionEvent, value);
 			}
 			remove
 			{
-				base.RemoveHandler(DirectionEvent, value);
+                RemoveHandler(DirectionEvent, value);
 			}
 		}
 
-		#endregion
-
-		#region ClearFilter event
-
-		public event RoutedEventHandler ClearFilter
+	    public event RoutedEventHandler ClearFilter
 		{
 			add
 			{
-				base.AddHandler(ClearFilterEvent, value);
+                AddHandler(ClearFilterEvent, value);
 			}
 			remove
 			{
-				base.RemoveHandler(ClearFilterEvent, value);
+                RemoveHandler(ClearFilterEvent, value);
 			}
 		}
 
-		#endregion
+	    private static void OnFilterFiringIntervalChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+	    {
+	        FilterControl filterBox = d as FilterControl;
+	        filterBox.timer.Interval = new TimeSpan(0, 0, 0, 0, filterBox.FilterFiringInterval);
+	    }
 
-		#region Overridden Functions/Methods
-
-		public override void OnApplyTemplate()
+	    public override void OnApplyTemplate()
 		{
 			base.OnApplyTemplate();
 
 			AttachToVisualTree();
 		}
 
-		#endregion
-
-		#region Private Functions/Methods
-
-		private void ApplyFilterOnTarget()
+	    private void ApplyFilterOnTarget()
 		{
 			if (TargetControl == null || TargetControl.ItemsSource == null)
 			{
@@ -242,7 +184,7 @@ namespace ZuegerAdressbook.View.Controls
 				throw new InvalidOperationException("FilterTextBindingPath is not set.");
 			}
 
-			collectionView.Filter = (m => (GetDataValue<string>(m, this.FilterTextBindingPath).IndexOf(this.FilterText, StringComparison.InvariantCultureIgnoreCase) > -1));
+			collectionView.Filter = (m => (m.DynamicAccess<string>(this.FilterTextBindingPath).IndexOf(this.FilterText, StringComparison.InvariantCultureIgnoreCase) > -1));
 		}
 
 		private void ClearFilterOnTarget()
@@ -274,22 +216,6 @@ namespace ZuegerAdressbook.View.Controls
 			}
 		}
 
-		private T GetDataValue<T>(object data, string propertyName)
-		{
-			PropertyInfo[] propinfo = data.GetType().GetProperties();
-			PropertyDescriptorCollection descriptors = TypeDescriptor.GetProperties(data.GetType());
-			PropertyDescriptor descriptor = descriptors[propertyName];
-
-			if (descriptor == null)
-			{
-				throw new InvalidOperationException();
-			}
-
-			T value = (T)descriptor.GetValue(data);
-
-			return value;
-		}
-
 		private void AttachToVisualTree()
 		{
 			textBlock = GetTemplateChild(PART_Header) as TextBlock;
@@ -298,8 +224,8 @@ namespace ZuegerAdressbook.View.Controls
 
 			if (filterBox != null)
 			{
-				filterBox.LostKeyboardFocus += new System.Windows.Input.KeyboardFocusChangedEventHandler(OnLostKeyboardFocus);
-				filterBox.GotKeyboardFocus += new System.Windows.Input.KeyboardFocusChangedEventHandler(OnGotKeyboardFocus);
+				filterBox.LostKeyboardFocus += new KeyboardFocusChangedEventHandler(OnLostKeyboardFocus);
+				filterBox.GotKeyboardFocus += new KeyboardFocusChangedEventHandler(OnGotKeyboardFocus);
 				filterBox.TextChanged += new TextChangedEventHandler(OnFilterBoxTextChanged);
 			}
 
@@ -429,9 +355,6 @@ namespace ZuegerAdressbook.View.Controls
 
 			tickCount++;
 		}
-
-		#endregion
-
 	}
 
 	public class FilterEventArgs : RoutedEventArgs

@@ -9,9 +9,9 @@ using ZuegerAdressbook.Extensions;
 
 namespace ZuegerAdressbook.View.Controls
 {
-    public partial class Quick : UserControl
+    public partial class QuickAccess : UserControl
     {
-        public Quick()
+        public QuickAccess()
         {
             InitializeComponent();
 
@@ -59,8 +59,8 @@ namespace ZuegerAdressbook.View.Controls
             }
         }
 
-        public static readonly DependencyProperty TargetControlProperty = DependencyProperty.Register("TargetControl", typeof(ItemsControl), typeof(Quick), new UIPropertyMetadata(null));
-        public static readonly DependencyProperty TargetPropertyPathProperty = DependencyProperty.Register("TargetPropertyPath", typeof(string), typeof(Quick), new PropertyMetadata(string.Empty));
+        public static readonly DependencyProperty TargetControlProperty = DependencyProperty.Register("TargetControl", typeof(ItemsControl), typeof(QuickAccess), new UIPropertyMetadata(null));
+        public static readonly DependencyProperty TargetPropertyPathProperty = DependencyProperty.Register("TargetPropertyPath", typeof(string), typeof(QuickAccess), new PropertyMetadata(string.Empty));
 
         public ListBox TargetControl
         {

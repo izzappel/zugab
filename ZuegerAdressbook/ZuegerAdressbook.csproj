@@ -102,10 +102,9 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Compile Include="View\Controls\Quick.xaml.cs">
-      <DependentUpon>Quick.xaml</DependentUpon>
+    <Compile Include="View\Controls\QuickAccess.xaml.cs">
+      <DependentUpon>QuickAccess.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Controls\QuickAccessListBox.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -131,11 +130,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Themes\QuickAccessListBox.generic.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\Controls\Quick.xaml">
+    <Page Include="View\Controls\QuickAccess.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

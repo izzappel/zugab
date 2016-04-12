@@ -52,7 +52,6 @@ namespace ZuegerAdressbook.View.Controls
 
             if (firstWithLetter != null)
             {
-                collectionView.MoveCurrentTo(firstWithLetter);
                 var scrollViewer = TargetControl.FindChild<ScrollViewer>();
                 scrollViewer.ScrollToBottom();
                 TargetControl.ScrollIntoView(firstWithLetter);

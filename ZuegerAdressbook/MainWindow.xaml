@@ -589,7 +589,7 @@
             <Grid Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="100" />
+                    <ColumnDefinition Width="40" />
                 </Grid.ColumnDefinitions>
                 <ListBox x:Name="listBox" Grid.Column="0" Grid.Row="9" ItemsSource="{Binding Persons}" SelectedItem="{Binding SelectedListPerson}">
                     <ListBox.ItemTemplate>

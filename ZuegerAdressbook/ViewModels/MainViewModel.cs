@@ -1,20 +1,21 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
-using System.Windows;
-using System.Windows.Threading;
+
+using Raven.Abstractions.Extensions;
 
 using ZuegerAdressbook.Commands;
-using ZuegerAdressbook.DataAccess;
 using ZuegerAdressbook.Extensions;
+using ZuegerAdressbook.Model;
 using ZuegerAdressbook.Service;
 
 namespace ZuegerAdressbook.ViewModels
 {
     public class MainViewModel : ViewModelBase, INotifyPropertyChanged, IChangeListener
     {
-        private readonly IDataAccess _dataAccess;
+        private readonly IDocumentStoreFactory _documentStoreFactory;
 
         private readonly IDispatcher _dispatcher;
 
@@ -74,19 +75,22 @@ namespace ZuegerAdressbook.ViewModels
 
         public ObservableCollection<PersonViewModel> Persons { get; set; }
 
+        public ObservableCollection<DocumentViewModel> Documents { get; set; }
+
         public RelayCommand NewCommand { get; set; }
         public RelayCommand SaveCommand { get; set; }
         public RelayCommand DeleteCommand { get; set; }
         public RelayCommand RevertCommand { get; set; }
         public RelayCommand AddDocumentCommand { get; set; }
+        public RelayCommand RemoveDocumentsCommand { get; set; }
 
         public MainViewModel()
         {
         }
 
-        public MainViewModel(IDataAccess dataAccess, IDispatcher dispatcher, IMessageDialogService messageDialogService)
+        public MainViewModel(IDocumentStoreFactory documentStoreFactory, IDispatcher dispatcher, IMessageDialogService messageDialogService)
         {
-            _dataAccess = dataAccess;
+            _documentStoreFactory = documentStoreFactory;
             _dispatcher = dispatcher;
             _messageDialogService = messageDialogService;
 
@@ -94,15 +98,35 @@ namespace ZuegerAdressbook.ViewModels
             SaveCommand = new RelayCommand(SaveSelectedPerson, CanSaveSelectedPerson);
             DeleteCommand = new RelayCommand(DeleteSelectedPerson, CanDeleteSelectedPerson);
             RevertCommand = new RelayCommand(RevertChanges, CanRevertChanges);
-            AddDocumentCommand = new RelayCommand(CreateNewPerson);
+            AddDocumentCommand = new RelayCommand(AddDocument, CanAddDocument);
+            RemoveDocumentsCommand = new RelayCommand(RemoveDocuments, CanRemoveDocuments);
 
-            Persons = new ObservableCollection<PersonViewModel>(_dataAccess.LoadPersons().OrderBy(t => t.Lastname).ThenBy(t => t.Firstname).Select(s => new PersonViewModel(s, this)).ToList());
+            Documents = new ObservableCollection<DocumentViewModel>();
+
+            using (var session = _documentStoreFactory.CreateDocumentStore().OpenSession())
+            {
+                var persons = session.LoadAll<Person>();
+                Persons = new ObservableCollection<PersonViewModel>(persons.OrderBy(t => t.Lastname).ThenBy(t => t.Firstname).Select(s => new PersonViewModel(s, this)).ToList());
+            }
+
 
             SelectedListPerson = Persons.FirstOrDefault();
         }
 
         private void OnSelectedDetailedPersonChanged()
         {
+            Documents.Clear();
+            if (SelectedDetailedPerson != null && !IsNewModeActive)
+            {
+                using (var session = _documentStoreFactory.CreateDocumentStore().OpenSession())
+                {
+                    var documents = session.Query<Document>().Where(t => t.PersonId == SelectedDetailedPerson.Id);
+                    documents.ToList().Select(s => new DocumentViewModel(s, this)).ForEach(Documents.Add);
+                }
+            }
+
+            RemoveDocumentsCommand.RaiseCanExecuteChanged();
+            AddDocumentCommand.RaiseCanExecuteChanged();
             SaveCommand.RaiseCanExecuteChanged();
             DeleteCommand.RaiseCanExecuteChanged();
             RevertCommand.RaiseCanExecuteChanged();
@@ -142,7 +166,13 @@ namespace ZuegerAdressbook.ViewModels
 
             var entity = SelectedDetailedPerson?.AcceptChanges();
 
-            SelectedDetailedPerson.Id = _dataAccess.SavePerson(entity);
+            using (var session = _documentStoreFactory.CreateDocumentStore().OpenSession())
+            {
+                session.Store(entity);
+                session.SaveChanges();
+            }
+
+            SelectedDetailedPerson.Id = entity.Id;
 
             SelectedListPerson = SelectedDetailedPerson;
         }
@@ -163,7 +193,11 @@ namespace ZuegerAdressbook.ViewModels
 
                 if (string.IsNullOrEmpty(toDelete.Id) == false)
                 {
-                    _dataAccess.DeletePerson(toDelete.Id);
+                    using (var session = _documentStoreFactory.CreateDocumentStore().OpenSession())
+                    {
+                        session.Delete(toDelete.Id);
+                        session.SaveChanges();
+                    }
                 }
             }
         }
@@ -187,17 +221,53 @@ namespace ZuegerAdressbook.ViewModels
             }
         }
 
+        private bool CanAddDocument()
+        {
+            return SelectedDetailedPerson != null && !IsNewModeActive;
+        }
+
         private void AddDocument()
         {
-            if (SelectedDetailedPerson != null)
+            var filename = _messageDialogService.OpenFileDialog();
+            if (filename.IsNullOrEmpty() == false)
             {
-                var filename = _messageDialogService.OpenFileDialog();
-                if (filename.IsNullOrEmpty() == false)
-                {
-                    //SelectedDetailedPerson.Documents.Add(filename);
+                var documentViewModel = new DocumentViewModel(this);
+                documentViewModel.FileName = filename;
+                documentViewModel.PersonId = SelectedDetailedPerson.Id;
 
+                Documents.Add(documentViewModel);
+
+                var entity = documentViewModel.AcceptChanges();
+
+                using (var session = _documentStoreFactory.CreateDocumentStore().OpenSession())
+                {
+                    session.Store(entity);
+                    session.SaveChanges();
                 }
+
+                documentViewModel.Id = entity.Id;
             }
+
+            RemoveDocumentsCommand.RaiseCanExecuteChanged();
+        }
+
+        private bool CanRemoveDocuments()
+        {
+            return !IsNewModeActive && SelectedDetailedPerson != null && Documents.Any(t => t.IsSelected);
+        }
+
+        private void RemoveDocuments()
+        {
+            var toDelete = Documents.Where(t => t.IsSelected).ToList();
+            toDelete.ForEach(t => Documents.Remove(t));
+
+            using (var session = _documentStoreFactory.CreateDocumentStore().OpenSession())
+            {
+                toDelete.ForEach(t => session.Delete(t.Id));
+                session.SaveChanges();
+            }
+
+            RemoveDocumentsCommand.RaiseCanExecuteChanged();
         }
 
         private bool ChangeSelectedDetailedPerson()
@@ -226,6 +296,8 @@ namespace ZuegerAdressbook.ViewModels
             SaveCommand.RaiseCanExecuteChanged();
             DeleteCommand.RaiseCanExecuteChanged();
             RevertCommand.RaiseCanExecuteChanged();
+            AddDocumentCommand.RaiseCanExecuteChanged();
+            RemoveDocumentsCommand.RaiseCanExecuteChanged();
         }
     }
 }

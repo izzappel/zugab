@@ -5,7 +5,6 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using Moq;
 
-using ZuegerAdressbook.DataAccess;
 using ZuegerAdressbook.Model;
 using ZuegerAdressbook.Service;
 using ZuegerAdressbook.ViewModels;
@@ -17,23 +16,20 @@ namespace Test
     {
         private List<Person> _persons;
 
-        private Mock<IDataAccess> _dataAccessMock;
-
         private Mock<IMessageDialogService> _messageDialogServiceMock;
 
         private Mock<IDispatcher> _dispatcherMock;
 
         private MainViewModel _viewModel;
 
+        private TestDoucmentStoreFactory _documentStoreFactory;
+
         [TestInitialize]
         public void TestInitialize()
         {
             _persons = new List<Person>();
 
-            _dataAccessMock = new Mock<IDataAccess>();
-            _dataAccessMock.Setup(t => t.LoadPersons()).Returns(_persons);
-            _dataAccessMock.Setup(t => t.SavePerson(It.Is<Person>(p => p.Id == "person/1"))).Returns("person/1");
-
+            _documentStoreFactory = new TestDoucmentStoreFactory();
             _dispatcherMock = new Mock<IDispatcher>();
 
             _messageDialogServiceMock = new Mock<IMessageDialogService>();
@@ -41,7 +37,7 @@ namespace Test
 
         private void InitializeViewModel()
         {
-            _viewModel = new MainViewModel(_dataAccessMock.Object, _dispatcherMock.Object, _messageDialogServiceMock.Object);
+            _viewModel = new MainViewModel(_documentStoreFactory, _dispatcherMock.Object, _messageDialogServiceMock.Object);
         }
 
         [TestMethod]
@@ -58,6 +54,7 @@ namespace Test
         public void GivenPersonsWhenAddNewPersonThenNewPersonsInitialized()
         {
             _persons.Add(new Person { Id = "person/1" });
+            AddPersons();
             InitializeViewModel();
             _viewModel.NewCommand.Execute(null);
 
@@ -69,6 +66,7 @@ namespace Test
         public void GivenChangedPersonWhenAddNewPersonThenAskForRevertChanges()
         {
             _persons.Add(new Person { Id = "person/1" });
+            AddPersons();
             InitializeViewModel();
             _viewModel.SelectedDetailedPerson.Firstname = "Sandra";
 
@@ -81,6 +79,7 @@ namespace Test
         public void GivenRejectedRevertChangesQuestionWhenAddNewPersonThenDoNotAddNewPerson()
         {
             _persons.Add(new Person { Id = "person/1" });
+            AddPersons();
             InitializeViewModel();
             _messageDialogServiceMock.Setup(t => t.OpenConfirmationDialog(It.IsAny<string>(), It.IsAny<string>())).Returns(false);
             _viewModel.SelectedDetailedPerson.Firstname = "Sandra";
@@ -95,6 +94,7 @@ namespace Test
         public void GivenAcceptedRevertChangesQuestionWhenAddNewPersonThenAddNewPerson()
         {
             _persons.Add(new Person { Id = "person/1" });
+            AddPersons();
             InitializeViewModel();
             _messageDialogServiceMock.Setup(t => t.OpenConfirmationDialog(It.IsAny<string>(), It.IsAny<string>())).Returns(true);
             _viewModel.SelectedDetailedPerson.Firstname = "Sandra";
@@ -109,6 +109,7 @@ namespace Test
         public void GivenAcceptedRevertChangesQuestionWhenAddNewPersonThenRevertChanges()
         {
             _persons.Add(new Person { Id = "person/1" });
+            AddPersons();
             InitializeViewModel();
             _messageDialogServiceMock.Setup(t => t.OpenConfirmationDialog(It.IsAny<string>(), It.IsAny<string>())).Returns(true);
             _viewModel.SelectedDetailedPerson.Firstname = "Sandra";
@@ -123,18 +124,25 @@ namespace Test
         public void GivenChangedPersonWhenSavePersonThenSaveChanges()
         {
             _persons.Add(new Person { Id = "person/1" });
+            AddPersons();
             InitializeViewModel();
             _viewModel.SelectedDetailedPerson.Firstname = "Sandra";
 
             _viewModel.SaveCommand.Execute(null);
 
-            _dataAccessMock.Verify(t => t.SavePerson(It.Is<Person>(p => p.Id == "person/1" && p.Firstname == "Sandra")), Times.Once);
+            using (var session = _documentStoreFactory.CreateDocumentStore().OpenSession())
+            {
+                var savedPerson = session.Load<Person>("person/1");
+                Assert.IsNotNull(savedPerson);
+                Assert.AreEqual("Sandra", savedPerson.Firstname);
+            }
         }
 
         [TestMethod]
         public void GivenChangedPersonWhenSavePersonThenPersonHasNoChanges()
         {
             _persons.Add(new Person { Id = "person/1" });
+            AddPersons();
             InitializeViewModel();
             _viewModel.SelectedDetailedPerson.Firstname = "Sandra";
 
@@ -149,6 +157,7 @@ namespace Test
         {
             _persons.Add(new Person { Id = "person/1" });
             _persons.Add(new Person { Id = "person/2" });
+            AddPersons();
             InitializeViewModel();
             _viewModel.SelectedDetailedPerson.Firstname = "Sandra";
 
@@ -162,6 +171,7 @@ namespace Test
         {
             _persons.Add(new Person { Id = "person/1" });
             _persons.Add(new Person { Id = "person/2" });
+            AddPersons();
             InitializeViewModel();
             _messageDialogServiceMock.Setup(t => t.OpenConfirmationDialog(It.IsAny<string>(), It.IsAny<string>())).Returns(true);
             _viewModel.SelectedDetailedPerson.Firstname = "Sandra";
@@ -177,6 +187,7 @@ namespace Test
         {
             _persons.Add(new Person { Id = "person/1" });
             _persons.Add(new Person { Id = "person/2" });
+            AddPersons();
             InitializeViewModel();
             _messageDialogServiceMock.Setup(t => t.OpenConfirmationDialog(It.IsAny<string>(), It.IsAny<string>())).Returns(true);
             _viewModel.SelectedDetailedPerson.Firstname = "Sandra";
@@ -193,6 +204,7 @@ namespace Test
         {
             _persons.Add(new Person { Id = "person/1" });
             _persons.Add(new Person { Id = "person/2" });
+            AddPersons();
             InitializeViewModel();
             _messageDialogServiceMock.Setup(t => t.OpenConfirmationDialog(It.IsAny<string>(), It.IsAny<string>())).Returns(false);
             _viewModel.SelectedDetailedPerson.Firstname = "Sandra";
@@ -207,6 +219,7 @@ namespace Test
         public void GivenChangedPersonWhenRevertChangesThenAskForRevertChanges()
         {
             _persons.Add(new Person { Id = "person/1" });
+            AddPersons();
             InitializeViewModel();
             _viewModel.SelectedDetailedPerson.Firstname = "Sandra";
 
@@ -219,6 +232,7 @@ namespace Test
         public void GivenAcceptedRevertChangesWhenRevertChangesThenRevertChanges()
         {
             _persons.Add(new Person { Id = "person/1" });
+            AddPersons();
             InitializeViewModel();
             _messageDialogServiceMock.Setup(t => t.OpenConfirmationDialog(It.IsAny<string>(), It.IsAny<string>())).Returns(true);
             _viewModel.SelectedDetailedPerson.Firstname = "Sandra";
@@ -233,6 +247,7 @@ namespace Test
         public void GivenAcceptedRevertChangesWhenRevertChangesThenHasNoChanges()
         {
             _persons.Add(new Person { Id = "person/1" });
+            AddPersons();
             InitializeViewModel();
             _messageDialogServiceMock.Setup(t => t.OpenConfirmationDialog(It.IsAny<string>(), It.IsAny<string>())).Returns(true);
             _viewModel.SelectedDetailedPerson.Firstname = "Sandra";
@@ -247,6 +262,7 @@ namespace Test
         public void GivenRejectedRevertChangesWhenRevertChangesThenDoNotRevertChanges()
         {
             _persons.Add(new Person { Id = "person/1" });
+            AddPersons();
             InitializeViewModel();
             _messageDialogServiceMock.Setup(t => t.OpenConfirmationDialog(It.IsAny<string>(), It.IsAny<string>())).Returns(false);
             _viewModel.SelectedDetailedPerson.Firstname = "Sandra";
@@ -257,5 +273,17 @@ namespace Test
             Assert.AreEqual("Sandra", _viewModel.SelectedDetailedPerson.Firstname);
         }
 
+        private void AddPersons()
+        {
+            using (var session = _documentStoreFactory.CreateDocumentStore().OpenSession())
+            {
+                foreach (var person in _persons)
+                {
+                    session.Store(person);
+                }
+
+                session.SaveChanges();
+            }
+        }
     }
 }

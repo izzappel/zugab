@@ -1,15 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace ZuegerAdressbook.Model
 {
-    public class Person
+    public class Person : IIdentifiable
     {
-        public Person()
-        {
-            Documents = new List<string>();
-        }
-
         public string Id { get; set; }
 
         public string Firstname { get; set; }
@@ -57,7 +51,5 @@ namespace ZuegerAdressbook.Model
         public bool HasEnkelKarte { get; set; }
 
         public DateTime? EnkelKarteExpirationDate { get; set; }
-
-        public IList<string> Documents { get; set; }
     }
 }

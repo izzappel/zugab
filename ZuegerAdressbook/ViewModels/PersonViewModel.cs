@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 
 using Raven.Imports.Newtonsoft.Json;
@@ -35,7 +34,6 @@ namespace ZuegerAdressbook.ViewModels
         private string _notes;
         private string _nameOnPassport;
         private string _passportNumber;
-        private IList<string> _documents;
         private IChangeListener _parent;
 
         public PersonViewModel(IChangeListener parent = null)
@@ -44,7 +42,7 @@ namespace ZuegerAdressbook.ViewModels
             _parent = parent;
         }
 
-        public PersonViewModel(Person person, MainViewModel parent)
+        public PersonViewModel(Person person, IChangeListener parent)
         {
             CopyFromEntity(person);
             _person = person;

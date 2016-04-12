@@ -19,7 +19,7 @@ namespace ZuegerAdressbook
 
             Style = (Style)FindResource(typeof(Window));
 
-            _viewModel = new MainViewModel(new DataAccess.DataAccess(), new ApplicationDispatcher(), new MessageDialogService());
+            _viewModel = new MainViewModel(new DocumentStoreFactory(), new ApplicationDispatcher(), new MessageDialogService());
             DataContext = _viewModel;
         }
 

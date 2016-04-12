@@ -229,10 +229,10 @@
                         <TextBlock Grid.Column="2" Grid.Row="1" Style="{StaticResource FontAwesomeIcon}" Visibility="{Binding Gender, ConverterParameter=Female, Converter={StaticResource enumVisibilityConverter}, FallbackValue=Collapsed}"><Run Text="&#xF182;"/></TextBlock>
                         <TextBlock Grid.Column="2" Grid.Row="1" Style="{StaticResource FontAwesomeIcon}" Visibility="{Binding Gender, ConverterParameter=Male, Converter={StaticResource enumVisibilityConverter}, FallbackValue=Collapsed}"><Run Text="&#xF183;"/></TextBlock>
 
-                        <Label Grid.Column="2" Grid.Row="2" Content="Nachname" Style="{StaticResource TopLabel}"/>
-                        <TextBox Grid.Column="2" Grid.Row="3" Text="{Binding Lastname, UpdateSourceTrigger=PropertyChanged}" Margin="5,0,0,0"/>
                         <Label Grid.Column="0" Grid.Row="2" Content="Vorname" Style="{StaticResource TopLabel}"/>
                         <TextBox Grid.Column="0" Grid.Row="3" Text="{Binding Firstname, UpdateSourceTrigger=PropertyChanged}"/>
+                        <Label Grid.Column="2" Grid.Row="2" Content="Nachname" Style="{StaticResource TopLabel}"/>
+                        <TextBox Grid.Column="2" Grid.Row="3" Text="{Binding Lastname, UpdateSourceTrigger=PropertyChanged}" Margin="5,0,0,0"/>
 
                         <Label Grid.Column="0" Grid.Row="4" Style="{StaticResource TopLabel}" Content="Geburtsdatum"/>
                         <DatePicker Grid.Column="0" Grid.Row="5" SelectedDate="{Binding Birthdate}" Template="{DynamicResource DatePickerControlTemplate}" />
@@ -343,7 +343,7 @@
                             <TextBlock DockPanel.Dock="Left" Style="{StaticResource SeparatorText}"><Run Text="Sonstiges"/></TextBlock>
                             <Separator />
                         </DockPanel>
-                        <Grid Grid.Row="4">
+                        <Grid Grid.Row="4" DataContext="{Binding DataContext, RelativeSource={RelativeSource AncestorType=Window, Mode=FindAncestor}}">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition />
                             </Grid.ColumnDefinitions>
@@ -359,18 +359,35 @@
                             <TextBox Grid.Column="0" Grid.Row="1" Text="{Binding Notes}" Style="{StaticResource MultilineTextBox}"/>
 
                             <DockPanel Grid.Column="0" Grid.Row="3" LastChildFill="False" >
+                                <DockPanel.Resources>
+                                    <Style TargetType="{x:Type Button}">
+                                        <Style.Triggers>
+                                            <Trigger Property="IsEnabled" Value="False">
+                                                <Setter Property="Foreground" Value="Gray"></Setter>
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </DockPanel.Resources>
                                 <Label Style="{StaticResource TopLabel}" DockPanel.Dock="Left" Content="Dokumente"/>
                                 <Button Background="#FFEFEFEF" DockPanel.Dock="Right" Width="30" Height="30" Command="{Binding AddDocumentCommand}">
                                     <TextBlock Style="{StaticResource FontAwesomeIcon}" Margin="5"><Run Text="&#xF067;"/></TextBlock>
                                 </Button>
+                                <Button Background="#FFEFEFEF" DockPanel.Dock="Right" Width="30" Height="30" Margin="0,0,5,0" Command="{Binding RemoveDocumentsCommand}">
+                                    <TextBlock Style="{StaticResource FontAwesomeIcon}" Margin="5"><Run Text="&#xF014;"/></TextBlock>
+                                </Button>
                             </DockPanel>
 
                             <ListView Grid.Column="0" Grid.Row="4" ItemsSource="{Binding Documents}" BorderThickness="0">
+                                <ListView.Resources>
+                                    <Style TargetType="{x:Type ListViewItem}">
+                                        <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}" />
+                                    </Style>
+                                </ListView.Resources>
                                 <ListView.ItemTemplate>
                                     <DataTemplate>
                                         <DockPanel>
                                             <TextBlock Style="{StaticResource FontAwesomeIcon}" Margin="0,0,5,0"><Run Text="&#xF0C6;"/></TextBlock>
-                                            <TextBlock Text="{Binding}" VerticalAlignment="Center"/>
+                                            <TextBlock Text="{Binding FileName}" VerticalAlignment="Center"/>
                                         </DockPanel>
                                     </DataTemplate>
                                 </ListView.ItemTemplate>
@@ -610,7 +627,7 @@
                 </ListBox>
                 <controls:QuickAccess Grid.Column="1" TargetControl="{Binding ElementName=listBox}" TargetPropertyPath="Lastname" VerticalAlignment="Stretch" Margin="10,0,0,0" />
             </Grid>
-            
+
         </Grid>
     </Grid>
 </Window>

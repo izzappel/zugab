@@ -132,7 +132,7 @@
                     </Button>
                     <Button Command="{Binding SaveCommand}" ToolBar.OverflowMode="Never">
                         <StackPanel Orientation="Vertical">
-                            <Image Source="Icons/48/floppy.png"/>
+                            <Image Source="Icons/48/sign-check.png"/>
                             <TextBlock HorizontalAlignment="Center"><Run Text="Speichern"/></TextBlock>
                         </StackPanel>
                     </Button>

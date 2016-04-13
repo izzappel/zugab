@@ -6,7 +6,7 @@ using ZuegerAdressbook.Model;
 
 namespace ZuegerAdressbook.ViewModels
 {
-    public class PersonViewModel : ViewModelBase
+    public class PersonViewModel : RevertableViewModelBase<Person>
     {
         private Person _person;
         private bool _hasChanges;
@@ -79,7 +79,7 @@ namespace ZuegerAdressbook.ViewModels
             _passportNumber = person.PassportNumber;
         }
 
-        public bool HasChanges
+        public override bool HasChanges
         {
             get { return _hasChanges; }
             set { ChangeAndNotify(value, ref _hasChanges); }
@@ -242,7 +242,7 @@ namespace ZuegerAdressbook.ViewModels
             set { ChangeAndNotify(value, ref _passportNumber); }
         }
 
-        public Person AcceptChanges()
+        public override Person AcceptChanges()
         {
             HasChanges = false;
 
@@ -279,7 +279,7 @@ namespace ZuegerAdressbook.ViewModels
             return person;
         }
 
-        public void ResetChanges()
+        public override void ResetChanges()
         {
             Id = _person.Id;
             Birthdate = _person.Birthdate;

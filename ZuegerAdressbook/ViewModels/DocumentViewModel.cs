@@ -4,7 +4,7 @@ using ZuegerAdressbook.Model;
 
 namespace ZuegerAdressbook.ViewModels
 {
-    public class DocumentViewModel : ViewModelBase
+    public class DocumentViewModel : RevertableViewModelBase<Document>
     {
         private Document _document;
 
@@ -40,7 +40,7 @@ namespace ZuegerAdressbook.ViewModels
             _personId = document.PersonId;
         }
 
-        public bool HasChanges
+        public override bool HasChanges
         {
             get { return _hasChanges; }
             set { ChangeAndNotify(value, ref _hasChanges); }
@@ -88,7 +88,7 @@ namespace ZuegerAdressbook.ViewModels
             return hasChanged;
         }
 
-        public Document AcceptChanges()
+        public override Document AcceptChanges()
         {
             HasChanges = false;
 
@@ -104,7 +104,7 @@ namespace ZuegerAdressbook.ViewModels
             return document;
         }
 
-        public void ResetChanges()
+        public override void ResetChanges()
         {
             Id = _document.Id;
             FileName = _document.FileName;

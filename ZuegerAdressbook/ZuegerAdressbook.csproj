@@ -99,6 +99,8 @@
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Service\MessageDialogService.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
+    <Compile Include="ViewModels\RevertableObservableCollection.cs" />
+    <Compile Include="ViewModels\RevertableViewModelBase.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="View\Controls\FilterControl.cs" />
     <Page Include="Themes\DatePickerControl.xaml">

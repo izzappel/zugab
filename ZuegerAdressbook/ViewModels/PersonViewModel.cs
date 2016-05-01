@@ -1,13 +1,22 @@
 ﻿using System;
+using System.Linq;
 using System.Runtime.CompilerServices;
 
 using Raven.Imports.Newtonsoft.Json;
+
+using ZuegerAdressbook.Commands;
+using ZuegerAdressbook.Extensions;
 using ZuegerAdressbook.Model;
+using ZuegerAdressbook.Service;
 
 namespace ZuegerAdressbook.ViewModels
 {
-    public class PersonViewModel : RevertableViewModelBase<Person>
+    public class PersonViewModel : RevertableViewModelBase<Person>, IChangeListener
     {
+        private readonly IMessageDialogService _messageDialogService;
+
+        private readonly IDocumentStoreFactory _documentStoreFactory;
+
         private Person _person;
         private bool _hasChanges;
         private string _id;
@@ -35,20 +44,24 @@ namespace ZuegerAdressbook.ViewModels
         private string _nameOnPassport;
         private string _passportNumber;
         private IChangeListener _parent;
+        private RevertableObservableCollection<DocumentViewModel, Document> _documents;
 
-        public PersonViewModel(IChangeListener parent = null)
+        public PersonViewModel(IMessageDialogService messageDialogService, IDocumentStoreFactory documentStoreFactory, Person person, IChangeListener parent)
         {
-            _person = new Person();
-            _parent = parent;
-        }
+            if (person == null)
+            {
+                person = new Person();
+            }
 
-        public PersonViewModel(Person person, IChangeListener parent)
-        {
-            CopyFromEntity(person);
+            _documentStoreFactory = documentStoreFactory;
+            _messageDialogService = messageDialogService;
             _person = person;
             _parent = parent;
 
-            // TODO: not sure wheter we should use the properties or not
+            CopyFromEntity(person);
+
+            AddDocumentCommand = new RelayCommand(AddDocument, CanAddDocument);
+            RemoveDocumentsCommand = new RelayCommand(RemoveDocuments, CanRemoveDocuments);
         }
 
         private void CopyFromEntity(Person person)
@@ -77,11 +90,32 @@ namespace ZuegerAdressbook.ViewModels
             _notes = person.Notes;
             _nameOnPassport = person.NameOnPassport;
             _passportNumber = person.PassportNumber;
+
+            LoadDocuments();
         }
 
+        private void LoadDocuments()
+        {
+            _documents = new RevertableObservableCollection<DocumentViewModel, Document>(this);
+
+            if (!IsNew)
+            {
+                using (var session = _documentStoreFactory.CreateDocumentStore().OpenSession())
+                {
+                    var documents = session.Query<Document>().Where(t => t.PersonId == _id).ToList();
+                    var documentViewModels = documents.Select(s => IocKernel.GetDocumentViewModel(this, s)).ToList();
+
+                    _documents = new RevertableObservableCollection<DocumentViewModel, Document>(documentViewModels, this);
+                }
+            }
+        }
+
+        private bool IsNew => _id.IsNullOrEmpty();
+
+        #region Properties
         public override bool HasChanges
         {
-            get { return _hasChanges; }
+            get { return _hasChanges || Documents.Any(t => t.HasChanges) || _documents.HasChanges; }
             set { ChangeAndNotify(value, ref _hasChanges); }
         }
 
@@ -242,6 +276,21 @@ namespace ZuegerAdressbook.ViewModels
             set { ChangeAndNotify(value, ref _passportNumber); }
         }
 
+        public RevertableObservableCollection<DocumentViewModel, Document> Documents
+        {
+            get { return _documents; }
+            set
+            {
+                ChangeAndNotify(value, ref _documents);
+            }
+        }
+
+        public RelayCommand AddDocumentCommand { get; set; }
+
+        public RelayCommand RemoveDocumentsCommand { get; set; }
+
+        #endregion
+
         public override Person AcceptChanges()
         {
             HasChanges = false;
@@ -307,6 +356,87 @@ namespace ZuegerAdressbook.ViewModels
             Title = _person.Title;
 
             HasChanges = false;
+
+            Documents.ResetChanges();
+        }
+
+        public void SaveDocuments()
+        {
+            foreach (var documentViewModel in Documents)
+            {
+                documentViewModel.PersonId = _id;
+            }
+
+            var documents = Documents.AcceptChanges();
+
+            using (var session = _documentStoreFactory.CreateDocumentStore().OpenSession())
+            {
+                foreach (var documentViewModel in documents)
+                {
+                    var document = documentViewModel.AcceptChanges();
+                    session.Store(document);
+                    documentViewModel.Id = document.Id;
+                }
+
+                var documentsToDelete = session.Query<Document>().Where(t => t.PersonId == _id).ToList().Where(t => documents.Any(d => d.Id == t.Id) == false);
+                foreach (var document in documentsToDelete)
+                {
+                    session.Delete(document.Id);
+                }
+
+                session.SaveChanges();
+            }
+        }
+
+        public void DeleteDocuments()
+        {
+            Documents.ResetChanges();
+
+            if (!IsNew)
+            {
+                using (var session = _documentStoreFactory.CreateDocumentStore().OpenSession())
+                {
+                    foreach (var t in Documents)
+                    {
+                        session.Delete(t.Id);
+                    }
+
+                    session.SaveChanges();
+                }
+            }
+        }
+
+        private bool CanAddDocument()
+        {
+            return true;
+        }
+
+        private void AddDocument()
+        {
+            var filename = _messageDialogService.OpenFileDialog();
+            if (filename.IsNullOrEmpty() == false)
+            {
+                var documentViewModel = IocKernel.GetDocumentViewModel(this);
+                documentViewModel.FileName = filename;
+                documentViewModel.PersonId = Id;
+
+                Documents.Add(documentViewModel);
+            }
+
+            RemoveDocumentsCommand.RaiseCanExecuteChanged();
+        }
+
+        private bool CanRemoveDocuments()
+        {
+            return Documents.Any(t => t.IsSelected);
+        }
+
+        private void RemoveDocuments()
+        {
+            var toDelete = Documents.Where(t => t.IsSelected).ToList();
+            toDelete.ForEach(t => Documents.Remove(t));
+
+            RemoveDocumentsCommand.RaiseCanExecuteChanged();
         }
 
         protected override bool ChangeAndNotify<T>(T value, ref T field, [CallerMemberName] string propertyName = null)
@@ -367,6 +497,15 @@ namespace ZuegerAdressbook.ViewModels
         public string FullName
         {
             get { return (this.Firstname + " " + this.Lastname).Trim(); }
+        }
+
+        public void ReportChange()
+        {
+            _parent.ReportChange();
+
+            Notify("HasChanges");
+            AddDocumentCommand.RaiseCanExecuteChanged();
+            RemoveDocumentsCommand.RaiseCanExecuteChanged();
         }
     }
 }

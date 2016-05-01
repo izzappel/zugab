@@ -5,6 +5,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using Moq;
 
+using ZuegerAdressbook;
 using ZuegerAdressbook.Model;
 using ZuegerAdressbook.Service;
 using ZuegerAdressbook.ViewModels;
@@ -33,6 +34,8 @@ namespace Test
             _dispatcherMock = new Mock<IDispatcher>();
 
             _messageDialogServiceMock = new Mock<IMessageDialogService>();
+
+            IocKernel.Initialize(new IocConfiguration());
         }
 
         private void InitializeViewModel()

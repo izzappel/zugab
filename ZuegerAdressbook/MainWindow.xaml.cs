@@ -1,7 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 
-using ZuegerAdressbook.Service;
 using ZuegerAdressbook.ViewModels;
 
 namespace ZuegerAdressbook
@@ -19,7 +18,7 @@ namespace ZuegerAdressbook
 
             Style = (Style)FindResource(typeof(Window));
 
-            _viewModel = new MainViewModel(new DocumentStoreFactory(), new ApplicationDispatcher(), new MessageDialogService());
+            _viewModel = IocKernel.Get<MainViewModel>();
             DataContext = _viewModel;
         }
 

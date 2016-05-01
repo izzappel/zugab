@@ -343,7 +343,7 @@
                             <TextBlock DockPanel.Dock="Left" Style="{StaticResource SeparatorText}"><Run Text="Sonstiges"/></TextBlock>
                             <Separator />
                         </DockPanel>
-                        <Grid Grid.Row="4" DataContext="{Binding DataContext, RelativeSource={RelativeSource AncestorType=Window, Mode=FindAncestor}}">
+                        <Grid Grid.Row="4" > <!--DataContext="{Binding DataContext, RelativeSource={RelativeSource AncestorType=Window, Mode=FindAncestor}}">-->
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition />
                             </Grid.ColumnDefinitions>

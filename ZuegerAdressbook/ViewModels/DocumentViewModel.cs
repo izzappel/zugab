@@ -20,17 +20,17 @@ namespace ZuegerAdressbook.ViewModels
 
         private IChangeListener _parent;
 
-        public DocumentViewModel(IChangeListener parent = null)
-        {
-            _document = new Document();
-            _parent = parent;
-        }
-
         public DocumentViewModel(Document document, IChangeListener parent)
         {
-            CopyFromEntity(document);
+            if (document == null)
+            {
+                document = new Document();
+            }
+
             _document = document;
             _parent = parent;
+
+            CopyFromEntity(document);
         }
 
         private void CopyFromEntity(Document document)

@@ -343,7 +343,7 @@
                             <TextBlock DockPanel.Dock="Left" Style="{StaticResource SeparatorText}"><Run Text="Sonstiges"/></TextBlock>
                             <Separator />
                         </DockPanel>
-                        <Grid Grid.Row="4" > <!--DataContext="{Binding DataContext, RelativeSource={RelativeSource AncestorType=Window, Mode=FindAncestor}}">-->
+                        <Grid Grid.Row="4" >
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition />
                             </Grid.ColumnDefinitions>
@@ -386,6 +386,9 @@
                                 <ListView.ItemTemplate>
                                     <DataTemplate>
                                         <DockPanel>
+                                            <DockPanel.InputBindings>
+                                                <MouseBinding Gesture="LeftDoubleClick" Command="{Binding OpenCommand}"></MouseBinding>
+                                            </DockPanel.InputBindings>
                                             <TextBlock Style="{StaticResource FontAwesomeIcon}" Margin="0,0,5,0"><Run Text="&#xF0C6;"/></TextBlock>
                                             <TextBlock Text="{Binding FileName}" VerticalAlignment="Center"/>
                                         </DockPanel>

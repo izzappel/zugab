@@ -1,5 +1,7 @@
-﻿using System.Runtime.CompilerServices;
+﻿using System.IO;
+using System.Runtime.CompilerServices;
 
+using ZuegerAdressbook.Commands;
 using ZuegerAdressbook.Model;
 
 namespace ZuegerAdressbook.ViewModels
@@ -31,6 +33,8 @@ namespace ZuegerAdressbook.ViewModels
             _parent = parent;
 
             CopyFromEntity(document);
+
+            OpenCommand = new RelayCommand(OpenDocument, CanOpenDocument);
         }
 
         private void CopyFromEntity(Document document)
@@ -69,6 +73,8 @@ namespace ZuegerAdressbook.ViewModels
             get { return _isSelected; }
             set { ChangeAndNotify(value, ref _isSelected); }
         }
+
+        public RelayCommand OpenCommand { get; set; }
 
         protected override bool ChangeAndNotify<T>(T value, ref T field, [CallerMemberName] string propertyName = null)
         {
@@ -111,6 +117,18 @@ namespace ZuegerAdressbook.ViewModels
             PersonId = _document.PersonId;
 
             HasChanges = false;
+        }
+
+        private bool CanOpenDocument()
+        {
+            return true;
+        }
+
+        private void OpenDocument()
+        {
+            string argument = @"/select, " + _fileName;
+
+            System.Diagnostics.Process.Start("explorer.exe", argument);
         }
     }
 }

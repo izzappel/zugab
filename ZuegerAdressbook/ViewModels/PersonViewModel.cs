@@ -43,6 +43,8 @@ namespace ZuegerAdressbook.ViewModels
         private string _notes;
         private string _nameOnPassport;
         private string _passportNumber;
+        private DateTime? _sbbInformationChangeDate;
+        private DateTime? _changeDate;
         private IChangeListener _parent;
         private RevertableObservableCollection<DocumentViewModel, Document> _documents;
 
@@ -90,6 +92,8 @@ namespace ZuegerAdressbook.ViewModels
             _notes = person.Notes;
             _nameOnPassport = person.NameOnPassport;
             _passportNumber = person.PassportNumber;
+            _sbbInformationChangeDate = person.SbbInformationChangeDate;
+            _changeDate = person.ChangeDate;
 
             LoadDocuments();
         }
@@ -276,6 +280,18 @@ namespace ZuegerAdressbook.ViewModels
             set { ChangeAndNotify(value, ref _passportNumber); }
         }
 
+        public DateTime? SbbInformationChangeDate
+        {
+            get { return _sbbInformationChangeDate; }
+            set { ChangeAndNotify(value, ref _sbbInformationChangeDate); }
+        }
+
+        public DateTime? ChangeDate
+        {
+            get { return _changeDate; }
+            set { ChangeAndNotify(value, ref _changeDate); }
+        }
+
         public RevertableObservableCollection<DocumentViewModel, Document> Documents
         {
             get { return _documents; }
@@ -293,6 +309,12 @@ namespace ZuegerAdressbook.ViewModels
 
         public override Person AcceptChanges()
         {
+            ChangeDate = DateTime.Now;
+            if (HaveSbbInformationedChanged())
+            {
+                SbbInformationChangeDate = _changeDate;
+            }
+
             HasChanges = false;
 
             var person = new Person
@@ -320,12 +342,23 @@ namespace ZuegerAdressbook.ViewModels
                 Plz = _plz,
                 Street1 = _street1,
                 Street2 = _street2,
-                Title = _title
+                Title = _title,
+                SbbInformationChangeDate = _sbbInformationChangeDate,
+                ChangeDate = _changeDate
             };
 
             _person = person;
 
             return person;
+        }
+
+        private bool HaveSbbInformationedChanged()
+        {
+            return
+                !(EnkelKarteExpirationDate.Equals(_person.EnkelKarteExpirationDate) && JuniorKarteExpirationDate.Equals(_person.JuniorKarteExpirationDate)
+                  && GeneralAboExpirationDate.Equals(_person.GeneralAboExpirationDate) && HalbTaxExpirationDate.Equals(_person.HalbtaxExpirationDate)
+                  && HasEnkelKarte.Equals(_person.HasEnkelKarte) && HasJuniorKarte.Equals(_person.HasJuniorKarte) && HasGeneralAbo.Equals(_person.HasGeneralAbo)
+                  && HasHalbTax.Equals(_person.HasHalbtax));
         }
 
         public override void ResetChanges()
@@ -354,6 +387,8 @@ namespace ZuegerAdressbook.ViewModels
             Street1 = _person.Street1;
             Street2 = _person.Street2;
             Title = _person.Title;
+            SbbInformationChangeDate = _person.SbbInformationChangeDate;
+            ChangeDate = _person.ChangeDate;
 
             HasChanges = false;
 

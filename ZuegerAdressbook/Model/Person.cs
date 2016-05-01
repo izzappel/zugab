@@ -51,5 +51,9 @@ namespace ZuegerAdressbook.Model
         public bool HasEnkelKarte { get; set; }
 
         public DateTime? EnkelKarteExpirationDate { get; set; }
+
+        public DateTime? SbbInformationChangeDate { get; set; }
+
+        public DateTime? ChangeDate { get; set; }
     }
 }

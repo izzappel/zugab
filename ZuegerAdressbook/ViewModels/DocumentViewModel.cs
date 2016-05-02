@@ -20,6 +20,8 @@ namespace ZuegerAdressbook.ViewModels
 
         private bool _isSelected;
 
+        private bool _notExists;
+
         private IChangeListener _parent;
 
         public DocumentViewModel(Document document, IChangeListener parent)
@@ -73,6 +75,12 @@ namespace ZuegerAdressbook.ViewModels
             get { return _isSelected; }
             set { ChangeAndNotify(value, ref _isSelected); }
         }
+        
+        public bool NotExists
+        {
+            get { return _notExists; }
+            set { ChangeAndNotify(value, ref _notExists); }
+        }
 
         public RelayCommand OpenCommand { get; set; }
 
@@ -83,7 +91,7 @@ namespace ZuegerAdressbook.ViewModels
 
             if (hasChanged)
             {
-                if (propertyName != "HasChanges" && propertyName != "Id" && propertyName != "IsSelected") // Id will never be set from UI and should never trigger the change tracking
+                if (propertyName != "HasChanges" && propertyName != "Id" && propertyName != "IsSelected" && propertyName != "NotExists") // Id will never be set from UI and should never trigger the change tracking
                 {
                     HasChanges = true;
                 }

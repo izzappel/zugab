@@ -118,6 +118,8 @@ namespace ZuegerAdressbook.ViewModels
             SaveCommand.RaiseCanExecuteChanged();
             DeleteCommand.RaiseCanExecuteChanged();
             RevertCommand.RaiseCanExecuteChanged();
+
+            SelectedDetailedPerson?.CheckDocuments();
         }
 
         private void CreateNewPerson()

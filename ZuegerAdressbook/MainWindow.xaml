@@ -391,10 +391,29 @@
                                 <ListView.ItemTemplate>
                                     <DataTemplate>
                                         <DockPanel>
+                                            <DockPanel.Resources>
+                                                <Style TargetType="{x:Type TextBlock}">
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding NotExists}" Value="true">
+                                                            <Setter Property="Foreground" Value="Red"></Setter>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </DockPanel.Resources>
                                             <DockPanel.InputBindings>
                                                 <MouseBinding Gesture="LeftDoubleClick" Command="{Binding OpenCommand}"></MouseBinding>
                                             </DockPanel.InputBindings>
-                                            <TextBlock Style="{StaticResource FontAwesomeIcon}" Margin="0,0,5,0"><Run Text="&#xF0C6;"/></TextBlock>
+                                            <TextBlock Style="{StaticResource FontAwesomeIcon}" Margin="0,0,5,0" Foreground="Red" Visibility="{Binding NotExists, Converter={StaticResource booleanVisibilityConverter}, FallbackValue=Collapsed}"><Run Text="&#xF0E7;"/></TextBlock>
+                                            <TextBlock Margin="0,0,5,0"><Run Text="&#xF0C6;"/>
+                                                <TextBlock.Style>
+                                                    <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource FontAwesomeIcon}">
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding NotExists}" Value="true">
+                                                                <Setter Property="Foreground" Value="Red"></Setter>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </TextBlock.Style></TextBlock>
                                             <TextBlock Text="{Binding FileName}" VerticalAlignment="Center"/>
                                         </DockPanel>
                                     </DataTemplate>

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 
@@ -438,6 +439,14 @@ namespace ZuegerAdressbook.ViewModels
 
                     session.SaveChanges();
                 }
+            }
+        }
+
+        public void CheckDocuments()
+        {
+            foreach (var documentViewModel in Documents)
+            {
+                documentViewModel.NotExists = !File.Exists(documentViewModel.FileName);
             }
         }
 

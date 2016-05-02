@@ -9,7 +9,7 @@ using ZuegerAdressbook.ViewModels;
 namespace Test
 {
     [TestClass]
-    public class PersonViewModelTests
+    public class PersonViewModelChildTests
     {
         private Mock<IMessageDialogService> _messageDialogServiceMock;
 

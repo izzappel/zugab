@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25123.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "Test\Test.csproj", "{FF0EB32C-6DA1-4D7D-BBC9-EC3F587E117D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZuegerAddressbook", "ZuegerAddressbook\ZuegerAddressbook.csproj", "{6B46AC2D-E23B-464A-9197-EAFE421D2E91}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZuegerAddressbook.Service", "ZuegerAddressbook.Service\ZuegerAddressbook.Service.csproj", "{FADCF610-8030-4E23-BE18-5B1BC3B4C4B5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FF0EB32C-6DA1-4D7D-BBC9-EC3F587E117D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FF0EB32C-6DA1-4D7D-BBC9-EC3F587E117D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FF0EB32C-6DA1-4D7D-BBC9-EC3F587E117D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FF0EB32C-6DA1-4D7D-BBC9-EC3F587E117D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6B46AC2D-E23B-464A-9197-EAFE421D2E91}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6B46AC2D-E23B-464A-9197-EAFE421D2E91}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6B46AC2D-E23B-464A-9197-EAFE421D2E91}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6B46AC2D-E23B-464A-9197-EAFE421D2E91}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FADCF610-8030-4E23-BE18-5B1BC3B4C4B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FADCF610-8030-4E23-BE18-5B1BC3B4C4B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FADCF610-8030-4E23-BE18-5B1BC3B4C4B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FADCF610-8030-4E23-BE18-5B1BC3B4C4B5}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

@@ -88,17 +88,17 @@
     <Compile Include="TestDoucmentStoreFactory.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ZuegerAdressbook\ZuegerAdressbook.csproj">
-      <Project>{6b46ac2d-e23b-464a-9197-eafe421d2e91}</Project>
-      <Name>ZuegerAdressbook</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
     <None Include="Raven.Studio.Html5.zip">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ZuegerAddressbook\ZuegerAddressbook.csproj">
+      <Project>{6B46AC2D-E23B-464A-9197-EAFE421D2E91}</Project>
+      <Name>ZuegerAddressbook</Name>
+    </ProjectReference>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

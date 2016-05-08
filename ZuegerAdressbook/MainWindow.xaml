@@ -157,11 +157,17 @@
                         </StackPanel>
                     </Button>
                 </ToolBar>
-                <ToolBar Header="Export" Loaded="FrameworkElement_OnLoaded" >
+                <ToolBar Header="Excel" Loaded="FrameworkElement_OnLoaded" >
+                    <Button Command="{Binding ImportCommand}" ToolBar.OverflowMode="Never">
+                        <StackPanel Orientation="Vertical">
+                            <Image Source="Icons/48/box-in.png"/>
+                            <TextBlock HorizontalAlignment="Center"><Run Text="Import"/></TextBlock>
+                        </StackPanel>
+                    </Button>
                     <Button ToolBar.OverflowMode="Never">
                         <StackPanel Orientation="Vertical">
-                            <Image Source="Icons/48/file-excel.png"/>
-                            <TextBlock HorizontalAlignment="Center"><Run Text="Excel"/></TextBlock>
+                            <Image Source="Icons/48/box-out.png"/>
+                            <TextBlock HorizontalAlignment="Center"><Run Text="Export"/></TextBlock>
                         </StackPanel>
                     </Button>
                 </ToolBar>
@@ -268,8 +274,10 @@
                         <Label Grid.Column="2" Grid.Row="13" Content="Tel Mobile"/>
                         <TextBox Grid.Column="2" Grid.Row="14" Text="{Binding MobileNumber}"/>
 
-                        <Label Grid.Column="0" Grid.Row="15" Style="{StaticResource TopLabel}" Content="E-Mail"/>
-                        <TextBox Grid.Column="0" Grid.Row="16" Text="{Binding EmailAddress}"/>
+                        <Label Grid.Column="0" Grid.Row="15" Style="{StaticResource TopLabel}" Content="Tel G"/>
+                        <TextBox Grid.Column="0" Grid.Row="16" Text="{Binding BusinessPhoneNumber}"/>
+                        <Label Grid.Column="2" Grid.Row="15" Style="{StaticResource TopLabel}" Content="E-Mail"/>
+                        <TextBox Grid.Column="2" Grid.Row="16" Text="{Binding EmailAddress}"/>
                     </Grid>
 
                     <Separator Grid.Column="1" Grid.Row="0" Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Margin="2,50,2,50"></Separator>

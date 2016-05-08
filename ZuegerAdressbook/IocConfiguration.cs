@@ -12,6 +12,7 @@ namespace ZuegerAdressbook
             Bind<IDocumentStoreFactory>().To<DocumentStoreFactory>().InTransientScope();
             Bind<IMessageDialogService>().To<MessageDialogService>();
             Bind<IDispatcher>().To<ApplicationDispatcher>();
+            Bind<IExcelImportService>().To<ExcelImportService>();
 
 
             Bind<MainViewModel>().ToSelf().InTransientScope();

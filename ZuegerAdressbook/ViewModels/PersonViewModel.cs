@@ -33,6 +33,7 @@ namespace ZuegerAdressbook.ViewModels
         private string _emailAddress;
         private string _phoneNumber;
         private string _mobileNumber;
+        private string _businessPhoneNumber;
         private bool _hasGeneralAbo;
         private DateTime? _generalAboExpirationDate;
         private bool _hasHalbtax;
@@ -82,6 +83,7 @@ namespace ZuegerAdressbook.ViewModels
             _emailAddress = person.EmailAddress;
             _phoneNumber = person.PhoneNumber;
             _mobileNumber = person.MobileNumber;
+            _businessPhoneNumber = person.BusinessPhoneNumber;
             _hasGeneralAbo = person.HasGeneralAbo;
             _generalAboExpirationDate = person.GeneralAboExpirationDate;
             _hasHalbtax = person.HasHalbtax;
@@ -215,6 +217,12 @@ namespace ZuegerAdressbook.ViewModels
             set { ChangeAndNotify(value, ref _mobileNumber); }
         }
 
+        public string BusinessPhoneNumber
+        {
+            get { return _businessPhoneNumber; }
+            set { ChangeAndNotify(value, ref _businessPhoneNumber); }
+        }
+
         public bool HasGeneralAbo
         {
             get { return _hasGeneralAbo; }
@@ -337,6 +345,7 @@ namespace ZuegerAdressbook.ViewModels
                 JuniorKarteExpirationDate = _juniorKarteExpirationDate,
                 Lastname = _lastname,
                 MobileNumber = _mobileNumber,
+                BusinessPhoneNumber = _businessPhoneNumber,
                 NameOnPassport = _nameOnPassport,
                 Notes = _notes,
                 PhoneNumber = _phoneNumber,
@@ -384,6 +393,7 @@ namespace ZuegerAdressbook.ViewModels
             NameOnPassport = _person.NameOnPassport;
             Notes = _person.Notes;
             PhoneNumber = _person.PhoneNumber;
+            BusinessPhoneNumber = _person.BusinessPhoneNumber;
             Plz = _person.Plz;
             Street1 = _person.Street1;
             Street2 = _person.Street2;

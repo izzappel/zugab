@@ -25,6 +25,8 @@ namespace Test
 
         private TestDoucmentStoreFactory _documentStoreFactory;
 
+        private Mock<IExcelImportService> _excelImportServiceMock;
+
         [TestInitialize]
         public void TestInitialize()
         {
@@ -33,6 +35,8 @@ namespace Test
             _documentStoreFactory = new TestDoucmentStoreFactory();
             _dispatcherMock = new Mock<IDispatcher>();
 
+            _excelImportServiceMock = new Mock<IExcelImportService>();
+
             _messageDialogServiceMock = new Mock<IMessageDialogService>();
 
             IocKernel.Initialize(new IocConfiguration());
@@ -40,7 +44,7 @@ namespace Test
 
         private void InitializeViewModel()
         {
-            _viewModel = new MainViewModel(_documentStoreFactory, _dispatcherMock.Object, _messageDialogServiceMock.Object);
+            _viewModel = new MainViewModel(_documentStoreFactory, _dispatcherMock.Object, _messageDialogServiceMock.Object, _excelImportServiceMock.Object);
         }
 
         [TestMethod]

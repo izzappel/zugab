@@ -25,5 +25,15 @@ namespace ZuegerAdressbook.Service
 
             return filename;
         }
+
+        public void OpenInformationDialog(string title, string message)
+        {
+            MessageBox.Show(message, title, MessageBoxButton.OK, MessageBoxImage.Information);
+        }
+
+        public void OpenErrorDialog(string title, string message)
+        {
+            MessageBox.Show(message, title, MessageBoxButton.OK, MessageBoxImage.Error);
+        }
     }
 }

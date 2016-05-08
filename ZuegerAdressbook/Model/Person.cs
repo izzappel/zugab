@@ -30,6 +30,8 @@ namespace ZuegerAdressbook.Model
 
         public string MobileNumber { get; set; }
 
+        public string BusinessPhoneNumber { get; set; }
+
         public bool HasGeneralAbo { get; set; }
 
         public bool HasHalbtax { get; set; }

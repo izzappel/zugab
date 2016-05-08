@@ -37,6 +37,10 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EPPlus, Version=4.0.5.0, Culture=neutral, PublicKeyToken=ea159fdaa78159a1, processorArchitecture=MSIL">
+      <HintPath>..\packages\EPPlus.4.0.5\lib\net20\EPPlus.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Ninject, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
       <HintPath>..\packages\Ninject.3.2.2.0\lib\net45-full\Ninject.dll</HintPath>
       <Private>True</Private>
@@ -84,6 +88,7 @@
     <Compile Include="IocConfiguration.cs" />
     <Compile Include="IocKernel.cs" />
     <Compile Include="Service\DocumentStoreFactory.cs" />
+    <Compile Include="Service\ExcelImportService.cs" />
     <Compile Include="Service\IDocumentStoreFactory.cs" />
     <Compile Include="Model\IIdentifiable.cs" />
     <Compile Include="Extensions\ObjectExtensions.cs" />
@@ -96,7 +101,9 @@
     <Compile Include="Model\Gender.cs" />
     <Compile Include="Service\ApplicationDispatcher.cs" />
     <Compile Include="Service\IDispatcher.cs" />
+    <Compile Include="Service\IExcelImportService.cs" />
     <Compile Include="Service\IMessageDialogService.cs" />
+    <Compile Include="Service\OldAddressbookWorksheet.cs" />
     <Compile Include="ViewModels\DocumentViewModel.cs" />
     <Compile Include="ViewModels\IChangeListener.cs" />
     <Compile Include="ViewModels\PersonViewModel.cs" />

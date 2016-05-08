@@ -18,6 +18,8 @@ namespace ZuegerAdressbook.ViewModels
 
         private readonly IMessageDialogService _messageDialogService;
 
+        private readonly IExcelImportService _excelImportService;
+
         private bool IsNewModeActive => SelectedDetailedPerson != null && SelectedDetailedPerson.Id.IsNullOrEmpty();
 
         private PersonViewModel _selectedListPerson;
@@ -86,27 +88,37 @@ namespace ZuegerAdressbook.ViewModels
         public RelayCommand SaveCommand { get; set; }
         public RelayCommand DeleteCommand { get; set; }
         public RelayCommand RevertCommand { get; set; }
+        public RelayCommand ImportCommand { get; set; }
 
         public MainViewModel()
         {
         }
 
-        public MainViewModel(IDocumentStoreFactory documentStoreFactory, IDispatcher dispatcher, IMessageDialogService messageDialogService)
+        public MainViewModel(IDocumentStoreFactory documentStoreFactory, IDispatcher dispatcher, IMessageDialogService messageDialogService, IExcelImportService excelImportService)
         {
             _documentStoreFactory = documentStoreFactory;
             _dispatcher = dispatcher;
             _messageDialogService = messageDialogService;
+            _excelImportService = excelImportService;
 
             NewCommand = new RelayCommand(CreateNewPerson);
             SaveCommand = new RelayCommand(SaveSelectedPerson, CanSaveSelectedPerson);
             DeleteCommand = new RelayCommand(DeleteSelectedPerson, CanDeleteSelectedPerson);
             RevertCommand = new RelayCommand(RevertChanges, CanRevertChanges);
+            ImportCommand = new RelayCommand(ImportPersons);
 
+            InitializePersons();
+        }
+
+        private void InitializePersons()
+        {
             using (var session = _documentStoreFactory.CreateDocumentStore().OpenSession())
             {
                 var persons = session.LoadAll<Person>();
                 Persons = new ObservableCollection<PersonViewModel>(persons.OrderBy(t => t.Lastname).ThenBy(t => t.Firstname).Select(s => IocKernel.GetPersonViewModel(this, s)).ToList());
             }
+
+            Notify("Persons");
 
             SelectedListPerson = Persons.FirstOrDefault();
         }
@@ -216,6 +228,25 @@ namespace ZuegerAdressbook.ViewModels
                 {
                     SelectedDetailedPerson = null;
                     SelectedListPerson = Persons.FirstOrDefault();
+                }
+            }
+        }
+
+        private void ImportPersons()
+        {
+            var filename = _messageDialogService.OpenFileDialog();
+            if (filename.IsNullOrEmpty() == false)
+            {
+                try
+                {
+                    var numberOfImportedPersons = _excelImportService.Import(filename);
+                    _messageDialogService.OpenInformationDialog("Erfolgreich Importiert", $"{numberOfImportedPersons} Personen wurden importiert.");
+
+                    InitializePersons();
+                }
+                catch (Exception)
+                {
+                    _messageDialogService.OpenErrorDialog("Fehler beim Importieren", "Die Datei konnte nicht importiert werden.");
                 }
             }
         }

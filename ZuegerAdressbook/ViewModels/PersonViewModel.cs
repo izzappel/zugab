@@ -3,6 +3,8 @@ using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 
+using NLog;
+
 using Raven.Imports.Newtonsoft.Json;
 
 using ZuegerAdressbook.Commands;
@@ -14,6 +16,8 @@ namespace ZuegerAdressbook.ViewModels
 {
     public class PersonViewModel : RevertableViewModelBase<Person>, IChangeListener
     {
+        private static Logger _logger = LogManager.GetCurrentClassLogger();
+
         private readonly IMessageDialogService _messageDialogService;
 
         private readonly IDocumentStoreFactory _documentStoreFactory;
@@ -449,6 +453,8 @@ namespace ZuegerAdressbook.ViewModels
 
                     session.SaveChanges();
                 }
+
+                _logger.Info(LoggerMessage.GetFunctionUsageMessage("Delete Documents"));
             }
         }
 
@@ -475,6 +481,8 @@ namespace ZuegerAdressbook.ViewModels
                 documentViewModel.PersonId = Id;
 
                 Documents.Add(documentViewModel);
+
+                _logger.Info(LoggerMessage.GetFunctionUsageMessage("Add Document"));
             }
 
             RemoveDocumentsCommand.RaiseCanExecuteChanged();
@@ -489,6 +497,8 @@ namespace ZuegerAdressbook.ViewModels
         {
             var toDelete = Documents.Where(t => t.IsSelected).ToList();
             toDelete.ForEach(t => Documents.Remove(t));
+
+            _logger.Info(LoggerMessage.GetFunctionUsageMessage("Remove Document"));
 
             RemoveDocumentsCommand.RaiseCanExecuteChanged();
         }

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
+using NLog;
+
 using OfficeOpenXml;
 
 using ZuegerAdressbook.Extensions;
@@ -12,6 +14,8 @@ namespace ZuegerAdressbook.Service
 {
     public class ExcelImportService : IExcelImportService
     {
+        private static Logger _logger = LogManager.GetCurrentClassLogger();
+
         private readonly IDocumentStoreFactory _documentStoreFactory;
 
         public ExcelImportService(IDocumentStoreFactory documentStoreFactory)
@@ -33,6 +37,8 @@ namespace ZuegerAdressbook.Service
                         if (IsOldAddressbookExcel(worksheet))
                         {
                             persons = ImportOldAddressbookExcel(worksheet);
+
+                            _logger.Info(LoggerMessage.GetFunctionUsageMessage("Import Old Addressbook"));
                         }
                         else
                         {
@@ -47,8 +53,8 @@ namespace ZuegerAdressbook.Service
             }
             catch (Exception e)
             {
-                // todo log
-                throw e;
+                _logger.Warn(e, "Exception on Import Persons");
+                throw;
             }
         }
 

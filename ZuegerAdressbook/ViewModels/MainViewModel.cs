@@ -3,6 +3,8 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 
+using NLog;
+
 using ZuegerAdressbook.Commands;
 using ZuegerAdressbook.Extensions;
 using ZuegerAdressbook.Model;
@@ -12,6 +14,8 @@ namespace ZuegerAdressbook.ViewModels
 {
     public class MainViewModel : ViewModelBase, INotifyPropertyChanged, IChangeListener
     {
+        private static Logger _logger = LogManager.GetCurrentClassLogger();
+
         private readonly IDocumentStoreFactory _documentStoreFactory;
 
         private readonly IDispatcher _dispatcher;
@@ -151,6 +155,8 @@ namespace ZuegerAdressbook.ViewModels
             {
                 SelectedListPerson = null;
                 SelectedDetailedPerson = IocKernel.GetPersonViewModel(this);
+
+                _logger.Info(LoggerMessage.GetFunctionUsageMessage("Create New Person"));
             }
         }
 
@@ -184,6 +190,8 @@ namespace ZuegerAdressbook.ViewModels
             SelectedDetailedPerson.SaveDocuments();
 
             SelectedListPerson = SelectedDetailedPerson;
+
+            _logger.Info(LoggerMessage.GetFunctionUsageMessage("Save Selected Person"));
         }
 
         private bool CanDeleteSelectedPerson()
@@ -209,6 +217,8 @@ namespace ZuegerAdressbook.ViewModels
                         session.Delete(toDelete.Id);
                         session.SaveChanges();
                     }
+
+                    _logger.Info(LoggerMessage.GetFunctionUsageMessage("Delete Selected Person"));
                 }
             }
         }
@@ -228,7 +238,14 @@ namespace ZuegerAdressbook.ViewModels
                 {
                     SelectedDetailedPerson = null;
                     SelectedListPerson = Persons.FirstOrDefault();
+
+                    _logger.Info(LoggerMessage.GetFunctionUsageMessage("Revert Changes on New Mode"));
                 }
+                else
+                {
+                    _logger.Info(LoggerMessage.GetFunctionUsageMessage("Revert Changes on Edit Mode"));
+                }
+
             }
         }
 

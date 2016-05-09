@@ -73,7 +73,7 @@ namespace Test
 
             using (var session = _documentStoreFactory.CreateDocumentStore().OpenSession())
             {
-                var documents = session.Query<Document>().Where(t => t.PersonId == _viewModel.Id).ToList();
+                var documents = session.Query<Document>().Customize(t => t.WaitForNonStaleResults()).Where(t => t.PersonId == _viewModel.Id).ToList();
 
                 Assert.AreEqual(1, documents.Count);
                 Assert.AreEqual(@"C:\temp\myFile.txt", documents.First().FileName);
@@ -104,7 +104,7 @@ namespace Test
             Assert.AreEqual(_viewModel.Id, _viewModel.Documents.First().PersonId);
             using (var session = _documentStoreFactory.CreateDocumentStore().OpenSession())
             {
-                var documents = session.Query<Document>().Where(t => t.PersonId == _viewModel.Id).ToList();
+                var documents = session.Query<Document>().Customize(t => t.WaitForNonStaleResults()).Where(t => t.PersonId == _viewModel.Id).ToList();
 
                 Assert.AreEqual(1, documents.Count);
                 Assert.AreEqual(@"C:\temp\myFile.txt", documents.First().FileName);

@@ -111,6 +111,70 @@ namespace Test
             }
         }
 
+        [TestMethod]
+        public void GivenPersonWithDocumentWhenRemoveAndSaveDocumentThenDocumentIsRemoved()
+        {
+            _persons.Add(new Person { Id = "people/1" });
+            AddPersons();
+            _documents.Add(new Document { PersonId = "people/1", FileName = @"C:\temp\myFile.txt"});
+            AddDocuments();
+
+            InitializeViewModel(_persons.First());
+
+            _viewModel.Documents.First().IsSelected = true;
+            _viewModel.RemoveDocumentsCommand.Execute(null);
+            _viewModel.SaveDocuments();
+
+            using (var session = _documentStoreFactory.CreateDocumentStore().OpenSession())
+            {
+                var documents = session.Query<Document>().Customize(t => t.WaitForNonStaleResults()).Where(t => t.PersonId == _viewModel.Id).ToList();
+
+                Assert.AreEqual(0, documents.Count);
+            }
+        }
+
+        [TestMethod]
+        public void GivenPersonWithDocumentWhenRemoveDocumentAndRevertChangesThenDocumentIsNotRemoved()
+        {
+            _persons.Add(new Person { Id = "people/1" });
+            AddPersons();
+            _documents.Add(new Document { PersonId = "people/1", FileName = @"C:\temp\myFile.txt" });
+            AddDocuments();
+
+            InitializeViewModel(_persons.First());
+
+            _viewModel.Documents.First().IsSelected = true;
+            _viewModel.RemoveDocumentsCommand.Execute(null);
+            _viewModel.ResetChanges();
+
+            using (var session = _documentStoreFactory.CreateDocumentStore().OpenSession())
+            {
+                var documents = session.Query<Document>().Customize(t => t.WaitForNonStaleResults()).Where(t => t.PersonId == _viewModel.Id).ToList();
+
+                Assert.AreEqual(1, documents.Count);
+                Assert.AreEqual(@"C:\temp\myFile.txt", documents.First().FileName);
+            }
+        }
+
+        [TestMethod]
+        public void GivenPersonWithNoDocumentWhenAddDocumentAndRevertChangesThenDocumentIsNotAdded()
+        {
+            _persons.Add(new Person { Id = "people/1" });
+            AddPersons();
+            InitializeViewModel(_persons.First());
+
+            _messageDialogServiceMock.Setup(t => t.OpenFileDialog()).Returns(@"C:\temp\myFile.txt");
+            _viewModel.AddDocumentCommand.Execute(null);
+            _viewModel.ResetChanges();
+
+            using (var session = _documentStoreFactory.CreateDocumentStore().OpenSession())
+            {
+                var documents = session.Query<Document>().Customize(t => t.WaitForNonStaleResults()).Where(t => t.PersonId == _viewModel.Id).ToList();
+
+                Assert.AreEqual(0, documents.Count);
+            }
+        }
+
         private void AddPersons()
         {
             using (var session = _documentStoreFactory.CreateDocumentStore().OpenSession())

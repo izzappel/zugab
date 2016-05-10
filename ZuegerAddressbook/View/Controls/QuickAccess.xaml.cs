@@ -48,7 +48,7 @@ namespace ZuegerAdressbook.View.Controls
                 throw new InvalidOperationException("TargetPropertyPath is not set.");
             }
 
-            var firstWithLetter = collectionView.SourceCollection.Cast<object>().FirstOrDefault(o => o.DynamicAccess<string>(TargetPropertyPath).StartsWith(letter, true, CultureInfo.InvariantCulture));
+            var firstWithLetter = collectionView.SourceCollection.Cast<object>().FirstOrDefault(o => o.DynamicAccess<string>(TargetPropertyPath)?.StartsWith(letter, true, CultureInfo.InvariantCulture) ?? false);
 
             if (firstWithLetter != null)
             {

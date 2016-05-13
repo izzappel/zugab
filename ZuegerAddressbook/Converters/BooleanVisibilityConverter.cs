@@ -8,12 +8,24 @@ namespace ZuegerAdressbook.Converters
     {
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
+            bool invertValue = false;
+            var invertValueString = parameter as string;
+            if (invertValueString != null && invertValueString.Equals(bool.TrueString, StringComparison.InvariantCultureIgnoreCase))
+            {
+                invertValue = true;
+            }
+
             if (value == null)
             {
                 return DependencyProperty.UnsetValue;
             }
 
             var boolValue = (bool)value;
+            if (invertValue)
+            {
+                boolValue = !boolValue;
+            }
+
             if (boolValue)
             {
                 return Visibility.Visible;

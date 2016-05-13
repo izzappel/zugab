@@ -125,8 +125,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Compile Include="View\Controls\QuickAccess.xaml.cs">
-      <DependentUpon>QuickAccess.xaml</DependentUpon>
+    <Compile Include="View\Controls\BirthdateQuickAccess.xaml.cs">
+      <DependentUpon>BirthdateQuickAccess.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Controls\LetterQuickAccess.xaml.cs">
+      <DependentUpon>LetterQuickAccess.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -153,7 +156,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="View\Controls\QuickAccess.xaml">
+    <Page Include="View\Controls\BirthdateQuickAccess.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Controls\LetterQuickAccess.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

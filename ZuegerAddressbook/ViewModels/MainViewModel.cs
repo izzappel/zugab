@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
+using System.Windows.Data;
 
 using NLog;
 
@@ -31,6 +32,8 @@ namespace ZuegerAdressbook.ViewModels
         private PersonViewModel _selectedDetailedPerson;
 
         private RevertableObservableCollection<DocumentViewModel, Document> _documents;
+
+        private bool _isFilterByBirthdate = false;
 
         public bool HasChanges
         {
@@ -85,7 +88,19 @@ namespace ZuegerAdressbook.ViewModels
                 OnSelectedDetailedPersonChanged();
             }
         }
-        
+
+        public bool IsFilterByBirthdate
+        {
+            get
+            {
+                return _isFilterByBirthdate;
+            }
+            set
+            {
+                ChangeAndNotify(value, ref _isFilterByBirthdate);
+            }
+        }
+
         public ObservableCollection<PersonViewModel> Persons { get; set; }
 
         public RelayCommand NewCommand { get; set; }
@@ -93,6 +108,8 @@ namespace ZuegerAdressbook.ViewModels
         public RelayCommand DeleteCommand { get; set; }
         public RelayCommand RevertCommand { get; set; }
         public RelayCommand ImportCommand { get; set; }
+        public RelayCommand ToggleFilter { get; set; }
+
 
         public MainViewModel()
         {
@@ -110,6 +127,7 @@ namespace ZuegerAdressbook.ViewModels
             DeleteCommand = new RelayCommand(DeleteSelectedPerson, CanDeleteSelectedPerson);
             RevertCommand = new RelayCommand(RevertChanges, CanRevertChanges);
             ImportCommand = new RelayCommand(ImportPersons);
+            ToggleFilter = new RelayCommand(TogglePersonsFilter, CanTogglePersonsFilter);
 
             InitializePersons();
         }
@@ -266,6 +284,29 @@ namespace ZuegerAdressbook.ViewModels
                     _messageDialogService.OpenErrorDialog("Fehler beim Importieren", "Die Datei konnte nicht importiert werden.");
                 }
             }
+        }
+
+        private bool CanTogglePersonsFilter()
+        {
+            return !IsNewModeActive && !HasChanges;
+        }
+
+        private void TogglePersonsFilter()
+        {
+            if (IsFilterByBirthdate)
+            {
+                Persons = new ObservableCollection<PersonViewModel>(Persons.OrderBy(t => t.Lastname).ThenBy(t => t.Firstname).ToList());
+                IsFilterByBirthdate = false;
+            }
+            else
+            {
+                Persons = new ObservableCollection<PersonViewModel>(Persons.OrderBy(t => t.Birthdate?.Month).ThenBy(t => t.Birthdate?.Year).ThenBy(t => t.Birthdate?.Date).ToList());
+                IsFilterByBirthdate = true;
+            }
+
+            Notify("Persons");
+
+            SelectedListPerson = Persons.FirstOrDefault();
         }
 
         private bool ChangeSelectedDetailedPerson()

@@ -447,7 +447,7 @@
 
             <controls:FilterControl Grid.Column="0" Grid.Row="0" Margin="2" Height="30" Header="Tippen zum filtern..." TargetControl="{Binding ElementName=listBox}" FilterTextBindingPath="FullName"/>
 
-            <ToggleButton Grid.Column="1" Grid.Row="0" Background="Transparent" BorderThickness="0" Margin="2" Padding="3" Checked="BirthdayFilterToggle_OnChecked" x:Name="BirthdayFilterToggle">
+            <ToggleButton Grid.Column="1" Grid.Row="0" Background="Transparent" BorderThickness="0" Margin="2" Padding="3" Command="{Binding ToggleFilter}" IsChecked="{Binding IsFilterByBirthdate, Mode=OneWay}" x:Name="BirthdayFilterToggle">
                 <Image Source="Icons/48/gift.png" Height="25"/>
             </ToggleButton>
 
@@ -473,7 +473,8 @@
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                 </ListBox>
-                <controls:QuickAccess Grid.Column="1" TargetControl="{Binding ElementName=listBox}" TargetPropertyPath="Lastname" VerticalAlignment="Stretch" Margin="10,0,0,0" />
+                <controls:LetterQuickAccess Grid.Column="1" TargetControl="{Binding ElementName=listBox}" TargetPropertyPath="Lastname" VerticalAlignment="Stretch" Margin="10,0,0,0" Visibility="{Binding IsFilterByBirthdate, ConverterParameter=True, Converter={StaticResource booleanVisibilityConverter}}"></controls:LetterQuickAccess>
+                <controls:BirthdateQuickAccess Grid.Column="1" TargetControl="{Binding ElementName=listBox}" TargetPropertyPath="Birthdate" VerticalAlignment="Stretch" Margin="10,0,0,0" Visibility="{Binding IsFilterByBirthdate, Converter={StaticResource booleanVisibilityConverter}}"></controls:BirthdateQuickAccess>
             </Grid>
 
         </Grid>

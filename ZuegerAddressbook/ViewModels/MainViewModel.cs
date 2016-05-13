@@ -300,7 +300,7 @@ namespace ZuegerAdressbook.ViewModels
             }
             else
             {
-                Persons = new ObservableCollection<PersonViewModel>(Persons.OrderBy(t => t.Birthdate?.Month).ThenBy(t => t.Birthdate?.Year).ThenBy(t => t.Birthdate?.Date).ToList());
+                Persons = new ObservableCollection<PersonViewModel>(Persons.OrderBy(t => t.Birthdate?.Month).ThenBy(t => t.Birthdate?.Day).ThenBy(t => t.Lastname).ThenBy(t => t.Firstname).ToList());
                 IsFilterByBirthdate = true;
             }
 

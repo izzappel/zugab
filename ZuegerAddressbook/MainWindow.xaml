@@ -165,7 +165,7 @@
                             <TextBlock HorizontalAlignment="Center"><Run Text="Import"/></TextBlock>
                         </StackPanel>
                     </Button>
-                    <Button ToolBar.OverflowMode="Never">
+                    <Button Command="{Binding ExportCommand}"  ToolBar.OverflowMode="Never">
                         <StackPanel Orientation="Vertical">
                             <Image Source="Icons/48/box-out.png"/>
                             <TextBlock HorizontalAlignment="Center"><Run Text="Export"/></TextBlock>

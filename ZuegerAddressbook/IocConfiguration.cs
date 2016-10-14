@@ -13,7 +13,7 @@ namespace ZuegerAdressbook
             Bind<IMessageDialogService>().To<MessageDialogService>();
             Bind<IDispatcher>().To<ApplicationDispatcher>();
             Bind<IExcelImportService>().To<ExcelImportService>();
-
+            Bind<IExcelExportService>().To<ExcelExportService>();
 
             Bind<MainViewModel>().ToSelf().InTransientScope();
             Bind<PersonViewModel>().ToSelf().InTransientScope();

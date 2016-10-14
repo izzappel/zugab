@@ -27,6 +27,8 @@ namespace Test
 
         private Mock<IExcelImportService> _excelImportServiceMock;
 
+        private Mock<IExcelExportService> _excelExportServiceMock;
+
         [TestInitialize]
         public void TestInitialize()
         {
@@ -36,6 +38,7 @@ namespace Test
             _dispatcherMock = new Mock<IDispatcher>();
 
             _excelImportServiceMock = new Mock<IExcelImportService>();
+            _excelExportServiceMock = new Mock<IExcelExportService>();
 
             _messageDialogServiceMock = new Mock<IMessageDialogService>();
 
@@ -44,7 +47,7 @@ namespace Test
 
         private void InitializeViewModel()
         {
-            _viewModel = new MainViewModel(_documentStoreFactory, _dispatcherMock.Object, _messageDialogServiceMock.Object, _excelImportServiceMock.Object);
+            _viewModel = new MainViewModel(_documentStoreFactory, _dispatcherMock.Object, _messageDialogServiceMock.Object, _excelImportServiceMock.Object, _excelExportServiceMock.Object);
         }
 
         [TestMethod]

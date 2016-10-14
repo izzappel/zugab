@@ -6,6 +6,10 @@
 
         string OpenFileDialog();
 
+        string OpenExcelFileDialog();
+
+        string SaveExcelFileDialog();
+
         void OpenInformationDialog(string title, string message);
 
         void OpenErrorDialog(string title, string message);

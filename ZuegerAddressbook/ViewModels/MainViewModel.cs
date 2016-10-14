@@ -25,6 +25,8 @@ namespace ZuegerAdressbook.ViewModels
 
         private readonly IExcelImportService _excelImportService;
 
+        private readonly IExcelExportService _excelExportService;
+
         private bool IsNewModeActive => SelectedDetailedPerson != null && SelectedDetailedPerson.Id.IsNullOrEmpty();
 
         private PersonViewModel _selectedListPerson;
@@ -108,6 +110,7 @@ namespace ZuegerAdressbook.ViewModels
         public RelayCommand DeleteCommand { get; set; }
         public RelayCommand RevertCommand { get; set; }
         public RelayCommand ImportCommand { get; set; }
+        public RelayCommand ExportCommand { get; set; }
         public RelayCommand ToggleFilter { get; set; }
 
 
@@ -115,18 +118,20 @@ namespace ZuegerAdressbook.ViewModels
         {
         }
 
-        public MainViewModel(IDocumentStoreFactory documentStoreFactory, IDispatcher dispatcher, IMessageDialogService messageDialogService, IExcelImportService excelImportService)
+        public MainViewModel(IDocumentStoreFactory documentStoreFactory, IDispatcher dispatcher, IMessageDialogService messageDialogService, IExcelImportService excelImportService, IExcelExportService excelExportService)
         {
             _documentStoreFactory = documentStoreFactory;
             _dispatcher = dispatcher;
             _messageDialogService = messageDialogService;
             _excelImportService = excelImportService;
+            _excelExportService = excelExportService;
 
             NewCommand = new RelayCommand(CreateNewPerson);
             SaveCommand = new RelayCommand(SaveSelectedPerson, CanSaveSelectedPerson);
             DeleteCommand = new RelayCommand(DeleteSelectedPerson, CanDeleteSelectedPerson);
             RevertCommand = new RelayCommand(RevertChanges, CanRevertChanges);
             ImportCommand = new RelayCommand(ImportPersons);
+            ExportCommand = new RelayCommand(ExportPersons);
             ToggleFilter = new RelayCommand(TogglePersonsFilter, CanTogglePersonsFilter);
 
             InitializePersons();
@@ -269,7 +274,7 @@ namespace ZuegerAdressbook.ViewModels
 
         private void ImportPersons()
         {
-            var filename = _messageDialogService.OpenFileDialog();
+            var filename = _messageDialogService.OpenExcelFileDialog();
             if (filename.IsNullOrEmpty() == false)
             {
                 try
@@ -282,6 +287,25 @@ namespace ZuegerAdressbook.ViewModels
                 catch (Exception)
                 {
                     _messageDialogService.OpenErrorDialog("Fehler beim Importieren", "Die Datei konnte nicht importiert werden.");
+                }
+            }
+        }
+
+        private void ExportPersons()
+        {
+            var filename = _messageDialogService.SaveExcelFileDialog();
+            if (filename.IsNullOrEmpty() == false)
+            {
+                try
+                {
+                    var numberOfExportedPersons = _excelExportService.Export(filename);
+                    _messageDialogService.OpenInformationDialog("Erfolgreich Exportiert", $"{numberOfExportedPersons} Personen wurden exportiert.");
+
+                    InitializePersons();
+                }
+                catch (Exception)
+                {
+                    _messageDialogService.OpenErrorDialog("Fehler beim Exportieren", "Die Personen konnten nicht exportiert werden.");
                 }
             }
         }

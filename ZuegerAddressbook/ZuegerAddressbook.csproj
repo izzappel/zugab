@@ -92,7 +92,10 @@
     <Compile Include="Converters\EnumBooleanConverter.cs" />
     <Compile Include="IocConfiguration.cs" />
     <Compile Include="IocKernel.cs" />
+    <Compile Include="Service\AddressbookWorksheet.cs" />
+    <Compile Include="Service\AddressbookWorksheetRow.cs" />
     <Compile Include="Service\DocumentStoreFactory.cs" />
+    <Compile Include="Service\ExcelExportService.cs" />
     <Compile Include="Service\ExcelImportService.cs" />
     <Compile Include="Service\IDocumentStoreFactory.cs" />
     <Compile Include="Model\IIdentifiable.cs" />
@@ -106,6 +109,7 @@
     <Compile Include="Model\Gender.cs" />
     <Compile Include="Service\ApplicationDispatcher.cs" />
     <Compile Include="Service\IDispatcher.cs" />
+    <Compile Include="Service\IExcelExportService.cs" />
     <Compile Include="Service\IExcelImportService.cs" />
     <Compile Include="Service\IMessageDialogService.cs" />
     <Compile Include="Service\LoggerMessage.cs" />

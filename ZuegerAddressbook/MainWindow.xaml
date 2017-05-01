@@ -30,6 +30,7 @@
         <Style TargetType="{x:Type TextBox}">
             <Setter Property="VerticalContentAlignment" Value="Center" />
             <Setter Property="BorderThickness" Value="0,0,0,1"/>
+            <Setter Property="BorderBrush" Value="#FFAAAAAA" />
             <Setter Property="Background" Value="{StaticResource ControlBackgroundColor}"/>
             <Setter Property="FontFamily" Value="fonts/#Frutiger LT Com 55 Roman"/>
             <Setter Property="Margin" Value="5,0,0,0"/>
@@ -245,7 +246,7 @@
                         <TextBox Grid.Column="2" Grid.Row="3" Text="{Binding Lastname, UpdateSourceTrigger=PropertyChanged}" Margin="5,0,0,0"/>
 
                         <Label Grid.Column="0" Grid.Row="4" Style="{StaticResource TopLabel}" Content="Geburtsdatum"/>
-                        <DatePicker Grid.Column="0" Grid.Row="5" SelectedDate="{Binding Birthdate}" Template="{DynamicResource DatePickerControlTemplate}" />
+                        <DatePicker Grid.Column="0" Grid.Row="5" SelectedDate="{Binding Birthdate, StringFormat={}{0:dd.MM.yyyy}}" SelectedDateFormat="Short" Template="{DynamicResource DatePickerControlTemplate}" />
                         <StackPanel Grid.Column="2" Grid.Row="5" Orientation="Horizontal">
                             <TextBlock Text="{Binding Age, FallbackValue=?, TargetNullValue=?}" Margin="0,0,5,0"/>
                             <TextBlock Text="Jahre" Margin="0,0,5,0"/>

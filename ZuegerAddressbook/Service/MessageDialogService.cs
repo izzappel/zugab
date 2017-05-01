@@ -1,4 +1,6 @@
 ﻿using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Documents;
 
 namespace ZuegerAdressbook.Service
 {
@@ -67,6 +69,21 @@ namespace ZuegerAdressbook.Service
         public void OpenErrorDialog(string title, string message)
         {
             MessageBox.Show(message, title, MessageBoxButton.OK, MessageBoxImage.Error);
+        }
+
+        public void OpenPrintDialog(FlowDocument document, string description)
+        {
+            PrintDialog printDialog = new PrintDialog();
+
+            IDocumentPaginatorSource dps = document;
+            if (printDialog.ShowDialog() == true)
+            {
+                document.PageHeight = printDialog.PrintableAreaHeight;
+                document.PageWidth = printDialog.PrintableAreaWidth;
+                document.ColumnGap = 0;
+                document.ColumnWidth = printDialog.PrintableAreaWidth;
+                printDialog.PrintDocument(dps.DocumentPaginator, description);
+            }
         }
     }
 }

@@ -92,6 +92,10 @@
     <Compile Include="Converters\EnumBooleanConverter.cs" />
     <Compile Include="IocConfiguration.cs" />
     <Compile Include="IocKernel.cs" />
+    <Compile Include="Printing\PersonDetail.xaml.cs">
+      <DependentUpon>PersonDetail.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Printing\PersonDetailViewModel.cs" />
     <Compile Include="Service\AddressbookWorksheet.cs" />
     <Compile Include="Service\AddressbookWorksheetRow.cs" />
     <Compile Include="Service\DocumentStoreFactory.cs" />
@@ -122,10 +126,18 @@
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Service\MessageDialogService.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
+    <Compile Include="ViewModels\PrintPersonDetailsViewModel.cs" />
     <Compile Include="ViewModels\RevertableObservableCollection.cs" />
     <Compile Include="ViewModels\RevertableViewModelBase.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="View\Controls\FilterControl.cs" />
+    <Compile Include="View\PrintPersonDetailsDialog.xaml.cs">
+      <DependentUpon>PrintPersonDetailsDialog.xaml</DependentUpon>
+    </Compile>
+    <Page Include="Printing\PersonDetail.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Themes\DatePickerControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -166,6 +178,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="View\Controls\LetterQuickAccess.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\PrintPersonDetailsDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -2,7 +2,6 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
-using System.Windows.Data;
 
 using NLog;
 
@@ -10,6 +9,7 @@ using ZuegerAdressbook.Commands;
 using ZuegerAdressbook.Extensions;
 using ZuegerAdressbook.Model;
 using ZuegerAdressbook.Service;
+using ZuegerAdressbook.View;
 
 namespace ZuegerAdressbook.ViewModels
 {
@@ -111,6 +111,7 @@ namespace ZuegerAdressbook.ViewModels
         public RelayCommand RevertCommand { get; set; }
         public RelayCommand ImportCommand { get; set; }
         public RelayCommand ExportCommand { get; set; }
+        public RelayCommand PrintPersonDetailCommand { get; set; }
         public RelayCommand ToggleFilter { get; set; }
 
 
@@ -132,6 +133,7 @@ namespace ZuegerAdressbook.ViewModels
             RevertCommand = new RelayCommand(RevertChanges, CanRevertChanges);
             ImportCommand = new RelayCommand(ImportPersons);
             ExportCommand = new RelayCommand(ExportPersons);
+            PrintPersonDetailCommand = new RelayCommand(PrintPersonDetail);
             ToggleFilter = new RelayCommand(TogglePersonsFilter, CanTogglePersonsFilter);
 
             InitializePersons();
@@ -308,6 +310,12 @@ namespace ZuegerAdressbook.ViewModels
                     _messageDialogService.OpenErrorDialog("Fehler beim Exportieren", "Die Personen konnten nicht exportiert werden.");
                 }
             }
+        }
+
+        private void PrintPersonDetail()
+        {
+            var dialog = new PrintPersonDetailsDialog();
+            dialog.ShowDialog();
         }
 
         private bool CanTogglePersonsFilter()

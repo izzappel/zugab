@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:Controls="clr-namespace:ZuegerAdressbook.View.Controls"
              x:Class="ZuegerAdressbook.App"
+             xmlns:converter="clr-namespace:ZuegerAdressbook.Converters"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
         <ResourceDictionary>
@@ -13,6 +14,17 @@
                 <Setter Property="FontFamily" Value="fonts/#Frutiger LT Com 55 Roman" />
             </Style>
             <SolidColorBrush x:Key="ControlBackgroundColor" Color="#FFDDDDDD" />
+
+            <converter:EnumBooleanConverter x:Key="enumBooleanConverter" />
+            <converter:BooleanVisibilityConverter x:Key="booleanVisibilityConverter"/>
+            <converter:EnumVisibilityConverter x:Key="enumVisibilityConverter"/>
+            <converter:NullableVisibilityConverter x:Key="nullableVisibilityConverter"/>
+            
+            <Style TargetType="{x:Type TextBlock}" x:Key="FontAwesomeIcon">
+                <Setter Property="FontFamily" Value="fonts/#FontAwesome"/>
+                <Setter Property="FontSize" Value="20"/>
+                <Setter Property="VerticalAlignment" Value="Center" />
+            </Style>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

@@ -8,7 +8,8 @@
         xmlns:vm="clr-namespace:ZuegerAdressbook.ViewModels"
         xmlns:converter="clr-namespace:ZuegerAdressbook.Converters"
         mc:Ignorable="d"
-        Title="PrintPersonDetailsDialog" Height="500" Width="500"
+        Icon="../Icons/48/address-book.png"
+        Title="Drucken" Height="500" Width="500"
         d:DataContext="{d:DesignInstance vm:PrintPersonDetailsViewModel, IsDesignTimeCreatable=True}">
     <Window.Resources>
     </Window.Resources>
@@ -30,7 +31,7 @@
             </StackPanel>
         </Border>
 
-        <ListBox Grid.Column="0" Grid.Row="1" ItemsSource="{Binding Persons}" SelectedItem="{Binding SelectedListPerson}">
+        <ListBox Grid.Column="0" Grid.Row="1" ItemsSource="{Binding Persons}" SelectedItem="{Binding SelectedListPerson}" Margin="5 5 0 0">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <Grid>
@@ -68,7 +69,7 @@
             </Button>
         </StackPanel>
 
-        <ListBox Grid.Column="2" Grid.Row="1" ItemsSource="{Binding SelectedPersons}" SelectedItem="{Binding SelectedSelectedPerson}">
+        <ListBox Grid.Column="2" Grid.Row="1" ItemsSource="{Binding SelectedPersons}" SelectedItem="{Binding SelectedSelectedPerson}" Margin="0 5 5 0">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <Grid>
@@ -93,8 +94,8 @@
             </ListBox.ItemTemplate>
         </ListBox>
 
-        <StackPanel Grid.Column="3" Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
-            <Button Command="{Binding PrintPersonDetailCommand}" Margin="20 0 0 0" Padding="5">
+        <StackPanel Grid.Column="3" Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="5 5 5 5">
+            <Button Command="{Binding PrintPersonDetailCommand}" Padding="5">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="../Icons/48/sign-check.png"/>
                     <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"><Run Text="Drucken"/></TextBlock>

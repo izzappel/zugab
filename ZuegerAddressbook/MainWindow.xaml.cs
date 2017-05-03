@@ -22,30 +22,6 @@ namespace ZuegerAdressbook
             DataContext = _viewModel;
         }
 
-        private void AddDocumentButton_OnClick(object sender, RoutedEventArgs e)
-        {
-            Microsoft.Win32.OpenFileDialog fileDialog = new Microsoft.Win32.OpenFileDialog();
-
-            var result = fileDialog.ShowDialog();
-            if (result == true)
-            {
-                // Open document 
-                string filename = fileDialog.FileName;
-            }
-        }
-
-        private void BirthdayFilterToggle_OnChecked(object sender, RoutedEventArgs e)
-        {
-            if (BirthdayFilterToggle.IsChecked.GetValueOrDefault())
-            {
-                //_viewModel.SortPersonsByBirthday();
-            }
-            else
-            {
-                //_viewModel.SortPersonsByName();
-            }
-        }
-
         private void FrameworkElement_OnLoaded(object sender, RoutedEventArgs e)
         {
             ToolBar toolBar = sender as ToolBar;

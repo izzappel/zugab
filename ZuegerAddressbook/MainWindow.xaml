@@ -16,17 +16,6 @@
     Icon="Icons/48/address-book.png"
     d:DataContext="{d:DesignInstance vm:MainViewModel, IsDesignTimeCreatable=True}">
     <Window.Resources>
-        <converter:EnumBooleanConverter x:Key="enumBooleanConverter" />
-        <converter:BooleanVisibilityConverter x:Key="booleanVisibilityConverter"/>
-        <converter:EnumVisibilityConverter x:Key="enumVisibilityConverter"/>
-        <converter:NullableVisibilityConverter x:Key="nullableVisibilityConverter"/>
-
-        <Style TargetType="{x:Type TextBlock}" x:Key="FontAwesomeIcon">
-            <Setter Property="FontFamily" Value="fonts/#FontAwesome"/>
-            <Setter Property="FontSize" Value="20"/>
-            <Setter Property="VerticalAlignment" Value="Center" />
-        </Style>
-
         <Style TargetType="{x:Type TextBox}">
             <Setter Property="VerticalContentAlignment" Value="Center" />
             <Setter Property="BorderThickness" Value="0,0,0,1"/>
@@ -146,7 +135,7 @@
                     </Button>
                 </ToolBar>
                 <ToolBar Header="Drucken" Loaded="FrameworkElement_OnLoaded">
-                    <Button ToolBar.OverflowMode="Never">
+                    <Button Command="{Binding PrintPersonDetailCommand}" ToolBar.OverflowMode="Never">
                         <StackPanel Orientation="Vertical">
                             <Image Source="Icons/48/profile-group.png"/>
                             <TextBlock HorizontalAlignment="Center"><Run Text="Personen"/></TextBlock>

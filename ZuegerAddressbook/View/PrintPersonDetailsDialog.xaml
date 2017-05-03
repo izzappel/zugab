@@ -1,0 +1,106 @@
+﻿<Window x:Class="ZuegerAdressbook.View.PrintPersonDetailsDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:zugab="clr-namespace:ZuegerAdressbook"
+        xmlns:local="clr-namespace:ZuegerAdressbook.View"
+        xmlns:vm="clr-namespace:ZuegerAdressbook.ViewModels"
+        xmlns:converter="clr-namespace:ZuegerAdressbook.Converters"
+        mc:Ignorable="d"
+        Icon="../Icons/48/address-book.png"
+        Title="Drucken" Height="500" Width="500"
+        d:DataContext="{d:DesignInstance vm:PrintPersonDetailsViewModel, IsDesignTimeCreatable=True}">
+    <Window.Resources>
+    </Window.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="50"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <Border Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3" Background="#FFF9F9F9" BorderThickness="0,0,0,1" BorderBrush="#FF333333" SnapsToDevicePixels="True">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Padding="20" FontSize="15pt">Bitte Personen zum Drucken auswählen:</TextBlock>
+            </StackPanel>
+        </Border>
+
+        <ListBox Grid.Column="0" Grid.Row="1" ItemsSource="{Binding Persons}" SelectedItem="{Binding SelectedListPerson}" Margin="5 5 0 0">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="20" />
+                            <ColumnDefinition Width="5" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Grid.Row="0" Style="{StaticResource FontAwesomeIcon}" Visibility="{Binding Gender, ConverterParameter=Female, Converter={StaticResource enumVisibilityConverter}}"><Run Text="&#xF182;"/></TextBlock>
+                        <TextBlock Grid.Column="0" Grid.Row="0"  Style="{StaticResource FontAwesomeIcon}" Visibility="{Binding Gender, ConverterParameter=Male, Converter={StaticResource enumVisibilityConverter}}"><Run Text="&#xF183;"/></TextBlock>
+
+                        <TextBlock  Grid.Column="2" Grid.Row="0"  VerticalAlignment="Center">
+                                    <Run Text="{Binding Lastname}" />
+                                    <Run Text="{Binding Firstname}" />
+                        </TextBlock>
+                        <TextBlock Visibility="{Binding Birthdate, Converter={StaticResource nullableVisibilityConverter}}" Grid.Column="3" Grid.Row="0" Margin="5,0,0,0"  VerticalAlignment="Center">
+                                    <Run Text="{Binding Birthdate, StringFormat=({0:dd. MMMM yyyy})}" />
+                        </TextBlock>
+                    </Grid>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
+        <StackPanel Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" Margin="5 0 5 0">
+            <Button Command="{Binding AddSelectedToSelectedPersonsCommand}" Margin="0 5 0 5">
+                <StackPanel Orientation="Vertical">
+                    <Image Source="../Icons/48/sign-right.png"/>
+                </StackPanel>
+            </Button>
+            <Button Command="{Binding RemoveSelectedFromSelectedPersonsCommand}" Margin="0 5 0 5">
+                <StackPanel Orientation="Vertical">
+                    <Image Source="../Icons/48/sign-left.png"/>
+                </StackPanel>
+            </Button>
+        </StackPanel>
+
+        <ListBox Grid.Column="2" Grid.Row="1" ItemsSource="{Binding SelectedPersons}" SelectedItem="{Binding SelectedSelectedPerson}" Margin="0 5 5 0">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="20" />
+                            <ColumnDefinition Width="5" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Grid.Row="0" Style="{StaticResource FontAwesomeIcon}" Visibility="{Binding Gender, ConverterParameter=Female, Converter={StaticResource enumVisibilityConverter}}"><Run Text="&#xF182;"/></TextBlock>
+                        <TextBlock Grid.Column="0" Grid.Row="0"  Style="{StaticResource FontAwesomeIcon}" Visibility="{Binding Gender, ConverterParameter=Male, Converter={StaticResource enumVisibilityConverter}}"><Run Text="&#xF183;"/></TextBlock>
+
+                        <TextBlock  Grid.Column="2" Grid.Row="0"  VerticalAlignment="Center">
+                                    <Run Text="{Binding Lastname}" />
+                                    <Run Text="{Binding Firstname}" />
+                        </TextBlock>
+                        <TextBlock Visibility="{Binding Birthdate, Converter={StaticResource nullableVisibilityConverter}}" Grid.Column="3" Grid.Row="0" Margin="5,0,0,0"  VerticalAlignment="Center">
+                                    <Run Text="{Binding Birthdate, StringFormat=({0:dd. MMMM yyyy})}" />
+                        </TextBlock>
+                    </Grid>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
+        <StackPanel Grid.Column="3" Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="5 5 5 5">
+            <Button Command="{Binding PrintPersonDetailCommand}" Padding="5">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="../Icons/48/sign-check.png"/>
+                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"><Run Text="Drucken"/></TextBlock>
+                </StackPanel>
+            </Button>
+        </StackPanel>
+    </Grid>
+</Window>

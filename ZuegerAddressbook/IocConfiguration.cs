@@ -18,6 +18,7 @@ namespace ZuegerAdressbook
             Bind<MainViewModel>().ToSelf().InTransientScope();
             Bind<PersonViewModel>().ToSelf().InTransientScope();
             Bind<DocumentViewModel>().ToSelf().InTransientScope();
+            Bind<PrintPersonDetailsViewModel>().ToSelf().InTransientScope();
         }
     }
 }

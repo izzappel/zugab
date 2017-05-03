@@ -34,7 +34,6 @@ namespace ZuegerAdressbook.Service
                     Lastname = row.Lastname,
                     Title = row.Title,
                     Street1 = row.Street1,
-                    Street2 = row.Street2,
                     Plz = row.Plz,
                     City = row.City,
                     PhoneNumber = row.PhoneNumber,
@@ -84,7 +83,6 @@ namespace ZuegerAdressbook.Service
                 row.Gender = person.Gender;
                 row.Title = person.Title;
                 row.Street1 = person.Street1;
-                row.Street2 = person.Street2;
                 row.City = person.City;
                 row.Plz = person.Plz;
                 row.Birthdate = person.Birthdate;
@@ -116,7 +114,6 @@ namespace ZuegerAdressbook.Service
             _worksheet.Cells[1, 4].Value = "Geschlecht";
             _worksheet.Cells[1, 5].Value = "Titel";
             _worksheet.Cells[1, 6].Value = "Strasse 1";
-            _worksheet.Cells[1, 7].Value = "Strasse 2";
             _worksheet.Cells[1, 8].Value = "Stadt";
             _worksheet.Cells[1, 9].Value = "PLZ";
             _worksheet.Cells[1, 10].Value = "Geburtsdatum";

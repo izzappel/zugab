@@ -30,7 +30,6 @@ namespace ZuegerAdressbook.ViewModels
         private Gender _gender;
         private string _title;
         private string _street1;
-        private string _street2;
         private string _city;
         private string _plz;
         private DateTime? _birthdate;
@@ -80,7 +79,6 @@ namespace ZuegerAdressbook.ViewModels
             _gender = person.Gender;
             _title = person.Title;
             _street1 = person.Street1;
-            _street2 = person.Street2;
             _city = person.City;
             _plz = person.Plz;
             _birthdate = person.Birthdate;
@@ -172,12 +170,6 @@ namespace ZuegerAdressbook.ViewModels
         {
             get { return _street1; }
             set { ChangeAndNotify(value, ref _street1); }
-        }
-
-        public string Street2
-        {
-            get { return _street2; }
-            set { ChangeAndNotify(value, ref _street2); }
         }
 
         public string City
@@ -355,7 +347,6 @@ namespace ZuegerAdressbook.ViewModels
                 PhoneNumber = _phoneNumber,
                 Plz = _plz,
                 Street1 = _street1,
-                Street2 = _street2,
                 Title = _title,
                 SbbInformationChangeDate = _sbbInformationChangeDate,
                 ChangeDate = _changeDate
@@ -400,7 +391,6 @@ namespace ZuegerAdressbook.ViewModels
             BusinessPhoneNumber = _person.BusinessPhoneNumber;
             Plz = _person.Plz;
             Street1 = _person.Street1;
-            Street2 = _person.Street2;
             Title = _person.Title;
             SbbInformationChangeDate = _person.SbbInformationChangeDate;
             ChangeDate = _person.ChangeDate;

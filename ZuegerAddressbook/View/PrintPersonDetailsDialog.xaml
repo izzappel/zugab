@@ -9,7 +9,7 @@
         xmlns:converter="clr-namespace:ZuegerAdressbook.Converters"
         mc:Ignorable="d"
         Icon="../Icons/48/address-book.png"
-        Title="Drucken" Height="500" Width="500"
+        Title="Drucken" Height="500" Width="700"
         d:DataContext="{d:DesignInstance vm:PrintPersonDetailsViewModel, IsDesignTimeCreatable=True}">
     <Window.Resources>
     </Window.Resources>

@@ -1,17 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
 using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using ZuegerAdressbook.ViewModels;
 
 namespace ZuegerAdressbook.Printing
@@ -29,39 +20,94 @@ namespace ZuegerAdressbook.Printing
             PagePadding = new Thickness(20);
             _persons = new List<PersonViewModel>(persons);
 
+            var fontFamily = new FontFamily(new Uri("pack://application:,,,/ZuegerAddressbook.Name;component/Resources/Fonts/"), "#Frutiger LT Com 55 Roman");
+
             var table = new Table();
-            table.FontFamily = new FontFamily(new Uri("pack://application:,,,/ZuegerAddressbook.Name;component/Resources/Fonts/"), "#Frutiger LT Com 55 Roman");
+            table.FontFamily = fontFamily;
             table.FontSize = 11;
             table.CellSpacing = 0;
             var tableRowGroup = new TableRowGroup();
 
-            tableRowGroup.Rows.Add(CreateHeaderRow());
-            tableRowGroup.Rows.Add(CreateEmptyRow());
-            tableRowGroup.Rows.Add(CreateRow("Anrede", person => person.Title));
-            tableRowGroup.Rows.Add(CreateRow("Name", person => person.Lastname));
-            tableRowGroup.Rows.Add(CreateRow("Vorname", person => person.Firstname));
-            tableRowGroup.Rows.Add(CreateRow("Strasse / Hausnr.", person => person.Street1));
-            tableRowGroup.Rows.Add(CreateRow("PLZ / Ort", person => person.Plz + " " + person.City));
-            tableRowGroup.Rows.Add(CreateEmptyRow());
-            tableRowGroup.Rows.Add(CreateRow("Festnetz", person => person.PhoneNumber));
-            tableRowGroup.Rows.Add(CreateRow("Mobile", person => person.MobileNumber));
-            tableRowGroup.Rows.Add(CreateRow("E-Mail", person => person.EmailAddress));
-            tableRowGroup.Rows.Add(CreateEmptyRow());
-            tableRowGroup.Rows.Add(CreateRow("Geburtsdatum", person => person.Birthdate.HasValue ? person.Birthdate.Value.ToShortDateString() : "-"));
-            tableRowGroup.Rows.Add(CreateEmptyRow());
-            tableRowGroup.Rows.Add(CreateRow("SBB-Ermässigung", person => "-"));
-            tableRowGroup.Rows.Add(CreateEmptyRow());
-            tableRowGroup.Rows.Add(CreateRow("Passnummer", person => person.PassportNumber));
-            tableRowGroup.Rows.Add(CreateRow("Pass gültig bis", person => ""));
-            tableRowGroup.Rows.Add(CreateEmptyRow());
-            tableRowGroup.Rows.Add(CreateRow("Bemerkungen", person => person.Notes));
-            tableRowGroup.Rows.Add(CreateEmptyRow());
+            tableRowGroup.Rows.Add(CreatePersonHeaderRow());
+            tableRowGroup.Rows.Add(CreateEmptyPersonRow());
+            tableRowGroup.Rows.Add(CreatePersonRow("Anrede", person => CreateGenderString(person.Gender)));
+            tableRowGroup.Rows.Add(CreatePersonRow("Name", person => person.Lastname));
+            tableRowGroup.Rows.Add(CreatePersonRow("Vorname", person => person.Firstname));
+            tableRowGroup.Rows.Add(CreatePersonRow("Strasse / Hausnr.", person => person.Street1));
+            tableRowGroup.Rows.Add(CreatePersonRow("PLZ / Ort", person => person.Plz + " " + person.City));
+            tableRowGroup.Rows.Add(CreateEmptyPersonRow());
+            tableRowGroup.Rows.Add(CreatePersonRow("Festnetz", person => person.PhoneNumber));
+            tableRowGroup.Rows.Add(CreatePersonRow("Mobile", person => person.MobileNumber));
+            tableRowGroup.Rows.Add(CreatePersonRow("E-Mail", person => person.EmailAddress));
+            tableRowGroup.Rows.Add(CreateEmptyPersonRow());
+            tableRowGroup.Rows.Add(CreatePersonRow("Geburtsdatum", person => person.Birthdate.HasValue ? person.Birthdate.Value.ToShortDateString() : "-"));
+            tableRowGroup.Rows.Add(CreateEmptyPersonRow());
+            tableRowGroup.Rows.Add(CreatePersonRow("SBB-Ermässigung", person => CreateReductionString(person)));
+            tableRowGroup.Rows.Add(CreateEmptyPersonRow());
+            tableRowGroup.Rows.Add(CreatePersonRow("Name auf Pass", person => person.NameOnPassport));
+            tableRowGroup.Rows.Add(CreatePersonRow("Passnummer", person => person.PassportNumber));
+            tableRowGroup.Rows.Add(CreatePersonRow("Pass gültig bis", person => ""));
+            tableRowGroup.Rows.Add(CreateEmptyPersonRow());
+            tableRowGroup.Rows.Add(CreatePersonRow("Bemerkungen", person => person.Notes));
+            tableRowGroup.Rows.Add(CreateEmptyPersonRow());
 
             table.RowGroups.Add(tableRowGroup);
+
+            var feedbackTable = new Table();
+            feedbackTable.FontFamily = fontFamily;
+            feedbackTable.FontSize = 11;
+            feedbackTable.CellSpacing = 0;
+
+            var feedbackTableRowGroup = new TableRowGroup();
+            feedbackTableRowGroup.Rows.Add(CreateFeedbackTitleRow());
+            feedbackTableRowGroup.Rows.Add(CreateFeedbackHeadrRow());
+            feedbackTableRowGroup.Rows.Add(CreateEmptyFeedbackRow());
+            feedbackTableRowGroup.Rows.Add(CreateEmptyFeedbackRow());
+            feedbackTableRowGroup.Rows.Add(CreateEmptyFeedbackRow());
+            feedbackTableRowGroup.Rows.Add(CreateEmptyFeedbackRow());
+            feedbackTableRowGroup.Rows.Add(CreateEmptyFeedbackRow());
+            feedbackTableRowGroup.Rows.Add(CreateEmptyFeedbackRow());
+            feedbackTableRowGroup.Rows.Add(CreateEmptyFeedbackRow());
+
+            feedbackTable.RowGroups.Add(feedbackTableRowGroup);
+
             Section.Blocks.Add(table);
+            Section.Blocks.Add(Text(string.Format("gedruckt am: {0}", DateTime.Now.ToShortDateString())));
+            Section.Blocks.Add(feedbackTable);
         }
 
-        private TableRow CreateRow(string title, Func<PersonViewModel, string> personPropertySelector)
+        private string CreateGenderString(Model.Gender gender)
+        {
+            return gender == Model.Gender.Male ? "Mann" : "Frau";
+        }
+
+        private string CreateReductionString(PersonViewModel person)
+        {
+            var reductions = new List<string>();
+            if (person.HasHalbTax)
+            {
+                reductions.Add("Halbtax");
+            }
+
+            if (person.HasGeneralAbo)
+            {
+                reductions.Add("GA");
+            }
+
+            if(person.HasEnkelKarte)
+            {
+                reductions.Add("Enkelkarte");
+            }
+
+            if (person.HasJuniorKarte)
+            {
+                reductions.Add("Juniorkarte");
+            }
+
+            return string.Join(", ", reductions);
+        }
+
+        private TableRow CreatePersonRow(string title, Func<PersonViewModel, string> personPropertySelector)
         {
             var row = new TableRow();
             row.Cells.Add(Cell(Text(title)));
@@ -70,26 +116,56 @@ namespace ZuegerAdressbook.Printing
             return row;
         }
 
-        private TableRow CreateHeaderRow()
+        private TableRow CreatePersonHeaderRow()
         {
             var headerRow = new TableRow();
             headerRow.FontWeight = FontWeights.Bold;
             headerRow.Background = new SolidColorBrush(Colors.Yellow);
             headerRow.Cells.Add(Cell(Text("Stammdaten")));
-            var personEnumerator = _persons.GetEnumerator(); 
-            for (var index = 1; personEnumerator.MoveNext() == true; index++)
-            {
-                headerRow.Cells.Add(Cell(Text(string.Format("{0}. Person", index))));
-            }
-
+            _persons.ForEach(person => headerRow.Cells.Add(Cell(Text(string.Format("{0} {1}", person.Lastname, person.Firstname)))));
+            
             return headerRow;
         }
         
-        private TableRow CreateEmptyRow()
+        private TableRow CreateEmptyPersonRow()
         {
             var emptyRow = new TableRow();
             emptyRow.Cells.Add(Cell(Text(string.Empty)));
             _persons.ForEach(person => emptyRow.Cells.Add(Cell(Text(string.Empty))));
+
+            return emptyRow;
+        }
+
+        private TableRow CreateFeedbackTitleRow()
+        {
+            var titleCell = Cell(Text("Kundenfeedback"));
+            titleCell.ColumnSpan = 3;
+
+            var titleRow = new TableRow();
+            titleRow.FontWeight = FontWeights.Bold;
+            titleRow.Background = new SolidColorBrush(Colors.Yellow);
+            titleRow.Cells.Add(titleCell);
+
+            return titleRow;
+        }
+
+        private TableRow CreateFeedbackHeadrRow()
+        {
+            var headerRow = new TableRow();
+            headerRow.FontWeight = FontWeights.Bold;
+            headerRow.Cells.Add(Cell(Text("erhalten am")));
+            headerRow.Cells.Add(Cell(Text("Gutschein")));
+            headerRow.Cells.Add(Cell(Text("eingelöst am")));
+
+            return headerRow;
+        }
+
+        private TableRow CreateEmptyFeedbackRow()
+        {
+            var emptyRow = new TableRow();
+            emptyRow.Cells.Add(Cell(Text(string.Empty)));
+            emptyRow.Cells.Add(Cell(Text(string.Empty)));
+            emptyRow.Cells.Add(Cell(Text(string.Empty)));
 
             return emptyRow;
         }
@@ -106,7 +182,13 @@ namespace ZuegerAdressbook.Printing
 
         private Paragraph Text(string text)
         {
-            return new Paragraph(new Run(text));
+            var fontFamily = new FontFamily(new Uri("pack://application:,,,/ZuegerAddressbook.Name;component/Resources/Fonts/"), "#Frutiger LT Com 55 Roman");
+
+            var paragraph = new Paragraph(new Run(text));
+            paragraph.FontFamily = fontFamily;
+            paragraph.FontSize = 11;
+
+            return paragraph;
         }
         
     }

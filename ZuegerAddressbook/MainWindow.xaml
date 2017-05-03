@@ -137,14 +137,8 @@
                 <ToolBar Header="Drucken" Loaded="FrameworkElement_OnLoaded">
                     <Button Command="{Binding PrintPersonDetailCommand}" ToolBar.OverflowMode="Never">
                         <StackPanel Orientation="Vertical">
-                            <Image Source="Icons/48/profile-group.png"/>
-                            <TextBlock HorizontalAlignment="Center"><Run Text="Personen"/></TextBlock>
-                        </StackPanel>
-                    </Button>
-                    <Button ToolBar.OverflowMode="Never">
-                        <StackPanel Orientation="Vertical">
                             <Image Source="Icons/48/user-id.png"/>
-                            <TextBlock HorizontalAlignment="Center"><Run Text="Etiketten"/></TextBlock>
+                            <TextBlock HorizontalAlignment="Center"><Run Text="Stammdaten"/></TextBlock>
                         </StackPanel>
                     </Button>
                 </ToolBar>

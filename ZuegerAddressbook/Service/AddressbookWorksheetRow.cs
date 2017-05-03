@@ -98,7 +98,7 @@ namespace ZuegerAdressbook.Service
             }
         }
 
-        public string Street2
+        public string City
         {
             get
             {
@@ -110,7 +110,7 @@ namespace ZuegerAdressbook.Service
             }
         }
 
-        public string City
+        public string Plz
         {
             get
             {
@@ -122,31 +122,31 @@ namespace ZuegerAdressbook.Service
             }
         }
 
-        public string Plz
-        {
-            get
-            {
-                return _worksheet.Cells[Row, 9].Text;
-            }
-            set
-            {
-                _worksheet.Cells[Row, 9].Value = value;
-            }
-        }
-
         public DateTime? Birthdate
         {
             get
             {
-                return string.IsNullOrEmpty(_worksheet.Cells[Row, 10].Text) == false ? DateTime.Parse(_worksheet.Cells[Row, 10].Text) : (DateTime?)null;
+                return string.IsNullOrEmpty(_worksheet.Cells[Row, 9].Text) == false ? DateTime.Parse(_worksheet.Cells[Row, 0].Text) : (DateTime?)null;
             }
             set
             {
-                _worksheet.Cells[Row, 10].Value = value?.ToShortDateString() ?? string.Empty;
+                _worksheet.Cells[Row, 9].Value = value?.ToShortDateString() ?? string.Empty;
             }
         }
 
         public string EmailAddress
+        {
+            get
+            {
+                return _worksheet.Cells[Row, 10].Text;
+            }
+            set
+            {
+                _worksheet.Cells[Row, 10].Value = value;
+            }
+        }
+
+        public string PhoneNumber
         {
             get
             {
@@ -158,7 +158,7 @@ namespace ZuegerAdressbook.Service
             }
         }
 
-        public string PhoneNumber
+        public string MobileNumber
         {
             get
             {
@@ -170,7 +170,7 @@ namespace ZuegerAdressbook.Service
             }
         }
 
-        public string MobileNumber
+        public string BusinessPhoneNumber
         {
             get
             {
@@ -182,27 +182,15 @@ namespace ZuegerAdressbook.Service
             }
         }
 
-        public string BusinessPhoneNumber
-        {
-            get
-            {
-                return _worksheet.Cells[Row, 14].Text;
-            }
-            set
-            {
-                _worksheet.Cells[Row, 14].Value = value;
-            }
-        }
-
         public bool HasGeneralAbo
         {
             get
             {
-                return _worksheet.Cells[Row, 15].Text == Ja;
+                return _worksheet.Cells[Row, 14].Text == Ja;
             }
             set
             {
-                _worksheet.Cells[Row, 15].Value = value ? Ja : Nein;
+                _worksheet.Cells[Row, 14].Value = value ? Ja : Nein;
             }
         }
 
@@ -210,11 +198,11 @@ namespace ZuegerAdressbook.Service
         {
             get
             {
-                return string.IsNullOrEmpty(_worksheet.Cells[Row, 16].Text) == false ? DateTime.Parse(_worksheet.Cells[Row, 16].Text) : (DateTime?)null;
+                return string.IsNullOrEmpty(_worksheet.Cells[Row, 15].Text) == false ? DateTime.Parse(_worksheet.Cells[Row, 15].Text) : (DateTime?)null;
             }
             set
             {
-                _worksheet.Cells[Row, 16].Value = value?.ToShortDateString() ?? string.Empty;
+                _worksheet.Cells[Row, 15].Value = value?.ToShortDateString() ?? string.Empty;
             }
         }
 
@@ -222,11 +210,11 @@ namespace ZuegerAdressbook.Service
         {
             get
             {
-                return _worksheet.Cells[Row, 17].Text == Ja;
+                return _worksheet.Cells[Row, 16].Text == Ja;
             }
             set
             {
-                _worksheet.Cells[Row, 17].Value = value ? Ja : Nein;
+                _worksheet.Cells[Row, 16].Value = value ? Ja : Nein;
             }
         }
 
@@ -234,15 +222,27 @@ namespace ZuegerAdressbook.Service
         {
             get
             {
-                return string.IsNullOrEmpty(_worksheet.Cells[Row, 18].Text) == false ? DateTime.Parse(_worksheet.Cells[Row, 18].Text) : (DateTime?)null;
+                return string.IsNullOrEmpty(_worksheet.Cells[Row, 17].Text) == false ? DateTime.Parse(_worksheet.Cells[Row, 17].Text) : (DateTime?)null;
             }
             set
             {
-                _worksheet.Cells[Row, 18].Value = value?.ToShortDateString() ?? string.Empty;
+                _worksheet.Cells[Row, 17].Value = value?.ToShortDateString() ?? string.Empty;
             }
         }
 
         public string NameOnPassport
+        {
+            get
+            {
+                return _worksheet.Cells[Row, 18].Text;
+            }
+            set
+            {
+                _worksheet.Cells[Row, 18].Value = value;
+            }
+        }
+
+        public string PassportNumber
         {
             get
             {
@@ -254,27 +254,15 @@ namespace ZuegerAdressbook.Service
             }
         }
 
-        public string PassportNumber
-        {
-            get
-            {
-                return _worksheet.Cells[Row, 20].Text;
-            }
-            set
-            {
-                _worksheet.Cells[Row, 20].Value = value;
-            }
-        }
-
         public bool HasJuniorKarte
         {
             get
             {
-                return _worksheet.Cells[Row, 21].Text == Ja;
+                return _worksheet.Cells[Row, 20].Text == Ja;
             }
             set
             {
-                _worksheet.Cells[Row, 21].Value = value ? Ja : Nein;
+                _worksheet.Cells[Row, 20].Value = value ? Ja : Nein;
             }
         }
 
@@ -282,11 +270,11 @@ namespace ZuegerAdressbook.Service
         {
             get
             {
-                return string.IsNullOrEmpty(_worksheet.Cells[Row, 22].Text) == false ? DateTime.Parse(_worksheet.Cells[Row, 22].Text) : (DateTime?)null;
+                return string.IsNullOrEmpty(_worksheet.Cells[Row, 21].Text) == false ? DateTime.Parse(_worksheet.Cells[Row, 21].Text) : (DateTime?)null;
             }
             set
             {
-                _worksheet.Cells[Row, 22].Value = value?.ToShortDateString() ?? string.Empty;
+                _worksheet.Cells[Row, 21].Value = value?.ToShortDateString() ?? string.Empty;
             }
         }
 
@@ -294,11 +282,11 @@ namespace ZuegerAdressbook.Service
         {
             get
             {
-                return _worksheet.Cells[Row, 23].Text == Ja;
+                return _worksheet.Cells[Row, 22].Text == Ja;
             }
             set
             {
-                _worksheet.Cells[Row, 23].Value = value ? Ja : Nein;
+                _worksheet.Cells[Row, 22].Value = value ? Ja : Nein;
             }
         }
 
@@ -306,11 +294,11 @@ namespace ZuegerAdressbook.Service
         {
             get
             {
-                return string.IsNullOrEmpty(_worksheet.Cells[Row, 24].Text) == false ? DateTime.Parse(_worksheet.Cells[Row, 24].Text) : (DateTime?)null;
+                return string.IsNullOrEmpty(_worksheet.Cells[Row, 23].Text) == false ? DateTime.Parse(_worksheet.Cells[Row, 23].Text) : (DateTime?)null;
             }
             set
             {
-                _worksheet.Cells[Row, 24].Value = value?.ToShortDateString() ?? string.Empty;
+                _worksheet.Cells[Row, 23].Value = value?.ToShortDateString() ?? string.Empty;
             }
         }
 
@@ -318,11 +306,11 @@ namespace ZuegerAdressbook.Service
         {
             get
             {
-                return _worksheet.Cells[Row, 25].Text;
+                return _worksheet.Cells[Row, 24].Text;
             }
             set
             {
-                _worksheet.Cells[Row, 25].Value = value;
+                _worksheet.Cells[Row, 24].Value = value;
             }
         }
     }

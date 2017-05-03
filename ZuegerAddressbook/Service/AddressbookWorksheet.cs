@@ -114,24 +114,24 @@ namespace ZuegerAdressbook.Service
             _worksheet.Cells[1, 4].Value = "Geschlecht";
             _worksheet.Cells[1, 5].Value = "Titel";
             _worksheet.Cells[1, 6].Value = "Strasse 1";
-            _worksheet.Cells[1, 8].Value = "Stadt";
-            _worksheet.Cells[1, 9].Value = "PLZ";
-            _worksheet.Cells[1, 10].Value = "Geburtsdatum";
-            _worksheet.Cells[1, 11].Value = "E-Mail";
-            _worksheet.Cells[1, 12].Value = "Tel Privat";
-            _worksheet.Cells[1, 13].Value = "Tel Mobile";
-            _worksheet.Cells[1, 14].Value = "Tel Geschäftlich";
-            _worksheet.Cells[1, 15].Value = "GA";
-            _worksheet.Cells[1, 16].Value = "GA Ablaufdatum";
-            _worksheet.Cells[1, 17].Value = "HalbTax";
-            _worksheet.Cells[1, 18].Value = "HalbTax Ablaufdatum";
-            _worksheet.Cells[1, 19].Value = "Pass Name";
-            _worksheet.Cells[1, 20].Value = "Pass Nummer";
-            _worksheet.Cells[1, 21].Value = "Junior Karte";
-            _worksheet.Cells[1, 22].Value = "Junior Karte Ablaufdatum";
-            _worksheet.Cells[1, 23].Value = "Enkel Karte";
-            _worksheet.Cells[1, 24].Value = "Enkel Karte Ablaufdatum";
-            _worksheet.Cells[1, 25].Value = "Notizen";
+            _worksheet.Cells[1, 7].Value = "Stadt";
+            _worksheet.Cells[1, 8].Value = "PLZ";
+            _worksheet.Cells[1, 9].Value = "Geburtsdatum";
+            _worksheet.Cells[1, 10].Value = "E-Mail";
+            _worksheet.Cells[1, 11].Value = "Tel Privat";
+            _worksheet.Cells[1, 12].Value = "Tel Mobile";
+            _worksheet.Cells[1, 13].Value = "Tel Geschäftlich";
+            _worksheet.Cells[1, 14].Value = "GA";
+            _worksheet.Cells[1, 15].Value = "GA Ablaufdatum";
+            _worksheet.Cells[1, 16].Value = "HalbTax";
+            _worksheet.Cells[1, 17].Value = "HalbTax Ablaufdatum";
+            _worksheet.Cells[1, 18].Value = "Pass Name";
+            _worksheet.Cells[1, 19].Value = "Pass Nummer";
+            _worksheet.Cells[1, 20].Value = "Junior Karte";
+            _worksheet.Cells[1, 21].Value = "Junior Karte Ablaufdatum";
+            _worksheet.Cells[1, 22].Value = "Enkel Karte";
+            _worksheet.Cells[1, 23].Value = "Enkel Karte Ablaufdatum";
+            _worksheet.Cells[1, 24].Value = "Notizen";
         }
 
         private AddressbookWorksheetRow GetRow(int row)

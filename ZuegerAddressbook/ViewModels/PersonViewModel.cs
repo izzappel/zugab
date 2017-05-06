@@ -48,6 +48,9 @@ namespace ZuegerAdressbook.ViewModels
         private string _notes;
         private string _nameOnPassport;
         private string _passportNumber;
+        private DateTime? _passportExpirationDate;
+        private bool _hasCancellationInsurance;
+        private DateTime? _canellationInsuranceExpirationDate;
         private DateTime? _sbbInformationChangeDate;
         private DateTime? _changeDate;
         private IChangeListener _parent;
@@ -97,6 +100,9 @@ namespace ZuegerAdressbook.ViewModels
             _notes = person.Notes;
             _nameOnPassport = person.NameOnPassport;
             _passportNumber = person.PassportNumber;
+            _passportExpirationDate = person.PassportExpirationDate;
+            _hasCancellationInsurance = person.HasCancellationInsurance;
+            _canellationInsuranceExpirationDate = person.CancellationInsuranceExpirationDate;
             _sbbInformationChangeDate = person.SbbInformationChangeDate;
             _changeDate = person.ChangeDate;
 
@@ -285,6 +291,24 @@ namespace ZuegerAdressbook.ViewModels
             set { ChangeAndNotify(value, ref _passportNumber); }
         }
 
+        public DateTime? PassportExpirationDate
+        {
+            get { return _passportExpirationDate; }
+            set { ChangeAndNotify(value, ref _passportExpirationDate); }
+        }
+
+        public bool HasCancellationInsurance
+        {
+            get { return _hasCancellationInsurance; }
+            set { ChangeAndNotify(value, ref _hasCancellationInsurance); }
+        }
+
+        public DateTime? CancellationInsuranceExpirationDate
+        {
+            get { return _canellationInsuranceExpirationDate; }
+            set { ChangeAndNotify(value, ref _canellationInsuranceExpirationDate); }
+        }
+
         public DateTime? SbbInformationChangeDate
         {
             get { return _sbbInformationChangeDate; }
@@ -327,6 +351,7 @@ namespace ZuegerAdressbook.ViewModels
                 Id = _id,
                 Birthdate = _birthdate,
                 PassportNumber = _passportNumber,
+                CancellationInsuranceExpirationDate = _canellationInsuranceExpirationDate,
                 City = _city,
                 EmailAddress = _emailAddress,
                 EnkelKarteExpirationDate = EnkelKarteExpirationDate,
@@ -334,6 +359,7 @@ namespace ZuegerAdressbook.ViewModels
                 Gender = _gender,
                 GeneralAboExpirationDate = _generalAboExpirationDate,
                 HalbtaxExpirationDate = _halbtaxExpirationDate,
+                HasCancellationInsurance = _hasCancellationInsurance,
                 HasEnkelKarte = _hasEnkelKarte,
                 HasGeneralAbo = _hasGeneralAbo,
                 HasHalbtax = _hasHalbtax,
@@ -343,13 +369,14 @@ namespace ZuegerAdressbook.ViewModels
                 MobileNumber = _mobileNumber,
                 BusinessPhoneNumber = _businessPhoneNumber,
                 NameOnPassport = _nameOnPassport,
+                PassportExpirationDate = _passportExpirationDate,
                 Notes = _notes,
                 PhoneNumber = _phoneNumber,
                 Plz = _plz,
                 Street1 = _street1,
                 Title = _title,
                 SbbInformationChangeDate = _sbbInformationChangeDate,
-                ChangeDate = _changeDate
+                ChangeDate = _changeDate,
             };
 
             _person = person;
@@ -388,6 +415,9 @@ namespace ZuegerAdressbook.ViewModels
             NameOnPassport = _person.NameOnPassport;
             Notes = _person.Notes;
             PhoneNumber = _person.PhoneNumber;
+            PassportExpirationDate = _person.PassportExpirationDate;
+            HasCancellationInsurance = _person.HasCancellationInsurance;
+            CancellationInsuranceExpirationDate = _person.CancellationInsuranceExpirationDate;
             BusinessPhoneNumber = _person.BusinessPhoneNumber;
             Plz = _person.Plz;
             Street1 = _person.Street1;

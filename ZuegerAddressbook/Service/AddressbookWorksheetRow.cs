@@ -126,7 +126,7 @@ namespace ZuegerAdressbook.Service
         {
             get
             {
-                return string.IsNullOrEmpty(_worksheet.Cells[Row, 9].Text) == false ? DateTime.Parse(_worksheet.Cells[Row, 0].Text) : (DateTime?)null;
+                return string.IsNullOrEmpty(_worksheet.Cells[Row, 9].Text) == false ? DateTime.Parse(_worksheet.Cells[Row, 9].Text) : (DateTime?)null;
             }
             set
             {
@@ -254,15 +254,27 @@ namespace ZuegerAdressbook.Service
             }
         }
 
+        public DateTime? PassportExpirationDate
+        {
+            get
+            {
+                return string.IsNullOrEmpty(_worksheet.Cells[Row, 20].Text) == false ? DateTime.Parse(_worksheet.Cells[Row, 20].Text) : (DateTime?)null;
+            }
+            set
+            {
+                _worksheet.Cells[Row, 20].Value = value?.ToShortDateString() ?? string.Empty;
+            }
+        }
+
         public bool HasJuniorKarte
         {
             get
             {
-                return _worksheet.Cells[Row, 20].Text == Ja;
+                return _worksheet.Cells[Row, 21].Text == Ja;
             }
             set
             {
-                _worksheet.Cells[Row, 20].Value = value ? Ja : Nein;
+                _worksheet.Cells[Row, 21].Value = value ? Ja : Nein;
             }
         }
 
@@ -270,11 +282,11 @@ namespace ZuegerAdressbook.Service
         {
             get
             {
-                return string.IsNullOrEmpty(_worksheet.Cells[Row, 21].Text) == false ? DateTime.Parse(_worksheet.Cells[Row, 21].Text) : (DateTime?)null;
+                return string.IsNullOrEmpty(_worksheet.Cells[Row, 22].Text) == false ? DateTime.Parse(_worksheet.Cells[Row, 22].Text) : (DateTime?)null;
             }
             set
             {
-                _worksheet.Cells[Row, 21].Value = value?.ToShortDateString() ?? string.Empty;
+                _worksheet.Cells[Row, 22].Value = value?.ToShortDateString() ?? string.Empty;
             }
         }
 
@@ -282,11 +294,11 @@ namespace ZuegerAdressbook.Service
         {
             get
             {
-                return _worksheet.Cells[Row, 22].Text == Ja;
+                return _worksheet.Cells[Row, 23].Text == Ja;
             }
             set
             {
-                _worksheet.Cells[Row, 22].Value = value ? Ja : Nein;
+                _worksheet.Cells[Row, 23].Value = value ? Ja : Nein;
             }
         }
 
@@ -294,11 +306,35 @@ namespace ZuegerAdressbook.Service
         {
             get
             {
-                return string.IsNullOrEmpty(_worksheet.Cells[Row, 23].Text) == false ? DateTime.Parse(_worksheet.Cells[Row, 23].Text) : (DateTime?)null;
+                return string.IsNullOrEmpty(_worksheet.Cells[Row, 24].Text) == false ? DateTime.Parse(_worksheet.Cells[Row, 24].Text) : (DateTime?)null;
             }
             set
             {
-                _worksheet.Cells[Row, 23].Value = value?.ToShortDateString() ?? string.Empty;
+                _worksheet.Cells[Row, 24].Value = value?.ToShortDateString() ?? string.Empty;
+            }
+        }
+
+        public bool HasCancellationInsurance
+        {
+            get
+            {
+                return _worksheet.Cells[Row, 25].Text == Ja;
+            }
+            set
+            {
+                _worksheet.Cells[Row, 25].Value = value ? Ja : Nein;
+            }
+        }
+
+        public DateTime? CanellationInsuranceExpirationDate
+        {
+            get
+            {
+                return string.IsNullOrEmpty(_worksheet.Cells[Row, 26].Text) == false ? DateTime.Parse(_worksheet.Cells[Row, 26].Text) : (DateTime?)null;
+            }
+            set
+            {
+                _worksheet.Cells[Row, 26].Value = value?.ToShortDateString() ?? string.Empty;
             }
         }
 
@@ -306,11 +342,11 @@ namespace ZuegerAdressbook.Service
         {
             get
             {
-                return _worksheet.Cells[Row, 24].Text;
+                return _worksheet.Cells[Row, 27].Text;
             }
             set
             {
-                _worksheet.Cells[Row, 24].Value = value;
+                _worksheet.Cells[Row, 27].Value = value;
             }
         }
     }

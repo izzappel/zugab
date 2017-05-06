@@ -93,6 +93,7 @@
     <Compile Include="Converters\BooleanVisibilityConverter.cs" />
     <Compile Include="Converters\EnumVisibilityConverter.cs" />
     <Compile Include="Converters\EnumBooleanConverter.cs" />
+    <Compile Include="Converters\StringToNullableDateTimeConverter.cs" />
     <Compile Include="IocConfiguration.cs" />
     <Compile Include="IocKernel.cs" />
     <Compile Include="Printing\PersonDetail.xaml.cs">

@@ -43,6 +43,7 @@ namespace ZuegerAdressbook.Service
                     Birthdate = row.Birthdate,
                     NameOnPassport = row.NameOnPassport,
                     PassportNumber = row.PassportNumber,
+                    PassportExpirationDate = row.PassportExpirationDate,
                     HasJuniorKarte = row.HasJuniorKarte,
                     JuniorKarteExpirationDate = row.JuniorKarteExpirationDate,
                     HasGeneralAbo = row.HasGeneralAbo,
@@ -51,6 +52,8 @@ namespace ZuegerAdressbook.Service
                     EnkelKarteExpirationDate = row.EnkelKarteExpirationDate,
                     HasHalbtax = row.HasHalbtax,
                     HalbtaxExpirationDate = row.HalbtaxExpirationDate,
+                    HasCancellationInsurance = row.HasCancellationInsurance,
+                    CancellationInsuranceExpirationDate = row.CanellationInsuranceExpirationDate,
                     Notes = row.Notes,
                     ChangeDate = DateTime.Now,
                     SbbInformationChangeDate = DateTime.Now
@@ -96,10 +99,13 @@ namespace ZuegerAdressbook.Service
                 row.HalbtaxExpirationDate = person.HalbtaxExpirationDate;
                 row.NameOnPassport = person.NameOnPassport;
                 row.PassportNumber = person.PassportNumber;
+                row.PassportExpirationDate = person.PassportExpirationDate;
                 row.HasJuniorKarte = person.HasJuniorKarte;
                 row.JuniorKarteExpirationDate = person.JuniorKarteExpirationDate;
                 row.HasEnkelKarte = person.HasEnkelKarte;
                 row.EnkelKarteExpirationDate = person.EnkelKarteExpirationDate;
+                row.HasCancellationInsurance = person.HasCancellationInsurance;
+                row.CanellationInsuranceExpirationDate = person.CancellationInsuranceExpirationDate;
                 row.Notes = person.Notes;
 
                 rowIndex++;
@@ -113,7 +119,7 @@ namespace ZuegerAdressbook.Service
             _worksheet.Cells[1, 3].Value = "Nachname";
             _worksheet.Cells[1, 4].Value = "Geschlecht";
             _worksheet.Cells[1, 5].Value = "Titel";
-            _worksheet.Cells[1, 6].Value = "Strasse 1";
+            _worksheet.Cells[1, 6].Value = "Strasse";
             _worksheet.Cells[1, 7].Value = "Stadt";
             _worksheet.Cells[1, 8].Value = "PLZ";
             _worksheet.Cells[1, 9].Value = "Geburtsdatum";
@@ -125,13 +131,16 @@ namespace ZuegerAdressbook.Service
             _worksheet.Cells[1, 15].Value = "GA Ablaufdatum";
             _worksheet.Cells[1, 16].Value = "HalbTax";
             _worksheet.Cells[1, 17].Value = "HalbTax Ablaufdatum";
-            _worksheet.Cells[1, 18].Value = "Pass Name";
-            _worksheet.Cells[1, 19].Value = "Pass Nummer";
-            _worksheet.Cells[1, 20].Value = "Junior Karte";
-            _worksheet.Cells[1, 21].Value = "Junior Karte Ablaufdatum";
-            _worksheet.Cells[1, 22].Value = "Enkel Karte";
-            _worksheet.Cells[1, 23].Value = "Enkel Karte Ablaufdatum";
-            _worksheet.Cells[1, 24].Value = "Notizen";
+            _worksheet.Cells[1, 18].Value = "Name auf Pass";
+            _worksheet.Cells[1, 19].Value = "Passnummer";
+            _worksheet.Cells[1, 20].Value = "Pass gültig bis";
+            _worksheet.Cells[1, 21].Value = "Junior Karte";
+            _worksheet.Cells[1, 22].Value = "Junior Karte Ablaufdatum";
+            _worksheet.Cells[1, 23].Value = "Enkel Karte";
+            _worksheet.Cells[1, 24].Value = "Enkel Karte Ablaufdatum";
+            _worksheet.Cells[1, 25].Value = "Annullationsversicherung";
+            _worksheet.Cells[1, 26].Value = "Annullationsversicherung gültig bis";
+            _worksheet.Cells[1, 27].Value = "Notizen";
         }
 
         private AddressbookWorksheetRow GetRow(int row)

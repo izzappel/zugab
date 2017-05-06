@@ -40,6 +40,8 @@ namespace ZuegerAdressbook.Model
 
         public string PassportNumber { get; set; }
 
+        public DateTime? PassportExpirationDate { get; set; }
+
         public DateTime? GeneralAboExpirationDate { get; set; }
 
         public DateTime? HalbtaxExpirationDate { get; set; }
@@ -51,6 +53,10 @@ namespace ZuegerAdressbook.Model
         public bool HasEnkelKarte { get; set; }
 
         public DateTime? EnkelKarteExpirationDate { get; set; }
+
+        public bool HasCancellationInsurance { get; set; }
+
+        public DateTime? CancellationInsuranceExpirationDate { get; set; }
 
         public DateTime? SbbInformationChangeDate { get; set; }
 

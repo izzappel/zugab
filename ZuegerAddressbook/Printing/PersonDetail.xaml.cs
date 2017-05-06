@@ -46,7 +46,9 @@ namespace ZuegerAdressbook.Printing
             tableRowGroup.Rows.Add(CreateEmptyPersonRow());
             tableRowGroup.Rows.Add(CreatePersonRow("Name auf Pass", person => person.NameOnPassport));
             tableRowGroup.Rows.Add(CreatePersonRow("Passnummer", person => person.PassportNumber));
-            tableRowGroup.Rows.Add(CreatePersonRow("Pass gültig bis", person => ""));
+            tableRowGroup.Rows.Add(CreatePersonRow("Pass gültig bis", person => person.PassportExpirationDate.HasValue ? person.PassportExpirationDate.Value.ToShortDateString() : "-"));
+            tableRowGroup.Rows.Add(CreateEmptyPersonRow());
+            tableRowGroup.Rows.Add(CreatePersonRow("Annullationsversicherung", person => person.HasCancellationInsurance ? string.Format("Ja (Ablaufdatum: {0:dd.MM.yyyy})", person.CancellationInsuranceExpirationDate?.ToShortDateString()) : "Nein"));
             tableRowGroup.Rows.Add(CreateEmptyPersonRow());
             tableRowGroup.Rows.Add(CreatePersonRow("Bemerkungen", person => person.Notes));
             tableRowGroup.Rows.Add(CreateEmptyPersonRow());

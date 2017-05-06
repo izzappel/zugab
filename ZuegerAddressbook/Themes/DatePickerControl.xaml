@@ -1,7 +1,9 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:ZuegerAdressbook"
-                    xmlns:gl="clr-namespace:System.Globalization;assembly=mscorlib">
+                    xmlns:gl="clr-namespace:System.Globalization;assembly=mscorlib"
+                    xmlns:converter="clr-namespace:ZuegerAdressbook.Converters">
+    <converter:StringToNullableDateTimeConverter x:Key="stringToNullableDateTimeConverter" />
     <ControlTemplate x:Key="DatePickerControlTemplate" TargetType="{x:Type DatePicker}">
         <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="0,0,0,1" Background="{DynamicResource ControlBackgroundColor}" Padding="0">
             <VisualStateManager.VisualStateGroups>
@@ -19,7 +21,21 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
-                <TextBox Text="{Binding Path=SelectedDate, RelativeSource={RelativeSource AncestorType={x:Type DatePicker}}, StringFormat={}{0:dd.MM.yyyy}, ConverterCulture={x:Static gl:CultureInfo.CurrentCulture}}" x:Name="PART_TextBox" Grid.Column="0" Focusable="{TemplateBinding Focusable}" HorizontalContentAlignment="Stretch" BorderThickness="0" Grid.Row="0" VerticalContentAlignment="Stretch" Margin="0" Background="{DynamicResource ControlBackgroundColor}"/>
+                <TextBox
+                    Style="{DynamicResource ResourceKey=MyDatePickerTextBoxStyle}"
+                    Text="{Binding Path=SelectedDate, RelativeSource={RelativeSource AncestorType={x:Type DatePicker}}, Converter={StaticResource stringToNullableDateTimeConverter}, ConverterParameter=dd.MM.yyyy}"
+                    x:Name="PART_TextBox"
+                    Grid.Column="0"
+                    Focusable="{TemplateBinding Focusable}"
+                    HorizontalContentAlignment="Stretch"
+                    BorderThickness="0"
+                    Grid.Row="0"
+                    VerticalContentAlignment="Stretch"
+                    Margin="0"
+                    Background="{DynamicResource ControlBackgroundColor}"
+                    Padding="0">
+
+                </TextBox>
                 <Button x:Name="PART_Button" Grid.Column="1" Foreground="{TemplateBinding Foreground}" Focusable="False" HorizontalAlignment="Left" Margin="3,0" Grid.Row="0" VerticalAlignment="Top" Width="20">
                     <Button.Template>
                         <ControlTemplate TargetType="{x:Type Button}">

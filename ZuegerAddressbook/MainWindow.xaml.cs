@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.Globalization;
+using System.Windows;
 using System.Windows.Controls;
 
 using ZuegerAdressbook.ViewModels;
@@ -14,12 +15,15 @@ namespace ZuegerAdressbook
 
         public MainWindow()
         {
+            Language = System.Windows.Markup.XmlLanguage.GetLanguage(CultureInfo.CurrentCulture.IetfLanguageTag);
+
             InitializeComponent();
 
             Style = (Style)FindResource(typeof(Window));
 
             _viewModel = IocKernel.Get<MainViewModel>();
             DataContext = _viewModel;
+
         }
 
         private void FrameworkElement_OnLoaded(object sender, RoutedEventArgs e)

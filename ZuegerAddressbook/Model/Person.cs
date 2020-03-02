@@ -28,35 +28,47 @@ namespace ZuegerAdressbook.Model
 
         public string MobileNumber { get; set; }
 
-        public string BusinessPhoneNumber { get; set; }
-
         public bool HasGeneralAbo { get; set; }
 
         public bool HasHalbtax { get; set; }
 
         public string Notes { get; set; }
 
-        public string NameOnPassport { get; set; }
+        public string PassportSurname { get; set; }
+
+        public string PassportGivenName { get; set; }
 
         public string PassportNumber { get; set; }
 
+        public string PassportNationality { get; set; }
+
+        public string PassportNationalityCode { get; set; }
+
+        public string PlaceOfOrigin { get; set; }
+
+        public string PlaceOfBirth { get; set; }
+
+        public DateTime? PassportIssueDate { get; set; }
+
         public DateTime? PassportExpirationDate { get; set; }
-
-        public DateTime? GeneralAboExpirationDate { get; set; }
-
-        public DateTime? HalbtaxExpirationDate { get; set; }
 
         public bool HasJuniorKarte { get; set; }
 
-        public DateTime? JuniorKarteExpirationDate { get; set; }
-
         public bool HasEnkelKarte { get; set; }
-
-        public DateTime? EnkelKarteExpirationDate { get; set; }
 
         public bool HasCancellationInsurance { get; set; }
 
+        public string CancellationInsurance { get; set; }
+
+        public DateTime? CancellationInsuranceIssueDate { get; set; }
+
         public DateTime? CancellationInsuranceExpirationDate { get; set; }
+
+        public string FrequentFlyerProgram { get; set; }
+
+        public string FrequentFlyerNumber { get; set; }
+
+        public DateTime? PassportInformationChangeDate { get; set; }
 
         public DateTime? SbbInformationChangeDate { get; set; }
 

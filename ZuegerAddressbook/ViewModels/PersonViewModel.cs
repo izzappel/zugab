@@ -36,21 +36,27 @@ namespace ZuegerAdressbook.ViewModels
         private string _emailAddress;
         private string _phoneNumber;
         private string _mobileNumber;
-        private string _businessPhoneNumber;
         private bool _hasGeneralAbo;
-        private DateTime? _generalAboExpirationDate;
         private bool _hasHalbtax;
-        private DateTime? _halbtaxExpirationDate;
         private bool _hasJuniorKarte;
-        private DateTime? _juniorKarteExpirationDate;
         private bool _hasEnkelKarte;
-        private DateTime? _enkelKarteExpirationDate;
         private string _notes;
-        private string _nameOnPassport;
+        private string _passportSurname;
+        private string _passportGivenName;
+        private string _passportNationality;
+        private string _passportNationalityCode;
+        private string _placeOfOrigin;
+        private string _placeOfBirth;
         private string _passportNumber;
+        private DateTime? _passportIssueDate;
         private DateTime? _passportExpirationDate;
         private bool _hasCancellationInsurance;
+        private string _cancellationInsurance;
+        private DateTime? _canellationInsuranceIssueDate;
         private DateTime? _canellationInsuranceExpirationDate;
+        private string _frequentFlyerProgram;
+        private string _frequentFylerNumber;
+        private DateTime? _passportInformationChangeDate;
         private DateTime? _sbbInformationChangeDate;
         private DateTime? _changeDate;
         private IChangeListener _parent;
@@ -88,21 +94,27 @@ namespace ZuegerAdressbook.ViewModels
             _emailAddress = person.EmailAddress;
             _phoneNumber = person.PhoneNumber;
             _mobileNumber = person.MobileNumber;
-            _businessPhoneNumber = person.BusinessPhoneNumber;
             _hasGeneralAbo = person.HasGeneralAbo;
-            _generalAboExpirationDate = person.GeneralAboExpirationDate;
             _hasHalbtax = person.HasHalbtax;
-            _halbtaxExpirationDate = person.HalbtaxExpirationDate;
             _hasJuniorKarte = person.HasJuniorKarte;
-            _juniorKarteExpirationDate = person.JuniorKarteExpirationDate;
             _hasEnkelKarte = person.HasEnkelKarte;
-            _enkelKarteExpirationDate = person.EnkelKarteExpirationDate;
             _notes = person.Notes;
-            _nameOnPassport = person.NameOnPassport;
+            _passportSurname = person.PassportSurname;
+            _passportGivenName = person.PassportGivenName;
+            _passportNationality = person.PassportNationality;
+            _passportNationalityCode = person.PassportNationalityCode;
+            _placeOfBirth = person.PlaceOfBirth;
+            _placeOfOrigin = person.PlaceOfOrigin;
             _passportNumber = person.PassportNumber;
+            _passportIssueDate = person.PassportIssueDate;
             _passportExpirationDate = person.PassportExpirationDate;
             _hasCancellationInsurance = person.HasCancellationInsurance;
+            _cancellationInsurance = person.CancellationInsurance;
+            _canellationInsuranceIssueDate = person.CancellationInsuranceIssueDate;
             _canellationInsuranceExpirationDate = person.CancellationInsuranceExpirationDate;
+            _frequentFlyerProgram = person.FrequentFlyerProgram;
+            _frequentFylerNumber = person.FrequentFlyerNumber;
+            _passportInformationChangeDate = person.PassportInformationChangeDate;
             _sbbInformationChangeDate = person.SbbInformationChangeDate;
             _changeDate = person.ChangeDate;
 
@@ -219,22 +231,10 @@ namespace ZuegerAdressbook.ViewModels
             set { ChangeAndNotify(value, ref _mobileNumber); }
         }
 
-        public string BusinessPhoneNumber
-        {
-            get { return _businessPhoneNumber; }
-            set { ChangeAndNotify(value, ref _businessPhoneNumber); }
-        }
-
         public bool HasGeneralAbo
         {
             get { return _hasGeneralAbo; }
             set { ChangeAndNotify(value, ref _hasGeneralAbo); }
-        }
-
-        public DateTime? GeneralAboExpirationDate
-        {
-            get { return _generalAboExpirationDate; }
-            set { ChangeAndNotify(value, ref _generalAboExpirationDate); }
         }
 
         public bool HasHalbTax
@@ -243,22 +243,10 @@ namespace ZuegerAdressbook.ViewModels
             set { ChangeAndNotify(value, ref _hasHalbtax); }
         }
 
-        public DateTime? HalbTaxExpirationDate
-        {
-            get { return _halbtaxExpirationDate; }
-            set { ChangeAndNotify(value, ref _halbtaxExpirationDate); }
-        }
-
         public bool HasJuniorKarte
         {
             get { return _hasJuniorKarte; }
             set { ChangeAndNotify(value, ref _hasJuniorKarte); }
-        }
-
-        public DateTime? JuniorKarteExpirationDate
-        {
-            get { return _juniorKarteExpirationDate; }
-            set { ChangeAndNotify(value, ref _juniorKarteExpirationDate); }
         }
 
         public bool HasEnkelKarte
@@ -267,28 +255,58 @@ namespace ZuegerAdressbook.ViewModels
             set { ChangeAndNotify(value, ref _hasEnkelKarte); }
         }
 
-        public DateTime? EnkelKarteExpirationDate
-        {
-            get { return _enkelKarteExpirationDate; }
-            set { ChangeAndNotify(value, ref _enkelKarteExpirationDate); }
-        }
-
         public string Notes
         {
             get { return _notes; }
             set { ChangeAndNotify(value, ref _notes); }
         }
 
-        public string NameOnPassport
+        public string PassportSurname
         {
-            get { return _nameOnPassport; }
-            set { ChangeAndNotify(value, ref _nameOnPassport); }
+            get { return _passportSurname; }
+            set { ChangeAndNotify(value, ref _passportSurname); }
+        }
+
+        public string PassportGivenName
+        {
+            get { return _passportGivenName; }
+            set { ChangeAndNotify(value, ref _passportGivenName); }
+        }
+
+        public string PassportNationality
+        {
+            get { return _passportNationality; }
+            set { ChangeAndNotify(value, ref _passportNationality); }
+        }
+
+        public string PassportNationalityCode
+        {
+            get { return _passportNationalityCode; }
+            set { ChangeAndNotify(value, ref _passportNationalityCode); }
+        }
+
+        public string PlaceOfOrigin
+        {
+            get { return _placeOfOrigin; }
+            set { ChangeAndNotify(value, ref _placeOfOrigin); }
+        }
+
+        public string PlaceOfBirth
+        {
+            get { return _placeOfBirth; }
+            set { ChangeAndNotify(value, ref _placeOfBirth); }
         }
 
         public string PassportNumber
         {
             get { return _passportNumber; }
             set { ChangeAndNotify(value, ref _passportNumber); }
+        }
+
+        public DateTime? PassportIssueDate
+        {
+            get { return _passportIssueDate; }
+            set { ChangeAndNotify(value, ref _passportIssueDate); }
         }
 
         public DateTime? PassportExpirationDate
@@ -303,10 +321,40 @@ namespace ZuegerAdressbook.ViewModels
             set { ChangeAndNotify(value, ref _hasCancellationInsurance); }
         }
 
+        public string CancellationInsurance
+        {
+            get { return _cancellationInsurance; }
+            set { ChangeAndNotify(value, ref _cancellationInsurance); }
+        }
+
+        public DateTime? CancellationInsuranceIssueDate
+        {
+            get { return _canellationInsuranceIssueDate; }
+            set { ChangeAndNotify(value, ref _canellationInsuranceIssueDate); }
+        }
+
         public DateTime? CancellationInsuranceExpirationDate
         {
             get { return _canellationInsuranceExpirationDate; }
             set { ChangeAndNotify(value, ref _canellationInsuranceExpirationDate); }
+        }
+
+        public string FrequentFylerProgram
+        {
+            get { return _frequentFlyerProgram; }
+            set { ChangeAndNotify(value, ref _frequentFlyerProgram); }
+        }
+
+        public string FrequentFlyerNumber
+        {
+            get { return _frequentFylerNumber; }
+            set { ChangeAndNotify(value, ref _frequentFylerNumber); }
+        }
+
+        public DateTime? PassportInformationChangeDate
+        {
+            get { return _passportInformationChangeDate; }
+            set { ChangeAndNotify(value, ref _passportInformationChangeDate); }
         }
 
         public DateTime? SbbInformationChangeDate
@@ -343,6 +391,10 @@ namespace ZuegerAdressbook.ViewModels
             {
                 SbbInformationChangeDate = _changeDate;
             }
+            if (HavePassportInformationedChanged())
+            {
+                PassportInformationChangeDate = _changeDate;
+            }
 
             HasChanges = false;
 
@@ -351,30 +403,36 @@ namespace ZuegerAdressbook.ViewModels
                 Id = _id,
                 Birthdate = _birthdate,
                 PassportNumber = _passportNumber,
+                CancellationInsuranceIssueDate = _canellationInsuranceIssueDate,
                 CancellationInsuranceExpirationDate = _canellationInsuranceExpirationDate,
                 City = _city,
                 EmailAddress = _emailAddress,
-                EnkelKarteExpirationDate = EnkelKarteExpirationDate,
                 Firstname = _firstname,
                 Gender = _gender,
-                GeneralAboExpirationDate = _generalAboExpirationDate,
-                HalbtaxExpirationDate = _halbtaxExpirationDate,
                 HasCancellationInsurance = _hasCancellationInsurance,
+                CancellationInsurance = _cancellationInsurance,
                 HasEnkelKarte = _hasEnkelKarte,
                 HasGeneralAbo = _hasGeneralAbo,
                 HasHalbtax = _hasHalbtax,
                 HasJuniorKarte = _hasJuniorKarte,
-                JuniorKarteExpirationDate = _juniorKarteExpirationDate,
                 Lastname = _lastname,
                 MobileNumber = _mobileNumber,
-                BusinessPhoneNumber = _businessPhoneNumber,
-                NameOnPassport = _nameOnPassport,
+                PassportSurname = _passportSurname,
+                PassportGivenName = _passportGivenName,
+                PassportNationality = _passportNationality,
+                PassportNationalityCode = _passportNationalityCode,
+                PlaceOfOrigin = _placeOfOrigin,
+                PlaceOfBirth = _placeOfBirth,
+                PassportIssueDate = _passportIssueDate,
                 PassportExpirationDate = _passportExpirationDate,
                 Notes = _notes,
                 PhoneNumber = _phoneNumber,
                 Plz = _plz,
                 Street1 = _street1,
                 Title = _title,
+                FrequentFlyerProgram = _frequentFlyerProgram,
+                FrequentFlyerNumber = _frequentFylerNumber,
+                PassportInformationChangeDate = _passportInformationChangeDate,
                 SbbInformationChangeDate = _sbbInformationChangeDate,
                 ChangeDate = _changeDate,
             };
@@ -384,12 +442,24 @@ namespace ZuegerAdressbook.ViewModels
             return person;
         }
 
+        private bool HavePassportInformationedChanged()
+        {
+            return
+                !((PassportSurname == null && _person.PassportSurname == null || PassportSurname.Equals(_person.PassportSurname))
+                  && (PassportGivenName == null && _person.PassportGivenName == null || PassportGivenName.Equals(_person.PassportGivenName))
+                  && (PassportNumber == null && _person.PassportNumber == null || PassportNumber.Equals(_person.PassportNumber))
+                  && (PassportNationality == null && _person.PassportNationality == null || PassportNationality.Equals(_person.PassportNationality))
+                  && (PassportNationalityCode == null && _person.PassportNationalityCode == null || PassportNationalityCode.Equals(_person.PassportNationalityCode))
+                  && (PlaceOfBirth == null && _person.PlaceOfBirth == null || PlaceOfBirth.Equals(_person.PlaceOfBirth))
+                  && (PlaceOfOrigin == null && _person.PlaceOfOrigin == null || PlaceOfOrigin.Equals(_person.PlaceOfOrigin))
+                  && (PassportIssueDate == null && _person.PassportIssueDate == null || PassportIssueDate.Equals(_person.PassportIssueDate))
+                  && (PassportExpirationDate == null && _person.PassportExpirationDate == null || PassportExpirationDate.Equals(_person.PassportExpirationDate)));
+        }
+
         private bool HaveSbbInformationedChanged()
         {
             return
-                !(EnkelKarteExpirationDate.Equals(_person.EnkelKarteExpirationDate) && JuniorKarteExpirationDate.Equals(_person.JuniorKarteExpirationDate)
-                  && GeneralAboExpirationDate.Equals(_person.GeneralAboExpirationDate) && HalbTaxExpirationDate.Equals(_person.HalbtaxExpirationDate)
-                  && HasEnkelKarte.Equals(_person.HasEnkelKarte) && HasJuniorKarte.Equals(_person.HasJuniorKarte) && HasGeneralAbo.Equals(_person.HasGeneralAbo)
+                !(HasEnkelKarte.Equals(_person.HasEnkelKarte) && HasJuniorKarte.Equals(_person.HasJuniorKarte) && HasGeneralAbo.Equals(_person.HasGeneralAbo)
                   && HasHalbTax.Equals(_person.HasHalbtax));
         }
 
@@ -400,28 +470,32 @@ namespace ZuegerAdressbook.ViewModels
             PassportNumber = _person.PassportNumber;
             City = _person.City;
             EmailAddress = _person.EmailAddress;
-            EnkelKarteExpirationDate = _person.EnkelKarteExpirationDate;
             Firstname = _person.Firstname;
             Gender = _person.Gender;
-            GeneralAboExpirationDate = _person.GeneralAboExpirationDate;
-            HalbTaxExpirationDate = _person.HalbtaxExpirationDate;
             HasHalbTax = _person.HasHalbtax;
             HasEnkelKarte = _person.HasEnkelKarte;
             HasGeneralAbo = _person.HasGeneralAbo;
             HasJuniorKarte = _person.HasJuniorKarte;
-            JuniorKarteExpirationDate = _person.JuniorKarteExpirationDate;
             Lastname = _person.Lastname;
             MobileNumber = _person.MobileNumber;
-            NameOnPassport = _person.NameOnPassport;
+            PassportSurname = _person.PassportSurname;
+            PassportGivenName = _person.PassportGivenName;
+            PassportNationality = _person.PassportNationality;
+            PassportNationalityCode = _person.PassportNationalityCode;
+            PlaceOfOrigin = _person.PlaceOfOrigin;
+            PlaceOfBirth = _person.PlaceOfBirth;
             Notes = _person.Notes;
             PhoneNumber = _person.PhoneNumber;
+            PassportIssueDate = _person.PassportIssueDate;
             PassportExpirationDate = _person.PassportExpirationDate;
             HasCancellationInsurance = _person.HasCancellationInsurance;
             CancellationInsuranceExpirationDate = _person.CancellationInsuranceExpirationDate;
-            BusinessPhoneNumber = _person.BusinessPhoneNumber;
             Plz = _person.Plz;
             Street1 = _person.Street1;
             Title = _person.Title;
+            FrequentFylerProgram = _person.FrequentFlyerProgram;
+            FrequentFlyerNumber = _person.FrequentFlyerNumber;
+            PassportInformationChangeDate = _person.PassportInformationChangeDate;
             SbbInformationChangeDate = _person.SbbInformationChangeDate;
             ChangeDate = _person.ChangeDate;
 

@@ -41,7 +41,6 @@ namespace ZuegerAdressbook.Service
                     City = GetCity(),
                     PhoneNumber = GetPhoneNumber(),
                     MobileNumber = GetMobilePhoneNumber(),
-                    BusinessPhoneNumber = GetBusinessPhoneNumber(),
                     EmailAddress = GetEmailAddress(),
                     Birthdate = GetBirthdate(),
                     Notes = GetNotes(),

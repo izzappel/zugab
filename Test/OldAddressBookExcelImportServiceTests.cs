@@ -50,7 +50,6 @@ namespace Test
                 Assert.AreEqual("8541", sandra.Plz);
                 Assert.AreEqual("023 658 96 15", sandra.PhoneNumber);
                 Assert.AreEqual("036 745 85 23", sandra.MobileNumber);
-                Assert.AreEqual("045 858 36 96", sandra.BusinessPhoneNumber);
                 Assert.AreEqual("sandra.meier@gmail.com", sandra.EmailAddress);
                 Assert.AreEqual("15.02.1987", sandra.Birthdate.GetValueOrDefault().ToString("dd.MM.yyyy"));
                 Assert.IsFalse(sandra.HasEnkelKarte);
@@ -65,7 +64,6 @@ namespace Test
                 Assert.AreEqual("4125", sandro.Plz);
                 Assert.AreEqual("058 745 89 33", sandro.PhoneNumber);
                 Assert.AreEqual("045 986 35 74", sandro.MobileNumber);
-                Assert.AreEqual("047 856 93 85", sandro.BusinessPhoneNumber);
                 Assert.AreEqual("sandro.meier@bluewin.ch", sandro.EmailAddress);
                 Assert.AreEqual("25.06.1997", sandro.Birthdate.GetValueOrDefault().ToString("dd.MM.yyyy"));
                 Assert.IsFalse(sandro.HasEnkelKarte);

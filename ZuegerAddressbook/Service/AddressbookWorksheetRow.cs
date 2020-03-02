@@ -170,19 +170,19 @@ namespace ZuegerAdressbook.Service
             }
         }
 
-        public string BusinessPhoneNumber
+        public bool HasGeneralAbo
         {
             get
             {
-                return _worksheet.Cells[Row, 13].Text;
+                return _worksheet.Cells[Row, 13].Text == Ja;
             }
             set
             {
-                _worksheet.Cells[Row, 13].Value = value;
+                _worksheet.Cells[Row, 13].Value = value ? Ja : Nein;
             }
         }
 
-        public bool HasGeneralAbo
+        public bool HasHalbtax
         {
             get
             {
@@ -194,43 +194,43 @@ namespace ZuegerAdressbook.Service
             }
         }
 
-        public DateTime? GeneralAboExpirationDate
+        public string PassportSurname
         {
             get
             {
-                return string.IsNullOrEmpty(_worksheet.Cells[Row, 15].Text) == false ? DateTime.Parse(_worksheet.Cells[Row, 15].Text) : (DateTime?)null;
+                return _worksheet.Cells[Row, 15].Text;
             }
             set
             {
-                _worksheet.Cells[Row, 15].Value = value?.ToShortDateString() ?? string.Empty;
+                _worksheet.Cells[Row, 15].Value = value;
             }
         }
 
-        public bool HasHalbtax
+        public string PassportGivenName
         {
             get
             {
-                return _worksheet.Cells[Row, 16].Text == Ja;
+                return _worksheet.Cells[Row, 16].Text;
             }
             set
             {
-                _worksheet.Cells[Row, 16].Value = value ? Ja : Nein;
+                _worksheet.Cells[Row, 16].Value = value;
             }
         }
 
-        public DateTime? HalbtaxExpirationDate
+        public string PassportNumber
         {
             get
             {
-                return string.IsNullOrEmpty(_worksheet.Cells[Row, 17].Text) == false ? DateTime.Parse(_worksheet.Cells[Row, 17].Text) : (DateTime?)null;
+                return _worksheet.Cells[Row, 17].Text;
             }
             set
             {
-                _worksheet.Cells[Row, 17].Value = value?.ToShortDateString() ?? string.Empty;
+                _worksheet.Cells[Row, 17].Value = value;
             }
         }
 
-        public string NameOnPassport
+        public string PassportNationality
         {
             get
             {
@@ -242,7 +242,7 @@ namespace ZuegerAdressbook.Service
             }
         }
 
-        public string PassportNumber
+        public string PassportNationalityCode
         {
             get
             {
@@ -254,31 +254,31 @@ namespace ZuegerAdressbook.Service
             }
         }
 
-        public DateTime? PassportExpirationDate
+        public string PlaceOfOrigin
         {
             get
             {
-                return string.IsNullOrEmpty(_worksheet.Cells[Row, 20].Text) == false ? DateTime.Parse(_worksheet.Cells[Row, 20].Text) : (DateTime?)null;
+                return _worksheet.Cells[Row, 20].Text;
             }
             set
             {
-                _worksheet.Cells[Row, 20].Value = value?.ToShortDateString() ?? string.Empty;
+                _worksheet.Cells[Row, 20].Value = value;
             }
         }
 
-        public bool HasJuniorKarte
+        public string PlaceOfBirth
         {
             get
             {
-                return _worksheet.Cells[Row, 21].Text == Ja;
+                return _worksheet.Cells[Row, 21].Text;
             }
             set
             {
-                _worksheet.Cells[Row, 21].Value = value ? Ja : Nein;
+                _worksheet.Cells[Row, 21].Value = value;
             }
         }
 
-        public DateTime? JuniorKarteExpirationDate
+        public DateTime? PassportIssueDate
         {
             get
             {
@@ -290,31 +290,31 @@ namespace ZuegerAdressbook.Service
             }
         }
 
+        public DateTime? PassportExpirationDate
+        {
+            get
+            {
+                return string.IsNullOrEmpty(_worksheet.Cells[Row, 23].Text) == false ? DateTime.Parse(_worksheet.Cells[Row, 23].Text) : (DateTime?)null;
+            }
+            set
+            {
+                _worksheet.Cells[Row, 23].Value = value?.ToShortDateString() ?? string.Empty;
+            }
+        }
+
+        public bool HasJuniorKarte
+        {
+            get
+            {
+                return _worksheet.Cells[Row, 24].Text == Ja;
+            }
+            set
+            {
+                _worksheet.Cells[Row, 24].Value = value ? Ja : Nein;
+            }
+        }
+
         public bool HasEnkelKarte
-        {
-            get
-            {
-                return _worksheet.Cells[Row, 23].Text == Ja;
-            }
-            set
-            {
-                _worksheet.Cells[Row, 23].Value = value ? Ja : Nein;
-            }
-        }
-
-        public DateTime? EnkelKarteExpirationDate
-        {
-            get
-            {
-                return string.IsNullOrEmpty(_worksheet.Cells[Row, 24].Text) == false ? DateTime.Parse(_worksheet.Cells[Row, 24].Text) : (DateTime?)null;
-            }
-            set
-            {
-                _worksheet.Cells[Row, 24].Value = value?.ToShortDateString() ?? string.Empty;
-            }
-        }
-
-        public bool HasCancellationInsurance
         {
             get
             {
@@ -326,19 +326,19 @@ namespace ZuegerAdressbook.Service
             }
         }
 
-        public DateTime? CanellationInsuranceExpirationDate
+        public bool HasCancellationInsurance
         {
             get
             {
-                return string.IsNullOrEmpty(_worksheet.Cells[Row, 26].Text) == false ? DateTime.Parse(_worksheet.Cells[Row, 26].Text) : (DateTime?)null;
+                return _worksheet.Cells[Row, 26].Text == Ja;
             }
             set
             {
-                _worksheet.Cells[Row, 26].Value = value?.ToShortDateString() ?? string.Empty;
+                _worksheet.Cells[Row, 26].Value = value ? Ja : Nein;
             }
         }
 
-        public string Notes
+        public string CancellationInsurance
         {
             get
             {
@@ -347,6 +347,66 @@ namespace ZuegerAdressbook.Service
             set
             {
                 _worksheet.Cells[Row, 27].Value = value;
+            }
+        }
+
+        public DateTime? CancellationInsuranceIssueDate
+        {
+            get
+            {
+                return string.IsNullOrEmpty(_worksheet.Cells[Row, 28].Text) == false ? DateTime.Parse(_worksheet.Cells[Row, 28].Text) : (DateTime?)null;
+            }
+            set
+            {
+                _worksheet.Cells[Row, 28].Value = value?.ToShortDateString() ?? string.Empty;
+            }
+        }
+
+        public DateTime? CancellationInsuranceExpirationDate
+        {
+            get
+            {
+                return string.IsNullOrEmpty(_worksheet.Cells[Row, 29].Text) == false ? DateTime.Parse(_worksheet.Cells[Row, 29].Text) : (DateTime?)null;
+            }
+            set
+            {
+                _worksheet.Cells[Row, 29].Value = value?.ToShortDateString() ?? string.Empty;
+            }
+        }
+
+        public string FrequentFlyerProgram
+        {
+            get
+            {
+                return _worksheet.Cells[Row, 30].Text;
+            }
+            set
+            {
+                _worksheet.Cells[Row, 30].Value = value;
+            }
+        }
+
+        public string FrequentFlyerNumber
+        {
+            get
+            {
+                return _worksheet.Cells[Row, 31].Text;
+            }
+            set
+            {
+                _worksheet.Cells[Row, 31].Value = value;
+            }
+        }
+
+        public string Notes
+        {
+            get
+            {
+                return _worksheet.Cells[Row, 32].Text;
+            }
+            set
+            {
+                _worksheet.Cells[Row, 32].Value = value;
             }
         }
     }

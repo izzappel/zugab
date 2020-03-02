@@ -93,6 +93,13 @@
                         <Setter Property="Height" Value="Auto"/>
                         <Setter Property="Margin" Value="10,0,10,2"></Setter>
                     </Style>
+                    <Style TargetType="{x:Type Button}" x:Key="ToolbarButton">
+                        <Style.Triggers>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Opacity" Value="0.6" />
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
                     <Style TargetType="{x:Type ToolBar}">
                         <Setter Property="Background" Value="#FFF9F9F9"/>
                         <Setter Property="HeaderTemplate">
@@ -109,25 +116,25 @@
                     </Style>
                 </ToolBarTray.Resources>
                 <ToolBar Header="Editieren" Loaded="FrameworkElement_OnLoaded">
-                    <Button Command="{Binding NewCommand}" ToolBar.OverflowMode="Never">
+                    <Button Command="{Binding NewCommand}" ToolBar.OverflowMode="Never" Style="{StaticResource ToolbarButton}">
                         <StackPanel Orientation="Vertical">
                             <Image Source="Icons/48/sign-add.png"/>
                             <TextBlock HorizontalAlignment="Center"><Run Text="Neu"/></TextBlock>
                         </StackPanel>
                     </Button>
-                    <Button Command="{Binding RevertCommand}" ToolBar.OverflowMode="Never">
+                    <Button Command="{Binding RevertCommand}" ToolBar.OverflowMode="Never" Style="{StaticResource ToolbarButton}">
                         <StackPanel Orientation="Vertical">
                             <Image Source="Icons/48/sign-error.png"/>
                             <TextBlock HorizontalAlignment="Center"><Run Text="Verwerfen"/></TextBlock>
                         </StackPanel>
                     </Button>
-                    <Button Command="{Binding SaveCommand}" ToolBar.OverflowMode="Never">
+                    <Button Command="{Binding SaveCommand}" ToolBar.OverflowMode="Never" Style="{StaticResource ToolbarButton}">
                         <StackPanel Orientation="Vertical">
                             <Image Source="Icons/48/sign-check.png"/>
                             <TextBlock HorizontalAlignment="Center"><Run Text="Speichern"/></TextBlock>
                         </StackPanel>
                     </Button>
-                    <Button Command="{Binding DeleteCommand}" ToolBar.OverflowMode="Never">
+                    <Button Command="{Binding DeleteCommand}" ToolBar.OverflowMode="Never" Style="{StaticResource ToolbarButton}">
                         <StackPanel Orientation="Vertical">
                             <Image Source="Icons/48/trashcan.png"/>
                             <TextBlock HorizontalAlignment="Center"><Run Text="Löschen"/></TextBlock>
@@ -135,7 +142,7 @@
                     </Button>
                 </ToolBar>
                 <ToolBar Header="Drucken" Loaded="FrameworkElement_OnLoaded">
-                    <Button Command="{Binding PrintPersonDetailCommand}" ToolBar.OverflowMode="Never">
+                    <Button Command="{Binding PrintPersonDetailCommand}" ToolBar.OverflowMode="Never" Style="{StaticResource ToolbarButton}">
                         <StackPanel Orientation="Vertical">
                             <Image Source="Icons/48/user-id.png"/>
                             <TextBlock HorizontalAlignment="Center"><Run Text="Stammdaten"/></TextBlock>
@@ -143,13 +150,13 @@
                     </Button>
                 </ToolBar>
                 <ToolBar Header="Excel" Loaded="FrameworkElement_OnLoaded" >
-                    <Button Command="{Binding ImportCommand}" ToolBar.OverflowMode="Never">
+                    <Button Command="{Binding ImportCommand}" ToolBar.OverflowMode="Never" Style="{StaticResource ToolbarButton}">
                         <StackPanel Orientation="Vertical">
                             <Image Source="Icons/48/box-in.png"/>
                             <TextBlock HorizontalAlignment="Center"><Run Text="Import"/></TextBlock>
                         </StackPanel>
                     </Button>
-                    <Button Command="{Binding ExportCommand}"  ToolBar.OverflowMode="Never">
+                    <Button Command="{Binding ExportCommand}"  ToolBar.OverflowMode="Never" Style="{StaticResource ToolbarButton}">
                         <StackPanel Orientation="Vertical">
                             <Image Source="Icons/48/box-out.png"/>
                             <TextBlock HorizontalAlignment="Center"><Run Text="Export"/></TextBlock>
@@ -165,10 +172,14 @@
             </Grid.RowDefinitions>
 
             <Border  Grid.Column="0" Grid.Row="0" Background="#FFF9F9F9" BorderThickness="0,0,0,1" BorderBrush="#FF333333" Margin="0,0,0,2" SnapsToDevicePixels="True">
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="{Binding SelectedDetailedPerson.FullName}" Padding="20" FontSize="18pt"></TextBlock>
-                    <TextBlock Margin="10,5,0,0" Text="{Binding SelectedDetailedPerson.ChangeDate, StringFormat=(Zuletzt geändert: {0:dd.MM.yyyy HH:mm})}" Foreground="#FF888888"></TextBlock>
-                </StackPanel>
+                <DockPanel HorizontalAlignment="Stretch" LastChildFill="True">
+                    <StackPanel Orientation="Horizontal" DockPanel.Dock="Left">
+                        <TextBlock Text="{Binding SelectedDetailedPerson.FullName}" Padding="20" FontSize="18pt"></TextBlock>
+                        <TextBlock Margin="10,5,0,0" Text="{Binding SelectedDetailedPerson.ChangeDate, StringFormat=(Zuletzt geändert: {0:dd.MM.yyyy HH:mm})}" Foreground="#FF888888"></TextBlock>
+                    </StackPanel>
+
+                    <TextBlock Text="•" TextAlignment="Right" DockPanel.Dock="Right" Foreground="Red" Visibility="{Binding HasChanges, Converter={StaticResource booleanVisibilityConverter}, FallbackValue=Collapsed}" Padding="20,0,20,0" FontSize="30pt"></TextBlock>
+                </DockPanel>
             </Border>
 
             <ScrollViewer Grid.Column="0" Grid.Row="1" DataContext="{Binding SelectedDetailedPerson}">
@@ -182,82 +193,173 @@
                         <RowDefinition></RowDefinition>
                     </Grid.RowDefinitions>
 
-                    <Grid  Grid.Column="0" Grid.Row="0" Margin="10,0,10,10">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="15"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
+                    <Grid Grid.Column="0" Grid.Row="0" Margin="10,0,10,10">
+
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="30"/>
-                            <RowDefinition Height="30"/>
                             <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="30"/>
                             <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="30"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="30"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="30"/>
-                            <RowDefinition Height="30"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="30"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="30"/>
                         </Grid.RowDefinitions>
 
-                        <DockPanel LastChildFill="True" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3">
-                            <Separator Width="30"/>
-                            <TextBlock DockPanel.Dock="Left" Style="{StaticResource SeparatorText}"><Run Text="Kontakt"/></TextBlock>
-                            <Separator />
-                        </DockPanel>
+                        <Grid Grid.Column="0" Grid.Row="0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="15"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="30"/>
+                            </Grid.RowDefinitions>
 
-                        <StackPanel Grid.Column="0" Grid.Row="1" Orientation="Horizontal" VerticalAlignment="Center">
-                            <Label Content="Anrede" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
-                            <RadioButton Margin="20,0,20,0" IsChecked="{Binding Gender, ConverterParameter=Male, Converter={StaticResource enumBooleanConverter}}" Content="Herr" VerticalAlignment="Center"/>
-                            <RadioButton IsChecked="{Binding Gender, ConverterParameter=Female, Converter={StaticResource enumBooleanConverter}}" Content="Frau" VerticalAlignment="Center"/>
-                        </StackPanel>
+                            <DockPanel LastChildFill="True" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3">
+                                <Separator Width="30"/>
+                                <TextBlock DockPanel.Dock="Left" Style="{StaticResource SeparatorText}"><Run Text="Kontakt"/></TextBlock>
+                                <Separator />
+                            </DockPanel>
 
-                        <TextBlock Grid.Column="2" Grid.Row="1" Style="{StaticResource FontAwesomeIcon}" Visibility="{Binding Gender, ConverterParameter=Female, Converter={StaticResource enumVisibilityConverter}, FallbackValue=Collapsed}"><Run Text="&#xF182;"/></TextBlock>
-                        <TextBlock Grid.Column="2" Grid.Row="1" Style="{StaticResource FontAwesomeIcon}" Visibility="{Binding Gender, ConverterParameter=Male, Converter={StaticResource enumVisibilityConverter}, FallbackValue=Collapsed}"><Run Text="&#xF183;"/></TextBlock>
+                            <StackPanel Grid.Column="0" Grid.Row="1" Orientation="Horizontal" VerticalAlignment="Center">
+                                <Label Content="Anrede" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
+                                <RadioButton Margin="20,0,20,0" IsChecked="{Binding Gender, ConverterParameter=Male, Converter={StaticResource enumBooleanConverter}}" Content="Herr" VerticalAlignment="Center"/>
+                                <RadioButton IsChecked="{Binding Gender, ConverterParameter=Female, Converter={StaticResource enumBooleanConverter}}" Content="Frau" VerticalAlignment="Center"/>
+                            </StackPanel>
 
-                        <Label Grid.Column="0" Grid.Row="2" Content="Vorname" Style="{StaticResource TopLabel}"/>
-                        <TextBox Grid.Column="0" Grid.Row="3" Text="{Binding Firstname, UpdateSourceTrigger=PropertyChanged}"/>
-                        <Label Grid.Column="2" Grid.Row="2" Content="Nachname" Style="{StaticResource TopLabel}"/>
-                        <TextBox Grid.Column="2" Grid.Row="3" Text="{Binding Lastname, UpdateSourceTrigger=PropertyChanged}" Margin="5,0,0,0"/>
+                            <TextBlock Grid.Column="2" Grid.Row="1" Style="{StaticResource FontAwesomeIcon}" Visibility="{Binding Gender, ConverterParameter=Female, Converter={StaticResource enumVisibilityConverter}, FallbackValue=Collapsed}"><Run Text="&#xF182;"/></TextBlock>
+                            <TextBlock Grid.Column="2" Grid.Row="1" Style="{StaticResource FontAwesomeIcon}" Visibility="{Binding Gender, ConverterParameter=Male, Converter={StaticResource enumVisibilityConverter}, FallbackValue=Collapsed}"><Run Text="&#xF183;"/></TextBlock>
 
-                        <Label Grid.Column="0" Grid.Row="4" Style="{StaticResource TopLabel}" Content="Geburtsdatum"/>
-                        <DatePicker Grid.Column="0" Grid.Row="5" SelectedDate="{Binding Birthdate, StringFormat={}{0:dd.MM.yyyy}, UpdateSourceTrigger=PropertyChanged}" SelectedDateFormat="Short" Template="{DynamicResource DatePickerControlTemplate}" />
-                        <StackPanel Grid.Column="2" Grid.Row="5" Orientation="Horizontal">
-                            <TextBlock Text="{Binding Age, FallbackValue=?, TargetNullValue=?}" Margin="0,0,5,0"/>
-                            <TextBlock Text="Jahre" Margin="0,0,5,0"/>
-                            <TextBlock Text="-" Margin="0,0,5,0" Visibility="{Binding IsChild, Converter={StaticResource booleanVisibilityConverter}, FallbackValue=Collapsed}"/>
-                            <TextBlock Style="{StaticResource FontAwesomeIcon}" Visibility="{Binding IsChild, Converter={StaticResource booleanVisibilityConverter}, FallbackValue=Collapsed}"><Run Text="&#xF1AE;"/></TextBlock>
-                        </StackPanel>
+                            <Label Grid.Column="0" Grid.Row="2" Content="Vorname" Style="{StaticResource TopLabel}"/>
+                            <TextBox Grid.Column="0" Grid.Row="3" Text="{Binding Firstname, UpdateSourceTrigger=PropertyChanged}"/>
+                            <Label Grid.Column="2" Grid.Row="2" Content="Nachname" Style="{StaticResource TopLabel}"/>
+                            <TextBox Grid.Column="2" Grid.Row="3" Text="{Binding Lastname, UpdateSourceTrigger=PropertyChanged}" Margin="5,0,0,0"/>
 
-                        <Label Grid.Column="0" Grid.Row="6" Style="{StaticResource TopLabel}" Content="Strasse / Nr."/>
-                        <TextBox Grid.Column="0" Grid.Row="7" Grid.ColumnSpan="5" Text="{Binding Street1, UpdateSourceTrigger=PropertyChanged}"/>
+                            <Label Grid.Column="0" Grid.Row="4" Style="{StaticResource TopLabel}" Content="Geburtsdatum"/>
+                            <DatePicker Grid.Column="0" Grid.Row="5" SelectedDate="{Binding Birthdate, StringFormat={}{0:dd.MM.yyyy}, UpdateSourceTrigger=PropertyChanged}" SelectedDateFormat="Short" Template="{DynamicResource DatePickerControlTemplate}" />
+                            <StackPanel Grid.Column="2" Grid.Row="5" Orientation="Horizontal">
+                                <TextBlock Text="{Binding Age, FallbackValue=?, TargetNullValue=?}" Margin="0,0,5,0"/>
+                                <TextBlock Text="Jahre" Margin="0,0,5,0"/>
+                                <TextBlock Text="-" Margin="0,0,5,0" Visibility="{Binding IsChild, Converter={StaticResource booleanVisibilityConverter}, FallbackValue=Collapsed}"/>
+                                <TextBlock Style="{StaticResource FontAwesomeIcon}" Visibility="{Binding IsChild, Converter={StaticResource booleanVisibilityConverter}, FallbackValue=Collapsed}"><Run Text="&#xF1AE;"/></TextBlock>
+                            </StackPanel>
 
-                        <Label Grid.Column="0" Grid.Row="8" Style="{StaticResource TopLabel}" Content="PLZ"/>
-                        <TextBox Grid.Column="0" Grid.Row="9" Text="{Binding Plz, UpdateSourceTrigger=PropertyChanged}"/>
-                        <Label Grid.Column="2" Grid.Row="8" Style="{StaticResource TopLabel}" Content="Ort"/>
-                        <TextBox Grid.Column="2" Grid.Row="9" Text="{Binding City, UpdateSourceTrigger=PropertyChanged}"/>
+                            <Label Grid.Column="0" Grid.Row="6" Style="{StaticResource TopLabel}" Content="Strasse / Nr."/>
+                            <TextBox Grid.Column="0" Grid.Row="7" Grid.ColumnSpan="5" Text="{Binding Street1, UpdateSourceTrigger=PropertyChanged}"/>
 
-                        <DockPanel Grid.Column="0" Grid.Row="10" Grid.ColumnSpan="3" LastChildFill="True">
-                            <Separator Width="30"/>
-                            <TextBlock DockPanel.Dock="Left" Style="{StaticResource SeparatorText}"><Run Text="Zusätzliche Kontaktdaten"/></TextBlock>
-                            <Separator />
-                        </DockPanel>
+                            <Label Grid.Column="0" Grid.Row="8" Style="{StaticResource TopLabel}" Content="PLZ"/>
+                            <TextBox Grid.Column="0" Grid.Row="9" Text="{Binding Plz, UpdateSourceTrigger=PropertyChanged}"/>
+                            <Label Grid.Column="2" Grid.Row="8" Style="{StaticResource TopLabel}" Content="Ort"/>
+                            <TextBox Grid.Column="2" Grid.Row="9" Text="{Binding City, UpdateSourceTrigger=PropertyChanged}"/>
 
-                        <Label Grid.Column="0" Grid.Row="11" Content="Tel P"/>
-                        <TextBox Grid.Column="0" Grid.Row="12" Text="{Binding PhoneNumber, UpdateSourceTrigger=PropertyChanged}"/>
-                        <Label Grid.Column="2" Grid.Row="11" Content="Tel Mobile"/>
-                        <TextBox Grid.Column="2" Grid.Row="12" Text="{Binding MobileNumber, UpdateSourceTrigger=PropertyChanged}"/>
+                            <DockPanel Grid.Column="0" Grid.Row="10" Grid.ColumnSpan="3" LastChildFill="True">
+                                <Separator Width="30"/>
+                                <TextBlock DockPanel.Dock="Left" Style="{StaticResource SeparatorText}"><Run Text="Zusätzliche Kontaktdaten"/></TextBlock>
+                                <Separator />
+                            </DockPanel>
 
-                        <Label Grid.Column="0" Grid.Row="13" Style="{StaticResource TopLabel}" Content="Tel G"/>
-                        <TextBox Grid.Column="0" Grid.Row="14" Text="{Binding BusinessPhoneNumber, UpdateSourceTrigger=PropertyChanged}"/>
-                        <Label Grid.Column="2" Grid.Row="13" Style="{StaticResource TopLabel}" Content="E-Mail"/>
-                        <TextBox Grid.Column="2" Grid.Row="14" Text="{Binding EmailAddress, UpdateSourceTrigger=PropertyChanged}"/>
+                            <Label Grid.Column="0" Grid.Row="11" Content="Tel P"/>
+                            <TextBox Grid.Column="0" Grid.Row="12" Text="{Binding PhoneNumber, UpdateSourceTrigger=PropertyChanged}"/>
+                            <Label Grid.Column="2" Grid.Row="11" Content="Tel Mobile"/>
+                            <TextBox Grid.Column="2" Grid.Row="12" Text="{Binding MobileNumber, UpdateSourceTrigger=PropertyChanged}"/>
+
+                            <Label Grid.Column="0" Grid.Row="13" Style="{StaticResource TopLabel}" Content="E-Mail"/>
+                            <TextBox Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="14" Text="{Binding EmailAddress, UpdateSourceTrigger=PropertyChanged}"/>
+
+                        </Grid>
+                        <Grid Grid.Column="0" Grid.Row="1">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+
+                            <DockPanel LastChildFill="True" Grid.Row="0">
+                                <Separator Width="30"/>
+                                <TextBlock DockPanel.Dock="Left" Style="{StaticResource SeparatorText}"><Run Text="Sonstiges"/></TextBlock>
+                                <Separator />
+                            </DockPanel>
+                            <Grid Grid.Row="1" >
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="100"/>
+                                    <RowDefinition Height="10"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+
+                                <Label Grid.Column="0" Grid.Row="0" Content="Notizen"/>
+                                <TextBox Grid.Column="0" Grid.Row="1" Text="{Binding Notes, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource MultilineTextBox}"/>
+
+                                <DockPanel Grid.Column="0" Grid.Row="3" LastChildFill="False" >
+                                    <DockPanel.Resources>
+                                        <Style TargetType="{x:Type Button}">
+                                            <Style.Triggers>
+                                                <Trigger Property="IsEnabled" Value="False">
+                                                    <Setter Property="Foreground" Value="Gray"></Setter>
+                                                </Trigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </DockPanel.Resources>
+                                    <Label Style="{StaticResource TopLabel}" DockPanel.Dock="Left" Content="Dokumente"/>
+                                    <Button Background="#FFEFEFEF" DockPanel.Dock="Right" Width="33" Height="33" Command="{Binding AddDocumentCommand}" VerticalContentAlignment="Center">
+                                        <TextBlock Style="{StaticResource FontAwesomeIcon}" Margin="5"><Run Text="&#xF067;"/></TextBlock>
+                                    </Button>
+                                    <Button Background="#FFEFEFEF" DockPanel.Dock="Right" Width="33" Height="33" Margin="0,0,5,0" Command="{Binding RemoveDocumentsCommand}" VerticalContentAlignment="Center">
+                                        <TextBlock Style="{StaticResource FontAwesomeIcon}" Margin="5"><Run Text="&#xF014;"/></TextBlock>
+                                    </Button>
+                                </DockPanel>
+
+                                <ListView Grid.Column="0" Grid.Row="4" ItemsSource="{Binding Documents}" BorderThickness="0">
+                                    <ListView.Resources>
+                                        <Style TargetType="{x:Type ListViewItem}">
+                                            <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}" />
+                                        </Style>
+                                    </ListView.Resources>
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate>
+                                            <DockPanel>
+                                                <DockPanel.Resources>
+                                                    <Style TargetType="{x:Type TextBlock}">
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding NotExists}" Value="true">
+                                                                <Setter Property="Foreground" Value="Red"></Setter>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </DockPanel.Resources>
+                                                <DockPanel.InputBindings>
+                                                    <MouseBinding Gesture="LeftDoubleClick" Command="{Binding OpenCommand}"></MouseBinding>
+                                                </DockPanel.InputBindings>
+                                                <TextBlock Style="{StaticResource FontAwesomeIcon}" Margin="0,0,5,0" Foreground="Red" Visibility="{Binding NotExists, Converter={StaticResource booleanVisibilityConverter}, FallbackValue=Collapsed}"><Run Text="&#xF0E7;"/></TextBlock>
+                                                <TextBlock Margin="0,0,5,0"><Run Text="&#xF0C6;"/>
+                                                    <TextBlock.Style>
+                                                        <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource FontAwesomeIcon}">
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{Binding NotExists}" Value="true">
+                                                                    <Setter Property="Foreground" Value="Red"></Setter>
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </TextBlock.Style></TextBlock>
+                                                <TextBlock Text="{Binding FileName, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center"/>
+                                            </DockPanel>
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
+                                </ListView>
+                            </Grid>
+                        </Grid>
                     </Grid>
 
                     <Separator Grid.Column="1" Grid.Row="0" Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Margin="2,50,2,50"></Separator>
@@ -266,7 +368,11 @@
 
                         <Grid.RowDefinitions>
                             <RowDefinition Height="30"/>
+                            <RowDefinition Height="15"/>
                             <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="30"/>
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="30"/>
                             <RowDefinition Height="Auto"/>
@@ -275,149 +381,131 @@
                         <DockPanel LastChildFill="True" Grid.Row="0">
                             <Separator Width="30"/>
                             <TextBlock DockPanel.Dock="Left" Style="{StaticResource SeparatorText}"><Run Text="Reiseagentur"/></TextBlock>
-                            <Separator Width="10"/>
-                            <TextBlock DockPanel.Dock="Left" Style="{StaticResource SeparatorText}" Text="{Binding SbbInformationChangeDate, StringFormat=(Reiseagentur zuletzt geändert: {0:dd.MM.yyyy HH:mm})}"></TextBlock>
                             <Separator />
                         </DockPanel>
-
-                        <Grid Grid.Row="1">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="15"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="30"/>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="30"/>
-                                <RowDefinition Height="5"/>
-                                <RowDefinition Height="30"/>
-                                <RowDefinition Height="5"/>
-                                <RowDefinition Height="30"/>
-                                <RowDefinition Height="30"/>
-                            </Grid.RowDefinitions>
-
-                            <Label Grid.Column="0" Grid.Row="0" Content="Name auf Pass"/>
-                            <TextBox Grid.Column="0" Grid.Row="1" Text="{Binding NameOnPassport, UpdateSourceTrigger=PropertyChanged}"/>
-                            <Label Grid.Column="2" Grid.Row="0" Content="Passnummer"/>
-                            <TextBox Grid.Column="2" Grid.Row="1" Text="{Binding PassportNumber, UpdateSourceTrigger=PropertyChanged}"/>
-                            <Label Grid.Column="0" Grid.Row="2" Content="Pass gültig bis" />
-                            <DatePicker Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="4" SelectedDate="{Binding PassportExpirationDate, UpdateSourceTrigger=PropertyChanged}" SnapsToDevicePixels="True" Template="{DynamicResource DatePickerControlTemplate}" />
-                            <CheckBox Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="4" IsChecked="{Binding HasCancellationInsurance}" Content="Annullationsversicherung" VerticalAlignment="Center"/>
-                            <Label Grid.Column="0" Grid.Row="7" Visibility="{Binding HasCancellationInsurance, Converter={StaticResource booleanVisibilityConverter}}" Content="Gültig bis"/>
-                            <DatePicker Grid.Column="3" Grid.Row="7" SelectedDate="{Binding CancellationInsuranceExpirationDate, UpdateSourceTrigger=PropertyChanged}" SnapsToDevicePixels="True" Visibility="{Binding HasCancellationInsurance, Converter={StaticResource booleanVisibilityConverter}}" Template="{DynamicResource DatePickerControlTemplate}" />
-                        </Grid>
+                        <DockPanel LastChildFill="True" Grid.Row="1">
+                            <Separator Width="30"/>
+                            <TextBlock DockPanel.Dock="Left" Style="{StaticResource SeparatorText}"><Run Text="Pass"/></TextBlock>
+                            <Separator Width="10"/>
+                            <TextBlock DockPanel.Dock="Left" Style="{StaticResource SeparatorText}" Text="{Binding PassportInformationChangeDate, StringFormat=(Pass zuletzt geändert: {0:dd.MM.yyyy HH:mm})}"></TextBlock>
+                            <Separator />
+                        </DockPanel>
 
                         <Grid Grid.Row="2">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="15"/>
-                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="30"/>
+                            </Grid.RowDefinitions>
+
+                            <Label Grid.Column="0" Grid.Row="0" Content="Nachname auf Pass"/>
+                            <TextBox Grid.Column="0" Grid.Row="1" Text="{Binding PassportSurname, UpdateSourceTrigger=PropertyChanged}"/>
+                            <Label Grid.Column="2" Grid.Row="0" Content="Vorname auf Pass"/>
+                            <TextBox Grid.Column="2" Grid.Row="1" Text="{Binding PassportGivenName, UpdateSourceTrigger=PropertyChanged}"/>
+                            <Label Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="3" Content="Passnummer"/>
+                            <TextBox Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="3" Text="{Binding PassportNumber, UpdateSourceTrigger=PropertyChanged}"/>
+                            <Label Grid.Column="0" Grid.Row="4" Content="Heimatort"/>
+                            <TextBox Grid.Column="0" Grid.Row="5" Text="{Binding PlaceOfOrigin, UpdateSourceTrigger=PropertyChanged}"/>
+                            <Label Grid.Column="2" Grid.Row="4" Content="Geburtsort"/>
+                            <TextBox Grid.Column="2" Grid.Row="5" Text="{Binding PlaceOfBirth, UpdateSourceTrigger=PropertyChanged}"/>
+                            <Label Grid.Column="0" Grid.Row="6" Content="Nationalität (z.B. Schweiz)"/>
+                            <TextBox Grid.Column="0" Grid.Row="7" Text="{Binding PassportNationality, UpdateSourceTrigger=PropertyChanged}"/>
+                            <Label Grid.Column="2" Grid.Row="6" Content="Code (z.B. CHE)"/>
+                            <TextBox Grid.Column="2" Grid.Row="7" Text="{Binding PassportNationalityCode, UpdateSourceTrigger=PropertyChanged}"/>
+                            <Label Grid.Column="0" Grid.Row="8" Content="Pass ausgestellt am" />
+                            <DatePicker Grid.Column="0" Grid.Row="9" SelectedDate="{Binding PassportIssueDate, UpdateSourceTrigger=PropertyChanged}" SnapsToDevicePixels="True" Template="{DynamicResource DatePickerControlTemplate}" />
+                            <Label Grid.Column="3" Grid.Row="8" Content="Pass gültig bis" />
+                            <DatePicker Grid.Column="3" Grid.Row="9" SelectedDate="{Binding PassportExpirationDate, UpdateSourceTrigger=PropertyChanged}" SnapsToDevicePixels="True" Template="{DynamicResource DatePickerControlTemplate}" />
+                        </Grid>
+
+                        <DockPanel LastChildFill="True" Grid.Row="3">
+                            <Separator Width="60"/>
+                            <TextBlock DockPanel.Dock="Left" Style="{StaticResource SeparatorText}"><Run Text="Versicherungen"/></TextBlock>
+                            <Separator />
+                        </DockPanel>
+                        <Grid Grid.Row="4">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="15"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="30"/>
+                            </Grid.RowDefinitions>
+
+                            <CheckBox Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="4" IsChecked="{Binding HasCancellationInsurance}" Content="Annullationsversicherung" VerticalAlignment="Center"/>
+                            <Label Grid.Column="0" Grid.Row="1" Content="Versicherung"/>
+                            <TextBox Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="3" Text="{Binding CancellationInsurance, UpdateSourceTrigger=PropertyChanged}"/>
+                            <Label Grid.Column="0" Grid.Row="3" Content="Gültig von"/>
+                            <DatePicker Grid.Column="0" Grid.Row="4" SelectedDate="{Binding CancellationInsuranceIssueDate, UpdateSourceTrigger=PropertyChanged}" SnapsToDevicePixels="True" Template="{DynamicResource DatePickerControlTemplate}" />
+                            <Label Grid.Column="3" Grid.Row="3" Content="Gültig bis"/>
+                            <DatePicker Grid.Column="3" Grid.Row="4" SelectedDate="{Binding CancellationInsuranceExpirationDate, UpdateSourceTrigger=PropertyChanged}" SnapsToDevicePixels="True" Template="{DynamicResource DatePickerControlTemplate}" />
+                        </Grid>
+
+                        <DockPanel LastChildFill="True" Grid.Row="5">
+                            <Separator Width="60"/>
+                            <TextBlock DockPanel.Dock="Left" Style="{StaticResource SeparatorText}"><Run Text="Vielflieger"/></TextBlock>
+                            <Separator />
+                        </DockPanel>
+
+                        <Grid Grid.Row="6">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="15"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="30"/>
+                            </Grid.RowDefinitions>
+                            <Label Grid.Column="0" Grid.Row="0" Content="Vielflieger-Programm"/>
+                            <TextBox Grid.Column="0" Grid.Row="1" Text="{Binding FrequentFylerProgram, UpdateSourceTrigger=PropertyChanged}"/>
+                            <Label Grid.Column="2" Grid.Row="0" Content="Vielflieger-Nummer"/>
+                            <TextBox Grid.Column="2" Grid.Row="1" Text="{Binding FrequentFlyerNumber, UpdateSourceTrigger=PropertyChanged}"/>
+                        </Grid>
+
+                        <DockPanel LastChildFill="True" Grid.Row="7">
+                            <Separator Width="60"/>
+                            <TextBlock DockPanel.Dock="Left" Style="{StaticResource SeparatorText}"><Run Text="SBB"/></TextBlock>
+                            <Separator Width="10"/>
+                            <TextBlock DockPanel.Dock="Left" Style="{StaticResource SeparatorText}" Text="{Binding SbbInformationChangeDate, StringFormat=(SBB zuletzt geändert: {0:dd.MM.yyyy HH:mm})}"></TextBlock>
+                            <Separator />
+                        </DockPanel>
+
+                        <Grid Grid.Row="8">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="15"/>
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="30"/>
                                 <RowDefinition Height="5"/>
                                 <RowDefinition Height="30"/>
-                                <RowDefinition Height="5"/>
-                                <RowDefinition Height="30"/>
-                                <RowDefinition Height="5"/>
-                                <RowDefinition Height="30"/>
                             </Grid.RowDefinitions>
-                            <CheckBox Grid.Column="0" Grid.Row="0" IsChecked="{Binding HasHalbTax}" Content="HalbTax" VerticalAlignment="Center"/>
-                            <Label Grid.Column="2" Grid.Row="0" Visibility="{Binding HasHalbTax, Converter={StaticResource booleanVisibilityConverter}}" Content="Ablaufdatum"/>
-                            <DatePicker Grid.Column="3" Grid.Row="0" SelectedDate="{Binding HalbTaxExpirationDate, UpdateSourceTrigger=PropertyChanged}" SnapsToDevicePixels="True" Visibility="{Binding HasHalbTax, Converter={StaticResource booleanVisibilityConverter}}" Template="{DynamicResource DatePickerControlTemplate}" />
+                            <CheckBox Grid.Column="0" Grid.Row="0" IsChecked="{Binding HasHalbTax}" Content="Halbtax" VerticalAlignment="Center"/>
+                            <CheckBox  Grid.Column="2" Grid.Row="0" IsChecked="{Binding HasGeneralAbo}" Content="GA" VerticalAlignment="Center"/>
 
-                            <CheckBox  Grid.Column="0" Grid.Row="2" IsChecked="{Binding HasGeneralAbo}" Content="GA" VerticalAlignment="Center"/>
-                            <Label Grid.Column="2" Grid.Row="2" Visibility="{Binding HasGeneralAbo, Converter={StaticResource booleanVisibilityConverter}}" Content="Ablaufdatum" />
-                            <DatePicker Grid.Column="3" Grid.Row="2" SelectedDate="{Binding GeneralAboExpirationDate, UpdateSourceTrigger=PropertyChanged}" SnapsToDevicePixels="True" Visibility="{Binding HasGeneralAbo, Converter={StaticResource booleanVisibilityConverter}}" Template="{DynamicResource DatePickerControlTemplate}" />
-
-                            <CheckBox  Grid.Column="0" Grid.Row="4" IsChecked="{Binding HasJuniorKarte}" Content="Junior-Karte" Visibility="{Binding IsChild, Converter={StaticResource booleanVisibilityConverter}}" VerticalAlignment="Center"/>
-                            <Label Grid.Column="2" Grid.Row="4" Visibility="{Binding HasJuniorKarte, Converter={StaticResource booleanVisibilityConverter}}" Content="Ablaufdatum" />
-                            <DatePicker Grid.Column="3" Grid.Row="4" SelectedDate="{Binding JuniorKarteExpirationDate, UpdateSourceTrigger=PropertyChanged}" SnapsToDevicePixels="True" Visibility="{Binding HasJuniorKarte, Converter={StaticResource booleanVisibilityConverter}}" Template="{DynamicResource DatePickerControlTemplate}" />
-
-                            <CheckBox  Grid.Column="0" Grid.Row="6" IsChecked="{Binding HasEnkelKarte}" Content="Enkel-Karte" Visibility="{Binding IsChild, Converter={StaticResource booleanVisibilityConverter}}" VerticalAlignment="Center"/>
-                            <Label Grid.Column="2" Grid.Row="6" Visibility="{Binding HasEnkelKarte, Converter={StaticResource booleanVisibilityConverter}}" Content="Ablaufdatum" />
-                            <DatePicker Grid.Column="3" Grid.Row="6" SelectedDate="{Binding EnkelKarteExpirationDate, UpdateSourceTrigger=PropertyChanged}" SnapsToDevicePixels="True" Visibility="{Binding HasEnkelKarte, Converter={StaticResource booleanVisibilityConverter}}" Template="{DynamicResource DatePickerControlTemplate}" />
+                            <CheckBox  Grid.Column="0" Grid.Row="2" IsChecked="{Binding HasJuniorKarte}" Content="Junior-Karte" Visibility="{Binding IsChild, Converter={StaticResource booleanVisibilityConverter}}" VerticalAlignment="Center"/>
+                            <CheckBox  Grid.Column="2" Grid.Row="2" IsChecked="{Binding HasEnkelKarte}" Content="Enkel-Karte" Visibility="{Binding IsChild, Converter={StaticResource booleanVisibilityConverter}}" VerticalAlignment="Center"/>
                         </Grid>
-                        <DockPanel LastChildFill="True" Grid.Row="3">
-                            <Separator Width="30"/>
-                            <TextBlock DockPanel.Dock="Left" Style="{StaticResource SeparatorText}"><Run Text="Sonstiges"/></TextBlock>
-                            <Separator />
-                        </DockPanel>
-                        <Grid Grid.Row="4" >
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition />
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="100"/>
-                                <RowDefinition Height="10"/>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="*"/>
-                            </Grid.RowDefinitions>
 
-                            <Label Grid.Column="0" Grid.Row="0" Content="Notizen"/>
-                            <TextBox Grid.Column="0" Grid.Row="1" Text="{Binding Notes, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource MultilineTextBox}"/>
-
-                            <DockPanel Grid.Column="0" Grid.Row="3" LastChildFill="False" >
-                                <DockPanel.Resources>
-                                    <Style TargetType="{x:Type Button}">
-                                        <Style.Triggers>
-                                            <Trigger Property="IsEnabled" Value="False">
-                                                <Setter Property="Foreground" Value="Gray"></Setter>
-                                            </Trigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </DockPanel.Resources>
-                                <Label Style="{StaticResource TopLabel}" DockPanel.Dock="Left" Content="Dokumente"/>
-                                <Button Background="#FFEFEFEF" DockPanel.Dock="Right" Width="33" Height="33" Command="{Binding AddDocumentCommand}" VerticalContentAlignment="Center">
-                                    <TextBlock Style="{StaticResource FontAwesomeIcon}" Margin="5"><Run Text="&#xF067;"/></TextBlock>
-                                </Button>
-                                <Button Background="#FFEFEFEF" DockPanel.Dock="Right" Width="33" Height="33" Margin="0,0,5,0" Command="{Binding RemoveDocumentsCommand}" VerticalContentAlignment="Center">
-                                    <TextBlock Style="{StaticResource FontAwesomeIcon}" Margin="5"><Run Text="&#xF014;"/></TextBlock>
-                                </Button>
-                            </DockPanel>
-
-                            <ListView Grid.Column="0" Grid.Row="4" ItemsSource="{Binding Documents}" BorderThickness="0">
-                                <ListView.Resources>
-                                    <Style TargetType="{x:Type ListViewItem}">
-                                        <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}" />
-                                    </Style>
-                                </ListView.Resources>
-                                <ListView.ItemTemplate>
-                                    <DataTemplate>
-                                        <DockPanel>
-                                            <DockPanel.Resources>
-                                                <Style TargetType="{x:Type TextBlock}">
-                                                    <Style.Triggers>
-                                                        <DataTrigger Binding="{Binding NotExists}" Value="true">
-                                                            <Setter Property="Foreground" Value="Red"></Setter>
-                                                        </DataTrigger>
-                                                    </Style.Triggers>
-                                                </Style>
-                                            </DockPanel.Resources>
-                                            <DockPanel.InputBindings>
-                                                <MouseBinding Gesture="LeftDoubleClick" Command="{Binding OpenCommand}"></MouseBinding>
-                                            </DockPanel.InputBindings>
-                                            <TextBlock Style="{StaticResource FontAwesomeIcon}" Margin="0,0,5,0" Foreground="Red" Visibility="{Binding NotExists, Converter={StaticResource booleanVisibilityConverter}, FallbackValue=Collapsed}"><Run Text="&#xF0E7;"/></TextBlock>
-                                            <TextBlock Margin="0,0,5,0"><Run Text="&#xF0C6;"/>
-                                                <TextBlock.Style>
-                                                    <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource FontAwesomeIcon}">
-                                                        <Style.Triggers>
-                                                            <DataTrigger Binding="{Binding NotExists}" Value="true">
-                                                                <Setter Property="Foreground" Value="Red"></Setter>
-                                                            </DataTrigger>
-                                                        </Style.Triggers>
-                                                    </Style>
-                                                </TextBlock.Style></TextBlock>
-                                            <TextBlock Text="{Binding FileName, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center"/>
-                                        </DockPanel>
-                                    </DataTemplate>
-                                </ListView.ItemTemplate>
-                            </ListView>
-                        </Grid>
                     </Grid>
 
                 </Grid>

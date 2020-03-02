@@ -44,11 +44,15 @@ namespace ZuegerAdressbook.Printing
             tableRowGroup.Rows.Add(CreateEmptyPersonRow());
             tableRowGroup.Rows.Add(CreatePersonRow("SBB-Ermässigung", person => CreateReductionString(person)));
             tableRowGroup.Rows.Add(CreateEmptyPersonRow());
-            tableRowGroup.Rows.Add(CreatePersonRow("Name auf Pass", person => person.NameOnPassport));
+            tableRowGroup.Rows.Add(CreatePersonRow("Name auf Pass", person => string.Format("{0} {1}", person.PassportGivenName, person.PassportSurname)));
             tableRowGroup.Rows.Add(CreatePersonRow("Passnummer", person => person.PassportNumber));
+            tableRowGroup.Rows.Add(CreatePersonRow("Heimatort", person => person.PlaceOfOrigin));
+            tableRowGroup.Rows.Add(CreatePersonRow("Geburtsort", person => person.PlaceOfBirth));
+            tableRowGroup.Rows.Add(CreatePersonRow("Nationalität", person => CreatePassportNationalityString(person)));
+            tableRowGroup.Rows.Add(CreatePersonRow("Pass ausgestellt am", person => person.PassportIssueDate.HasValue ? person.PassportIssueDate.Value.ToShortDateString() : "-"));
             tableRowGroup.Rows.Add(CreatePersonRow("Pass gültig bis", person => person.PassportExpirationDate.HasValue ? person.PassportExpirationDate.Value.ToShortDateString() : "-"));
             tableRowGroup.Rows.Add(CreateEmptyPersonRow());
-            tableRowGroup.Rows.Add(CreatePersonRow("Annullationsversicherung", person => person.HasCancellationInsurance ? string.Format("Ja (Ablaufdatum: {0:dd.MM.yyyy})", person.CancellationInsuranceExpirationDate?.ToShortDateString()) : "Nein"));
+            tableRowGroup.Rows.Add(CreatePersonRow("Annullationsversicherung", person => person.HasCancellationInsurance ? string.Format("{0} (von: {1:dd.MM.yyyy}, bis: {2:dd.MM.yyyy})", person.CancellationInsurance, person.CancellationInsuranceIssueDate?.ToShortDateString(), person.CancellationInsuranceExpirationDate?.ToShortDateString()) : "Nein"));
             tableRowGroup.Rows.Add(CreateEmptyPersonRow());
             tableRowGroup.Rows.Add(CreatePersonRow("Bemerkungen", person => person.Notes));
             tableRowGroup.Rows.Add(CreateEmptyPersonRow());
@@ -74,13 +78,20 @@ namespace ZuegerAdressbook.Printing
             feedbackTable.RowGroups.Add(feedbackTableRowGroup);
 
             Section.Blocks.Add(table);
-            Section.Blocks.Add(Text(string.Format("gedruckt am: {0}", DateTime.Now.ToShortDateString())));
+            Section.Blocks.Add(TextBlock(string.Format("gedruckt am: {0}", DateTime.Now.ToShortDateString())));
             Section.Blocks.Add(feedbackTable);
         }
 
         private string CreateGenderString(Model.Gender gender)
         {
             return gender == Model.Gender.Male ? "Mann" : "Frau";
+        }
+
+        private string CreatePassportNationalityString(PersonViewModel person)
+        {
+            var nationality = person.PassportNationality;
+            var nationalityCode = !string.IsNullOrEmpty(person.PassportNationalityCode) ? string.Format("({0})", person.PassportNationalityCode) : "";
+            return string.Format("{0} {1}", nationality, nationalityCode);
         }
 
         private string CreateReductionString(PersonViewModel person)
@@ -192,6 +203,18 @@ namespace ZuegerAdressbook.Printing
 
             return paragraph;
         }
-        
+
+        private Paragraph TextBlock(string text)
+        {
+            var fontFamily = new FontFamily(new Uri("pack://application:,,,/ZuegerAddressbook.Name;component/Resources/Fonts/"), "#Frutiger LT Com 55 Roman");
+
+            var paragraph = new Paragraph(new Run(text));
+            paragraph.FontFamily = fontFamily;
+            paragraph.FontSize = 11;
+            paragraph.Padding = new Thickness(5);
+
+            return paragraph;
+        }
+
     }
 }

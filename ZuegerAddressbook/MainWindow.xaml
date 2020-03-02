@@ -11,8 +11,8 @@
     mc:Ignorable="d" 
     x:Class="ZuegerAdressbook.MainWindow"
     Title="Züger Reisen - Adressbuch" 
-    d:DesignWidth="600"
-    d:DesignHeight="600"
+    d:DesignWidth="1076"
+    d:DesignHeight="860"
     Icon="Icons/48/address-book.png"
     d:DataContext="{d:DesignInstance vm:MainViewModel, IsDesignTimeCreatable=True}">
     <Window.Resources>
@@ -227,7 +227,7 @@
                         <TextBox Grid.Column="2" Grid.Row="3" Text="{Binding Lastname, UpdateSourceTrigger=PropertyChanged}" Margin="5,0,0,0"/>
 
                         <Label Grid.Column="0" Grid.Row="4" Style="{StaticResource TopLabel}" Content="Geburtsdatum"/>
-                        <DatePicker Grid.Column="0" Grid.Row="5" SelectedDate="{Binding Birthdate, StringFormat={}{0:dd.MM.yyyy}}" SelectedDateFormat="Short" Template="{DynamicResource DatePickerControlTemplate}" />
+                        <DatePicker Grid.Column="0" Grid.Row="5" SelectedDate="{Binding Birthdate, StringFormat={}{0:dd.MM.yyyy}, UpdateSourceTrigger=PropertyChanged}" SelectedDateFormat="Short" Template="{DynamicResource DatePickerControlTemplate}" />
                         <StackPanel Grid.Column="2" Grid.Row="5" Orientation="Horizontal">
                             <TextBlock Text="{Binding Age, FallbackValue=?, TargetNullValue=?}" Margin="0,0,5,0"/>
                             <TextBlock Text="Jahre" Margin="0,0,5,0"/>
@@ -236,12 +236,12 @@
                         </StackPanel>
 
                         <Label Grid.Column="0" Grid.Row="6" Style="{StaticResource TopLabel}" Content="Strasse / Nr."/>
-                        <TextBox Grid.Column="0" Grid.Row="7" Grid.ColumnSpan="5" Text="{Binding Street1}"/>
+                        <TextBox Grid.Column="0" Grid.Row="7" Grid.ColumnSpan="5" Text="{Binding Street1, UpdateSourceTrigger=PropertyChanged}"/>
 
                         <Label Grid.Column="0" Grid.Row="8" Style="{StaticResource TopLabel}" Content="PLZ"/>
-                        <TextBox Grid.Column="0" Grid.Row="9" Text="{Binding Plz}"/>
+                        <TextBox Grid.Column="0" Grid.Row="9" Text="{Binding Plz, UpdateSourceTrigger=PropertyChanged}"/>
                         <Label Grid.Column="2" Grid.Row="8" Style="{StaticResource TopLabel}" Content="Ort"/>
-                        <TextBox Grid.Column="2" Grid.Row="9" Text="{Binding City}"/>
+                        <TextBox Grid.Column="2" Grid.Row="9" Text="{Binding City, UpdateSourceTrigger=PropertyChanged}"/>
 
                         <DockPanel Grid.Column="0" Grid.Row="10" Grid.ColumnSpan="3" LastChildFill="True">
                             <Separator Width="30"/>
@@ -250,14 +250,14 @@
                         </DockPanel>
 
                         <Label Grid.Column="0" Grid.Row="11" Content="Tel P"/>
-                        <TextBox Grid.Column="0" Grid.Row="12" Text="{Binding PhoneNumber}"/>
+                        <TextBox Grid.Column="0" Grid.Row="12" Text="{Binding PhoneNumber, UpdateSourceTrigger=PropertyChanged}"/>
                         <Label Grid.Column="2" Grid.Row="11" Content="Tel Mobile"/>
-                        <TextBox Grid.Column="2" Grid.Row="12" Text="{Binding MobileNumber}"/>
+                        <TextBox Grid.Column="2" Grid.Row="12" Text="{Binding MobileNumber, UpdateSourceTrigger=PropertyChanged}"/>
 
                         <Label Grid.Column="0" Grid.Row="13" Style="{StaticResource TopLabel}" Content="Tel G"/>
-                        <TextBox Grid.Column="0" Grid.Row="14" Text="{Binding BusinessPhoneNumber}"/>
+                        <TextBox Grid.Column="0" Grid.Row="14" Text="{Binding BusinessPhoneNumber, UpdateSourceTrigger=PropertyChanged}"/>
                         <Label Grid.Column="2" Grid.Row="13" Style="{StaticResource TopLabel}" Content="E-Mail"/>
-                        <TextBox Grid.Column="2" Grid.Row="14" Text="{Binding EmailAddress}"/>
+                        <TextBox Grid.Column="2" Grid.Row="14" Text="{Binding EmailAddress, UpdateSourceTrigger=PropertyChanged}"/>
                     </Grid>
 
                     <Separator Grid.Column="1" Grid.Row="0" Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Margin="2,50,2,50"></Separator>
@@ -274,9 +274,9 @@
 
                         <DockPanel LastChildFill="True" Grid.Row="0">
                             <Separator Width="30"/>
-                            <TextBlock DockPanel.Dock="Left" Style="{StaticResource SeparatorText}"><Run Text="SBB / Reiseagentur"/></TextBlock>
+                            <TextBlock DockPanel.Dock="Left" Style="{StaticResource SeparatorText}"><Run Text="Reiseagentur"/></TextBlock>
                             <Separator Width="10"/>
-                            <TextBlock DockPanel.Dock="Left" Style="{StaticResource SeparatorText}" Text="{Binding SbbInformationChangeDate, StringFormat=(SBB zuletzt geändert: {0:dd.MM.yyyy HH:mm})}"></TextBlock>
+                            <TextBlock DockPanel.Dock="Left" Style="{StaticResource SeparatorText}" Text="{Binding SbbInformationChangeDate, StringFormat=(Reiseagentur zuletzt geändert: {0:dd.MM.yyyy HH:mm})}"></TextBlock>
                             <Separator />
                         </DockPanel>
 
@@ -299,14 +299,14 @@
                             </Grid.RowDefinitions>
 
                             <Label Grid.Column="0" Grid.Row="0" Content="Name auf Pass"/>
-                            <TextBox Grid.Column="0" Grid.Row="1" Text="{Binding NameOnPassport}"/>
+                            <TextBox Grid.Column="0" Grid.Row="1" Text="{Binding NameOnPassport, UpdateSourceTrigger=PropertyChanged}"/>
                             <Label Grid.Column="2" Grid.Row="0" Content="Passnummer"/>
-                            <TextBox Grid.Column="2" Grid.Row="1" Text="{Binding PassportNumber}"/>
+                            <TextBox Grid.Column="2" Grid.Row="1" Text="{Binding PassportNumber, UpdateSourceTrigger=PropertyChanged}"/>
                             <Label Grid.Column="0" Grid.Row="2" Content="Pass gültig bis" />
-                            <DatePicker Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="4" SelectedDate="{Binding PassportExpirationDate}" SnapsToDevicePixels="True" Template="{DynamicResource DatePickerControlTemplate}" />
+                            <DatePicker Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="4" SelectedDate="{Binding PassportExpirationDate, UpdateSourceTrigger=PropertyChanged}" SnapsToDevicePixels="True" Template="{DynamicResource DatePickerControlTemplate}" />
                             <CheckBox Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="4" IsChecked="{Binding HasCancellationInsurance}" Content="Annullationsversicherung" VerticalAlignment="Center"/>
                             <Label Grid.Column="0" Grid.Row="7" Visibility="{Binding HasCancellationInsurance, Converter={StaticResource booleanVisibilityConverter}}" Content="Gültig bis"/>
-                            <DatePicker Grid.Column="3" Grid.Row="7" SelectedDate="{Binding CancellationInsuranceExpirationDate}" SnapsToDevicePixels="True" Visibility="{Binding HasCancellationInsurance, Converter={StaticResource booleanVisibilityConverter}}" Template="{DynamicResource DatePickerControlTemplate}" />
+                            <DatePicker Grid.Column="3" Grid.Row="7" SelectedDate="{Binding CancellationInsuranceExpirationDate, UpdateSourceTrigger=PropertyChanged}" SnapsToDevicePixels="True" Visibility="{Binding HasCancellationInsurance, Converter={StaticResource booleanVisibilityConverter}}" Template="{DynamicResource DatePickerControlTemplate}" />
                         </Grid>
 
                         <Grid Grid.Row="2">
@@ -327,19 +327,19 @@
                             </Grid.RowDefinitions>
                             <CheckBox Grid.Column="0" Grid.Row="0" IsChecked="{Binding HasHalbTax}" Content="HalbTax" VerticalAlignment="Center"/>
                             <Label Grid.Column="2" Grid.Row="0" Visibility="{Binding HasHalbTax, Converter={StaticResource booleanVisibilityConverter}}" Content="Ablaufdatum"/>
-                            <DatePicker Grid.Column="3" Grid.Row="0" SelectedDate="{Binding HalbTaxExpirationDate}" SnapsToDevicePixels="True" Visibility="{Binding HasHalbTax, Converter={StaticResource booleanVisibilityConverter}}" Template="{DynamicResource DatePickerControlTemplate}" />
+                            <DatePicker Grid.Column="3" Grid.Row="0" SelectedDate="{Binding HalbTaxExpirationDate, UpdateSourceTrigger=PropertyChanged}" SnapsToDevicePixels="True" Visibility="{Binding HasHalbTax, Converter={StaticResource booleanVisibilityConverter}}" Template="{DynamicResource DatePickerControlTemplate}" />
 
                             <CheckBox  Grid.Column="0" Grid.Row="2" IsChecked="{Binding HasGeneralAbo}" Content="GA" VerticalAlignment="Center"/>
                             <Label Grid.Column="2" Grid.Row="2" Visibility="{Binding HasGeneralAbo, Converter={StaticResource booleanVisibilityConverter}}" Content="Ablaufdatum" />
-                            <DatePicker Grid.Column="3" Grid.Row="2" SelectedDate="{Binding GeneralAboExpirationDate}" SnapsToDevicePixels="True" Visibility="{Binding HasGeneralAbo, Converter={StaticResource booleanVisibilityConverter}}" Template="{DynamicResource DatePickerControlTemplate}" />
+                            <DatePicker Grid.Column="3" Grid.Row="2" SelectedDate="{Binding GeneralAboExpirationDate, UpdateSourceTrigger=PropertyChanged}" SnapsToDevicePixels="True" Visibility="{Binding HasGeneralAbo, Converter={StaticResource booleanVisibilityConverter}}" Template="{DynamicResource DatePickerControlTemplate}" />
 
                             <CheckBox  Grid.Column="0" Grid.Row="4" IsChecked="{Binding HasJuniorKarte}" Content="Junior-Karte" Visibility="{Binding IsChild, Converter={StaticResource booleanVisibilityConverter}}" VerticalAlignment="Center"/>
                             <Label Grid.Column="2" Grid.Row="4" Visibility="{Binding HasJuniorKarte, Converter={StaticResource booleanVisibilityConverter}}" Content="Ablaufdatum" />
-                            <DatePicker Grid.Column="3" Grid.Row="4" SelectedDate="{Binding JuniorKarteExpirationDate}" SnapsToDevicePixels="True" Visibility="{Binding HasJuniorKarte, Converter={StaticResource booleanVisibilityConverter}}" Template="{DynamicResource DatePickerControlTemplate}" />
+                            <DatePicker Grid.Column="3" Grid.Row="4" SelectedDate="{Binding JuniorKarteExpirationDate, UpdateSourceTrigger=PropertyChanged}" SnapsToDevicePixels="True" Visibility="{Binding HasJuniorKarte, Converter={StaticResource booleanVisibilityConverter}}" Template="{DynamicResource DatePickerControlTemplate}" />
 
                             <CheckBox  Grid.Column="0" Grid.Row="6" IsChecked="{Binding HasEnkelKarte}" Content="Enkel-Karte" Visibility="{Binding IsChild, Converter={StaticResource booleanVisibilityConverter}}" VerticalAlignment="Center"/>
                             <Label Grid.Column="2" Grid.Row="6" Visibility="{Binding HasEnkelKarte, Converter={StaticResource booleanVisibilityConverter}}" Content="Ablaufdatum" />
-                            <DatePicker Grid.Column="3" Grid.Row="6" SelectedDate="{Binding EnkelKarteExpirationDate}" SnapsToDevicePixels="True" Visibility="{Binding HasEnkelKarte, Converter={StaticResource booleanVisibilityConverter}}" Template="{DynamicResource DatePickerControlTemplate}" />
+                            <DatePicker Grid.Column="3" Grid.Row="6" SelectedDate="{Binding EnkelKarteExpirationDate, UpdateSourceTrigger=PropertyChanged}" SnapsToDevicePixels="True" Visibility="{Binding HasEnkelKarte, Converter={StaticResource booleanVisibilityConverter}}" Template="{DynamicResource DatePickerControlTemplate}" />
                         </Grid>
                         <DockPanel LastChildFill="True" Grid.Row="3">
                             <Separator Width="30"/>
@@ -359,7 +359,7 @@
                             </Grid.RowDefinitions>
 
                             <Label Grid.Column="0" Grid.Row="0" Content="Notizen"/>
-                            <TextBox Grid.Column="0" Grid.Row="1" Text="{Binding Notes}" Style="{StaticResource MultilineTextBox}"/>
+                            <TextBox Grid.Column="0" Grid.Row="1" Text="{Binding Notes, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource MultilineTextBox}"/>
 
                             <DockPanel Grid.Column="0" Grid.Row="3" LastChildFill="False" >
                                 <DockPanel.Resources>
@@ -412,7 +412,7 @@
                                                         </Style.Triggers>
                                                     </Style>
                                                 </TextBlock.Style></TextBlock>
-                                            <TextBlock Text="{Binding FileName}" VerticalAlignment="Center"/>
+                                            <TextBlock Text="{Binding FileName, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center"/>
                                         </DockPanel>
                                     </DataTemplate>
                                 </ListView.ItemTemplate>

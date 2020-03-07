@@ -8,9 +8,9 @@ namespace ZuegerAdressbook.Service
 {
     public class AddressbookWorksheetRow
     {
-        private const string FemaleText = "weiblich";
+        private const string FemaleText = "Frau";
 
-        private const string MaleText = "männlich";
+        private const string MaleText = "Mann";
 
         private const string Ja = "Ja";
 
@@ -302,19 +302,19 @@ namespace ZuegerAdressbook.Service
             }
         }
 
-        public bool HasJuniorKarte
+        public string PlaceOfIssue
         {
             get
             {
-                return _worksheet.Cells[Row, 24].Text == Ja;
+                return _worksheet.Cells[Row, 24].Text;
             }
             set
             {
-                _worksheet.Cells[Row, 24].Value = value ? Ja : Nein;
+                _worksheet.Cells[Row, 24].Value = value;
             }
         }
 
-        public bool HasEnkelKarte
+        public bool HasJuniorKarte
         {
             get
             {
@@ -326,7 +326,7 @@ namespace ZuegerAdressbook.Service
             }
         }
 
-        public bool HasCancellationInsurance
+        public bool HasEnkelKarte
         {
             get
             {

@@ -44,6 +44,8 @@ namespace ZuegerAdressbook.Model
 
         public string PassportNationalityCode { get; set; }
 
+        public string PlaceOfIssue { get; set; }
+
         public string PlaceOfOrigin { get; set; }
 
         public string PlaceOfBirth { get; set; }
@@ -55,8 +57,6 @@ namespace ZuegerAdressbook.Model
         public bool HasJuniorKarte { get; set; }
 
         public bool HasEnkelKarte { get; set; }
-
-        public bool HasCancellationInsurance { get; set; }
 
         public string CancellationInsurance { get; set; }
 

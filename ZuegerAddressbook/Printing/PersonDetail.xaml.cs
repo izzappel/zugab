@@ -52,9 +52,10 @@ namespace ZuegerAdressbook.Printing
             tableRowGroup.Rows.Add(CreatePersonRow("Pass ausgestellt am", person => person.PassportIssueDate.HasValue ? person.PassportIssueDate.Value.ToShortDateString() : "-"));
             tableRowGroup.Rows.Add(CreatePersonRow("Pass gültig bis", person => person.PassportExpirationDate.HasValue ? person.PassportExpirationDate.Value.ToShortDateString() : "-"));
             tableRowGroup.Rows.Add(CreateEmptyPersonRow());
-            tableRowGroup.Rows.Add(CreatePersonRow("Annullationsversicherung", person => person.HasCancellationInsurance ? string.Format("{0} (von: {1:dd.MM.yyyy}, bis: {2:dd.MM.yyyy})", person.CancellationInsurance, person.CancellationInsuranceIssueDate?.ToShortDateString(), person.CancellationInsuranceExpirationDate?.ToShortDateString()) : "Nein"));
+            tableRowGroup.Rows.Add(CreatePersonRow("Annullationsversicherung", person => CreateCancellationInsuranceString(person)));
             tableRowGroup.Rows.Add(CreateEmptyPersonRow());
             tableRowGroup.Rows.Add(CreatePersonRow("Bemerkungen", person => person.Notes));
+            tableRowGroup.Rows.Add(CreatePersonRow("Zuletzt geändert", person => person.ChangeDate.HasValue ? person.ChangeDate.Value.ToShortDateString() + " " + person.ChangeDate.Value.ToShortTimeString() : "-"));
             tableRowGroup.Rows.Add(CreateEmptyPersonRow());
 
             table.RowGroups.Add(tableRowGroup);
@@ -66,13 +67,6 @@ namespace ZuegerAdressbook.Printing
 
             var feedbackTableRowGroup = new TableRowGroup();
             feedbackTableRowGroup.Rows.Add(CreateFeedbackTitleRow());
-            feedbackTableRowGroup.Rows.Add(CreateFeedbackHeadrRow());
-            feedbackTableRowGroup.Rows.Add(CreateEmptyFeedbackRow());
-            feedbackTableRowGroup.Rows.Add(CreateEmptyFeedbackRow());
-            feedbackTableRowGroup.Rows.Add(CreateEmptyFeedbackRow());
-            feedbackTableRowGroup.Rows.Add(CreateEmptyFeedbackRow());
-            feedbackTableRowGroup.Rows.Add(CreateEmptyFeedbackRow());
-            feedbackTableRowGroup.Rows.Add(CreateEmptyFeedbackRow());
             feedbackTableRowGroup.Rows.Add(CreateEmptyFeedbackRow());
 
             feedbackTable.RowGroups.Add(feedbackTableRowGroup);
@@ -84,7 +78,7 @@ namespace ZuegerAdressbook.Printing
 
         private string CreateGenderString(Model.Gender gender)
         {
-            return gender == Model.Gender.Male ? "Mann" : "Frau";
+            return gender == Model.Gender.Male ? "Herr" : "Frau";
         }
 
         private string CreatePassportNationalityString(PersonViewModel person)
@@ -92,6 +86,33 @@ namespace ZuegerAdressbook.Printing
             var nationality = person.PassportNationality;
             var nationalityCode = !string.IsNullOrEmpty(person.PassportNationalityCode) ? string.Format("({0})", person.PassportNationalityCode) : "";
             return string.Format("{0} {1}", nationality, nationalityCode);
+        }
+
+        private string CreateCancellationInsuranceString(PersonViewModel person)
+        {
+            var issueDate = person.CancellationInsuranceIssueDate.HasValue ? string.Format("von {0}", person.CancellationInsuranceIssueDate.Value.ToShortDateString()) : null;
+            var expirationDate = person.CancellationInsuranceExpirationDate.HasValue ? string.Format("bis {0}", person.CancellationInsuranceExpirationDate.Value.ToShortDateString()) : null;
+
+            if (issueDate == null && expirationDate == null && string.IsNullOrEmpty(person.CancellationInsurance))
+            {
+                return "";
+            }
+
+            var info = new List<string>();
+            if (!string.IsNullOrEmpty(person.CancellationInsurance))
+            {
+                info.Add(person.CancellationInsurance);
+            }
+            if (issueDate != null)
+            {
+                info.Add(issueDate);
+            }
+            if (expirationDate != null)
+            {
+                info.Add(expirationDate);
+            }
+
+            return string.Join(", ", info);
         }
 
         private string CreateReductionString(PersonViewModel person)
@@ -152,7 +173,6 @@ namespace ZuegerAdressbook.Printing
         private TableRow CreateFeedbackTitleRow()
         {
             var titleCell = Cell(Text("Kundenfeedback"));
-            titleCell.ColumnSpan = 3;
 
             var titleRow = new TableRow();
             titleRow.FontWeight = FontWeights.Bold;
@@ -161,24 +181,13 @@ namespace ZuegerAdressbook.Printing
 
             return titleRow;
         }
-
-        private TableRow CreateFeedbackHeadrRow()
-        {
-            var headerRow = new TableRow();
-            headerRow.FontWeight = FontWeights.Bold;
-            headerRow.Cells.Add(Cell(Text("erhalten am")));
-            headerRow.Cells.Add(Cell(Text("Gutschein")));
-            headerRow.Cells.Add(Cell(Text("eingelöst am")));
-
-            return headerRow;
-        }
-
         private TableRow CreateEmptyFeedbackRow()
         {
+            var emptyCell = Cell(Text(string.Empty));
+            emptyCell.Padding = new Thickness(0, 50, 0, 50);
+
             var emptyRow = new TableRow();
-            emptyRow.Cells.Add(Cell(Text(string.Empty)));
-            emptyRow.Cells.Add(Cell(Text(string.Empty)));
-            emptyRow.Cells.Add(Cell(Text(string.Empty)));
+            emptyRow.Cells.Add(emptyCell);
 
             return emptyRow;
         }

@@ -408,6 +408,8 @@
                                 <RowDefinition Height="30"/>
                                 <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="30"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="30"/>
                             </Grid.RowDefinitions>
 
                             <Label Grid.Column="0" Grid.Row="0" Content="Nachname auf Pass"/>
@@ -428,6 +430,8 @@
                             <DatePicker Grid.Column="0" Grid.Row="9" SelectedDate="{Binding PassportIssueDate, UpdateSourceTrigger=PropertyChanged}" SnapsToDevicePixels="True" Template="{DynamicResource DatePickerControlTemplate}" />
                             <Label Grid.Column="3" Grid.Row="8" Content="Pass gültig bis" />
                             <DatePicker Grid.Column="3" Grid.Row="9" SelectedDate="{Binding PassportExpirationDate, UpdateSourceTrigger=PropertyChanged}" SnapsToDevicePixels="True" Template="{DynamicResource DatePickerControlTemplate}" />
+                            <Label Grid.Column="0" Grid.Row="10" Content="Pass Austellungsort"/>
+                            <TextBox Grid.Column="0" Grid.Row="11" Text="{Binding PlaceOfIssue, UpdateSourceTrigger=PropertyChanged}"/>
                         </Grid>
 
                         <DockPanel LastChildFill="True" Grid.Row="3">
@@ -442,20 +446,18 @@
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="30"/>
                                 <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="30"/>
                                 <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="30"/>
                             </Grid.RowDefinitions>
 
-                            <CheckBox Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="4" IsChecked="{Binding HasCancellationInsurance}" Content="Annullationsversicherung" VerticalAlignment="Center"/>
-                            <Label Grid.Column="0" Grid.Row="1" Content="Versicherung"/>
-                            <TextBox Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="3" Text="{Binding CancellationInsurance, UpdateSourceTrigger=PropertyChanged}"/>
-                            <Label Grid.Column="0" Grid.Row="3" Content="Gültig von"/>
-                            <DatePicker Grid.Column="0" Grid.Row="4" SelectedDate="{Binding CancellationInsuranceIssueDate, UpdateSourceTrigger=PropertyChanged}" SnapsToDevicePixels="True" Template="{DynamicResource DatePickerControlTemplate}" />
-                            <Label Grid.Column="3" Grid.Row="3" Content="Gültig bis"/>
-                            <DatePicker Grid.Column="3" Grid.Row="4" SelectedDate="{Binding CancellationInsuranceExpirationDate, UpdateSourceTrigger=PropertyChanged}" SnapsToDevicePixels="True" Template="{DynamicResource DatePickerControlTemplate}" />
+                            <Label Grid.Column="0" Grid.Row="0" Content="Annullationsversicherung"/>
+                            <TextBox Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="3" Text="{Binding CancellationInsurance, UpdateSourceTrigger=PropertyChanged}"/>
+                            <Label Grid.Column="0" Grid.Row="2" Content="Gültig von"/>
+                            <DatePicker Grid.Column="0" Grid.Row="3" SelectedDate="{Binding CancellationInsuranceIssueDate, UpdateSourceTrigger=PropertyChanged}" SnapsToDevicePixels="True" Template="{DynamicResource DatePickerControlTemplate}" />
+                            <Label Grid.Column="3" Grid.Row="2" Content="Gültig bis"/>
+                            <DatePicker Grid.Column="3" Grid.Row="3" SelectedDate="{Binding CancellationInsuranceExpirationDate, UpdateSourceTrigger=PropertyChanged}" SnapsToDevicePixels="True" Template="{DynamicResource DatePickerControlTemplate}" />
                         </Grid>
 
                         <DockPanel LastChildFill="True" Grid.Row="5">

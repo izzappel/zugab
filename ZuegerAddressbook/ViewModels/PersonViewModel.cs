@@ -45,12 +45,12 @@ namespace ZuegerAdressbook.ViewModels
         private string _passportGivenName;
         private string _passportNationality;
         private string _passportNationalityCode;
+        private string _placeOfIssue;
         private string _placeOfOrigin;
         private string _placeOfBirth;
         private string _passportNumber;
         private DateTime? _passportIssueDate;
         private DateTime? _passportExpirationDate;
-        private bool _hasCancellationInsurance;
         private string _cancellationInsurance;
         private DateTime? _canellationInsuranceIssueDate;
         private DateTime? _canellationInsuranceExpirationDate;
@@ -103,12 +103,12 @@ namespace ZuegerAdressbook.ViewModels
             _passportGivenName = person.PassportGivenName;
             _passportNationality = person.PassportNationality;
             _passportNationalityCode = person.PassportNationalityCode;
+            _placeOfIssue = person.PlaceOfIssue;
             _placeOfBirth = person.PlaceOfBirth;
             _placeOfOrigin = person.PlaceOfOrigin;
             _passportNumber = person.PassportNumber;
             _passportIssueDate = person.PassportIssueDate;
             _passportExpirationDate = person.PassportExpirationDate;
-            _hasCancellationInsurance = person.HasCancellationInsurance;
             _cancellationInsurance = person.CancellationInsurance;
             _canellationInsuranceIssueDate = person.CancellationInsuranceIssueDate;
             _canellationInsuranceExpirationDate = person.CancellationInsuranceExpirationDate;
@@ -285,6 +285,12 @@ namespace ZuegerAdressbook.ViewModels
             set { ChangeAndNotify(value, ref _passportNationalityCode); }
         }
 
+        public string PlaceOfIssue
+        {
+            get { return _placeOfIssue; }
+            set { ChangeAndNotify(value, ref _placeOfIssue); }
+        }
+
         public string PlaceOfOrigin
         {
             get { return _placeOfOrigin; }
@@ -313,12 +319,6 @@ namespace ZuegerAdressbook.ViewModels
         {
             get { return _passportExpirationDate; }
             set { ChangeAndNotify(value, ref _passportExpirationDate); }
-        }
-
-        public bool HasCancellationInsurance
-        {
-            get { return _hasCancellationInsurance; }
-            set { ChangeAndNotify(value, ref _hasCancellationInsurance); }
         }
 
         public string CancellationInsurance
@@ -409,7 +409,6 @@ namespace ZuegerAdressbook.ViewModels
                 EmailAddress = _emailAddress,
                 Firstname = _firstname,
                 Gender = _gender,
-                HasCancellationInsurance = _hasCancellationInsurance,
                 CancellationInsurance = _cancellationInsurance,
                 HasEnkelKarte = _hasEnkelKarte,
                 HasGeneralAbo = _hasGeneralAbo,
@@ -421,6 +420,7 @@ namespace ZuegerAdressbook.ViewModels
                 PassportGivenName = _passportGivenName,
                 PassportNationality = _passportNationality,
                 PassportNationalityCode = _passportNationalityCode,
+                PlaceOfIssue = _placeOfIssue,
                 PlaceOfOrigin = _placeOfOrigin,
                 PlaceOfBirth = _placeOfBirth,
                 PassportIssueDate = _passportIssueDate,
@@ -449,7 +449,8 @@ namespace ZuegerAdressbook.ViewModels
                   && (PassportGivenName == null && _person.PassportGivenName == null || PassportGivenName.Equals(_person.PassportGivenName))
                   && (PassportNumber == null && _person.PassportNumber == null || PassportNumber.Equals(_person.PassportNumber))
                   && (PassportNationality == null && _person.PassportNationality == null || PassportNationality.Equals(_person.PassportNationality))
-                  && (PassportNationalityCode == null && _person.PassportNationalityCode == null || PassportNationalityCode.Equals(_person.PassportNationalityCode))
+                  && (PassportNationalityCode == null && _person.PassportNationalityCode == null || PassportNationalityCode.Equals(_person.PassportNationalityCode)) && (PlaceOfBirth == null && _person.PlaceOfBirth == null || PlaceOfBirth.Equals(_person.PlaceOfBirth))
+                  && (PlaceOfIssue == null && _person.PlaceOfIssue == null || PlaceOfBirth.Equals(_person.PlaceOfIssue))
                   && (PlaceOfBirth == null && _person.PlaceOfBirth == null || PlaceOfBirth.Equals(_person.PlaceOfBirth))
                   && (PlaceOfOrigin == null && _person.PlaceOfOrigin == null || PlaceOfOrigin.Equals(_person.PlaceOfOrigin))
                   && (PassportIssueDate == null && _person.PassportIssueDate == null || PassportIssueDate.Equals(_person.PassportIssueDate))
@@ -482,13 +483,13 @@ namespace ZuegerAdressbook.ViewModels
             PassportGivenName = _person.PassportGivenName;
             PassportNationality = _person.PassportNationality;
             PassportNationalityCode = _person.PassportNationalityCode;
+            PlaceOfIssue = _person.PlaceOfIssue;
             PlaceOfOrigin = _person.PlaceOfOrigin;
             PlaceOfBirth = _person.PlaceOfBirth;
             Notes = _person.Notes;
             PhoneNumber = _person.PhoneNumber;
             PassportIssueDate = _person.PassportIssueDate;
             PassportExpirationDate = _person.PassportExpirationDate;
-            HasCancellationInsurance = _person.HasCancellationInsurance;
             CancellationInsuranceExpirationDate = _person.CancellationInsuranceExpirationDate;
             Plz = _person.Plz;
             Street1 = _person.Street1;
